@@ -30,40 +30,40 @@ export const products: Product[] = [
     collection: "L'Édition",
     price: "£ 445",
     tier: "L'Édition · Limited",
-    image: "/images/la-lune.png",
-    alt: "ZIRUVA La Lune — Gold Hardware Moon Bag",
-    bg: "#ECEAE7",
+    image: "/images/la-lune-hero.jpg",
+    alt: "ZIRUVA La Lune — Cognac Moon Bag with Gold Chain",
+    bg: "#F2EDE8",
     category: "Limited",
     specs: {
-      material: "Smooth Box Calf Leather",
-      hardware: "18k Gold Plated Brass",
+      material: "Smooth Box Calf Leather in Cognac",
+      hardware: "18k Gold Plated Interlocking Chain Links",
       dimensions: "24cm x 18cm x 7cm",
       origin: "Florence, Italy",
       serial: "ZR.ED-LN.001"
     },
-    narrative: "A lunar-inspired silhouette defined by its architectural curve and signature gold-plated hardware. La Lune is a centerpiece of our limited L'Édition series, representing the pinnacle of celestial minimalism."
+    narrative: "A lunar-inspired silhouette defined by its architectural curve and signature interlocking gold chain detail. La Lune represents the pinnacle of celestial minimalism, now featured in a rich, heritage cognac leather."
   },
   {
     id: "la-prisme",
     name: "La Prisme",
     collection: "Hero",
-    price: "£ 395",
+    price: "£ 425",
     tier: "Hero · 999 Numbered",
-    image: "/images/la-prisme-teal.png",
-    alt: "ZIRUVA La Prisme — Geometric Satchel",
-    bg: "#F2F0ED",
+    image: "/images/la-prisme-hero.jpg",
+    alt: "ZIRUVA La Prisme — Ivory Multi-Prism Satchel",
+    bg: "#FDFCFB",
     category: "Hero",
     specs: {
-      material: "Grade A Box Calfskin",
-      hardware: "Brushed Nickel Pillars",
+      material: "Grade A Box Calfskin & Leather Intarsia",
+      hardware: "18k Gold Plated Pillars",
       dimensions: "28cm x 20cm x 10cm",
       origin: "Tuscany, Italy",
       serial: "ZR.HR-PR.002"
     },
-    narrative: "The architectural anchor of our Hero collection. La Prisme utilizes sharp geometric angles and a structured satchel form to create a silhouette that is both avant-garde and timeless.",
+    narrative: "A prismatic masterpiece of artisanal precision. La Prisme features an intricate intarsia of multi-colored leather triangles on a heritage ivory base, creating a silhouette that is both avant-garde and timeless.",
     variants: [
-      { color: "#3A7D7E", image: "/images/la-prisme-teal.png", label: "Teal & Ivory" },
-      { color: "#800020", image: "/images/la-prisme-burgundy.jpg", label: "Burgundy & Ivory" }
+      { color: "#FDFCFB", image: "/images/la-prisme-hero.jpg", label: "Ivory Multi-Prism" },
+      { color: "#1A1A1A", image: "/images/la-prisme-noir.png", label: "Noir Gold-Prism" }
     ]
   },
   {
@@ -72,18 +72,18 @@ export const products: Product[] = [
     collection: "Hero",
     price: "£ 375",
     tier: "Hero · 999 Numbered",
-    image: "/images/la-barre.png",
-    alt: "ZIRUVA La Barre — Structured Two-Tone Tote",
-    bg: "#E6E3DF",
+    image: "/images/la-barre-hero.jpg",
+    alt: "ZIRUVA La Barre — Two-Tone Teal & Ivory Tote",
+    bg: "#FDFBFA",
     category: "Hero",
     specs: {
-      material: "Full-Grain Pebbled & Smooth Leather",
-      hardware: "Subtle Gunmetal Accents",
+      material: "Full-Grain Pebbled & Smooth Calf Leather",
+      hardware: "18k Gold Plated Pillar Accents",
       dimensions: "32cm x 26cm x 12cm",
       origin: "Veneto, Italy",
       serial: "ZR.HR-BR.003"
     },
-    narrative: "A study in verticality and contrast. This structured two-tone tote features cleanly defined lines and a sophisticated interplay of ivory and charcoal leather tones."
+    narrative: "A study in architectural verticality and color theory. La Barre pairs a pristine ivory body with deep teal pebbled leather accents, defined by its signature gold-plated pillar handles."
   },
   {
     id: "la-douce",
@@ -91,18 +91,18 @@ export const products: Product[] = [
     collection: "La Signature",
     price: "£ 355",
     tier: "Signature · Essential",
-    image: "/images/la-douce.png",
-    alt: "ZIRUVA La Douce — Soft Leather Tote",
-    bg: "#F0EFEB",
+    image: "/images/la-douce-hero.jpg",
+    alt: "ZIRUVA La Douce — Brown Croc-Embossed Tote",
+    bg: "#F2EDE8",
     category: "Signature",
     specs: {
-      material: "Milled Nappa Pebble Leather",
-      hardware: "Discrete Magnetic Closure",
+      material: "Cognac Croc-Embossed Vachetta",
+      hardware: "Polished Silver Logo Plaque",
       dimensions: "36cm x 28cm x 15cm",
       origin: "Tuscany, Italy",
       serial: "ZR.SI-DC.004"
     },
-    narrative: "Effortless elegance in every fold. La Douce is crafted from our softest milled pebble leather, designed to drape naturally while maintaining its sophisticated presence."
+    narrative: "A tactile masterpiece of classic sophistication. La Douce captures the essence of luxury with its rich cognac croc-embossed Vachetta leather and refined architectural silhouette."
   },
   {
     id: "la-peau",
@@ -110,18 +110,18 @@ export const products: Product[] = [
     collection: "La Signature",
     price: "£ 345",
     tier: "Signature · Essential",
-    image: "/images/la-peau.png",
-    alt: "ZIRUVA La Peau — Croc Embossed Tote",
-    bg: "#EDE7DC",
+    image: "/images/la-peau-hero.jpg",
+    alt: "ZIRUVA La Peau — Two-Tone Black & Ivory Tote",
+    bg: "#FDFCFB",
     category: "Signature",
     specs: {
-      material: "Croc-Embossed Vachetta",
-      hardware: "Polished Antique Brass",
+      material: "Full-Grain Pebbled Ivory & Smooth Noir Leather",
+      hardware: "Polished Gold-Foil Branding",
       dimensions: "30cm x 24cm x 13cm",
       origin: "Tuscany, Italy",
       serial: "ZR.SI-PE.005"
     },
-    narrative: "Texture as a statement. La Peau features premium croc-embossed Vachetta leather in a deep espresso hue, bringing a rich tactile dimension to our classic tote silhouette."
+    narrative: "A visual definition of contrast. La Peau explores the interplay between light and dark, pairing a pristine ivory pebble-grain body with deep noir leather accents and artisanal gold-foil detailing."
   },
   {
     id: "l-arc",
@@ -129,18 +129,18 @@ export const products: Product[] = [
     collection: "La Signature",
     price: "£ 325",
     tier: "Signature · Essential",
-    image: "/images/l-arc.png",
-    alt: "ZIRUVA L'Arc — Crescent Moon Bag",
-    bg: "#E8E6E3",
+    image: "/images/l-arc-hero.jpg",
+    alt: "ZIRUVA L'Arc — Taupe Crescent Moon Bag",
+    bg: "#E8E4E1",
     category: "Signature",
     specs: {
-      material: "Smooth Semi-Aniline Leather",
-      hardware: "Minimalist Silver Clasp",
+      material: "Smooth Semi-Aniline Leather in Taupe",
+      hardware: "Discrete Gold-Plated Zippers & Buckles",
       dimensions: "22cm x 16cm x 6cm",
       origin: "Veneto, Italy",
       serial: "ZR.SI-AR.006"
     },
-    narrative: "The crescent redefined. L'Arc balances a sleek, modern curve with a minimalist aesthetic, designed as the perfect companion for the transitioning urban landscape."
+    narrative: "The crescent redefined. L'Arc balances a sleek, modern curve with a minimalist taupe aesthetic. This edition features an integrated strap pouch for seamless urban utility."
   },
   {
     id: "la-toile",
@@ -148,17 +148,17 @@ export const products: Product[] = [
     collection: "La Signature",
     price: "£ 310",
     tier: "Signature · Essential",
-    image: "/images/la-toile.png",
-    alt: "ZIRUVA La Toile — Canvas Tote",
-    bg: "#F2F0ED",
+    image: "/images/la-toile-hero.jpg",
+    alt: "ZIRUVA La Toile — Deep Burgundy Leather Tote",
+    bg: "#F2EDE8",
     category: "Signature",
     specs: {
-      material: "Heavy-Weight Natural Canvas & Calfskin",
-      hardware: "Reinforced Brass Rivets",
+      material: "Full-Grain Box Calf Leather in Deep Burgundy",
+      hardware: "Gold-Plated Handle Links",
       dimensions: "40cm x 30cm x 18cm",
       origin: "Veneto, Italy",
       serial: "ZR.SI-TL.007"
     },
-    narrative: "The intersection of durability and luxury. Our heavy-weight natural canvas is elevated with hand-painted leather trim, creating an essential piece for refined utility."
+    narrative: "A study in depth and silhouette. La Toile is reimagined in a rich, seasonal deep burgundy leather, balancing a classic tote form with modern structural integrity and sophisticated gold-plated accents."
   }
 ];
