@@ -32,7 +32,7 @@ export default function HorizontalScroll() {
               viewport={{ once: true }}
               transition={{ duration: 0.7 }}
               style={{
-                fontFamily: "'Montserrat', sans-serif",
+                fontFamily: "var(--font-fashion)",
                 fontSize: "0.62rem",
                 fontWeight: 500,
                 letterSpacing: "0.35em",
@@ -61,7 +61,7 @@ export default function HorizontalScroll() {
           </div>
           <p
             style={{
-              fontFamily: "'Montserrat', sans-serif",
+              fontFamily: "var(--font-fashion)",
               fontSize: "0.6rem",
               fontWeight: 500,
               letterSpacing: "0.3em",
@@ -117,29 +117,57 @@ export default function HorizontalScroll() {
               {/* Image area */}
               <div
                 style={{
-                  height: "280px",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  padding: "2.5rem 2rem 1rem",
+                  height: "360px",
+                  position: "relative",
+                  overflow: "hidden",
                 }}
               >
                 <motion.div
-                  whileHover={{ scale: 1.08, y: -8 }}
-                  transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
-                  style={{ position: "relative", width: "200px", height: "200px" }}
+                  whileHover={{ scale: 1.1 }}
+                  transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
+                  style={{ width: "100%", height: "100%", position: "relative" }}
                 >
                   <Image
                     src={item.image}
                     alt={item.name}
                     fill
-                    sizes="200px"
+                    sizes="320px"
                     style={{
-                      objectFit: "contain",
-                      filter: "drop-shadow(0 16px 36px rgba(0,0,0,0.16))",
+                      objectFit: "cover",
+                      filter: "brightness(0.96)",
                     }}
                   />
                 </motion.div>
+                
+                {/* Legibility Gradient */}
+                <div
+                  style={{
+                    position: "absolute",
+                    inset: 0,
+                    background: "linear-gradient(to bottom, rgba(0,0,0,0.1) 0%, transparent 20%)",
+                    pointerEvents: "none",
+                  }}
+                />
+
+                {/* Subtle Brand Watermark */}
+                <div
+                  style={{
+                    position: "absolute",
+                    bottom: "1.2rem",
+                    right: "1.2rem",
+                    zIndex: 2,
+                    opacity: 0.5,
+                  }}
+                >
+                  <span style={{
+                    fontFamily: "'Cormorant Garamond', serif",
+                    fontSize: "0.75rem",
+                    fontStyle: "italic",
+                    color: "white",
+                  }}>
+                    Atelier Ziruva
+                  </span>
+                </div>
               </div>
 
               {/* Info */}
@@ -157,7 +185,7 @@ export default function HorizontalScroll() {
                 </h3>
                 <p
                   style={{
-                    fontFamily: "'Montserrat', sans-serif",
+                    fontFamily: "var(--font-fashion)",
                     fontSize: "0.6rem",
                     fontWeight: 500,
                     letterSpacing: "0.25em",
@@ -171,7 +199,7 @@ export default function HorizontalScroll() {
                 <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
                   <p
                     style={{
-                      fontFamily: "'Montserrat', sans-serif",
+                      fontFamily: "var(--font-sans)",
                       fontSize: "0.88rem",
                       fontWeight: 400,
                       color: "var(--accent-brown)",
@@ -181,7 +209,7 @@ export default function HorizontalScroll() {
                   </p>
                   <button
                     style={{
-                      fontFamily: "'Montserrat', sans-serif",
+                      fontFamily: "var(--font-fashion)",
                       fontSize: "0.58rem",
                       fontWeight: 500,
                       letterSpacing: "0.25em",

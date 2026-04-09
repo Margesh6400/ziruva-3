@@ -62,7 +62,7 @@ export default function Features() {
             viewport={{ once: true }}
             transition={{ duration: 0.7 }}
             style={{
-              fontFamily: "'Montserrat', sans-serif",
+              fontFamily: "var(--font-fashion)",
               fontSize: "0.62rem",
               fontWeight: 500,
               letterSpacing: "0.35em",
@@ -148,7 +148,7 @@ export default function Features() {
               </h3>
               <p
                 style={{
-                  fontFamily: "'Montserrat', sans-serif",
+                  fontFamily: "var(--font-sans)",
                   fontSize: "0.8rem",
                   fontWeight: 300,
                   lineHeight: 1.85,

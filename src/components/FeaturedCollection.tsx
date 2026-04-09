@@ -86,60 +86,89 @@ function ProductCard({ product, index }: { product: Product; index: number }) {
       }}
     >
       {/* Tier badge */}
-      <div style={{ position: "absolute", top: "1.4rem", left: "1.6rem", zIndex: 2 }}>
+      <div style={{ position: "absolute", top: "1.6rem", left: "1.8rem", zIndex: 10 }}>
         <span
           style={{
-            fontFamily: "'Montserrat', sans-serif",
+            fontFamily: "var(--font-fashion)",
             fontSize: "0.58rem",
-            fontWeight: 500,
+            fontWeight: 600,
             letterSpacing: "0.28em",
             textTransform: "uppercase",
-            color: "var(--text-secondary)",
+            color: "white",
+            textShadow: "0 2px 10px rgba(0,0,0,0.2)"
           }}
         >
           {product.tier}
         </span>
       </div>
 
-      {/* Image */}
+      {/* Image Container */}
       <div
         style={{
-          height: "320px",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
+          height: "400px",
+          position: "relative",
           overflow: "hidden",
-          paddingTop: "56px",
-          paddingLeft: "2rem",
-          paddingRight: "2rem",
         }}
       >
+        {/* Hover-zoom image */}
         <motion.div
           animate={{
-            scale: hovered ? 1.07 : 1,
-            y: hovered ? -10 : 0,
+            scale: hovered ? 1.1 : 1,
+            transition: { duration: 1.2, ease: [0.22, 1, 0.36, 1] }
           }}
-          transition={{ duration: 0.7, ease: [0.25, 0.46, 0.45, 0.94] }}
-          style={{ position: "relative", width: "220px", height: "220px" }}
+          style={{ width: "100%", height: "100%", position: "relative" }}
         >
           <Image
             src={product.image}
             alt={product.alt}
             fill
-            sizes="220px"
+            sizes="(max-width: 768px) 100vw, 33vw"
             style={{
-              objectFit: "contain",
-              filter: "drop-shadow(0 20px 40px rgba(0,0,0,0.18))",
+              objectFit: "cover",
+              filter: hovered ? "none" : "brightness(0.96)",
+              transition: "filter 0.6s ease",
             }}
           />
         </motion.div>
+
+        {/* Top-down gradient for badge legibility */}
+        <div
+          style={{
+            position: "absolute",
+            inset: 0,
+            background: "linear-gradient(to bottom, rgba(0,0,0,0.15) 0%, transparent 25%)",
+            pointerEvents: "none",
+          }}
+        />
+
+        {/* Brand Overlay (Subtle) */}
+        <div
+          style={{
+            position: "absolute",
+            bottom: "1.5rem",
+            right: "1.5rem",
+            zIndex: 3,
+            opacity: hovered ? 1 : 0.6,
+            transition: "opacity 0.4s ease",
+          }}
+        >
+          <span style={{
+            fontFamily: "'Cormorant Garamond', serif",
+            fontSize: "0.9rem",
+            fontStyle: "italic",
+            color: "white",
+            textShadow: "0 2px 10px rgba(0,0,0,0.1)"
+          }}>
+            Maison Ziruva
+          </span>
+        </div>
       </div>
 
       {/* Info */}
       <div style={{ padding: "1.5rem 2rem 2rem" }}>
         <p
           style={{
-            fontFamily: "'Montserrat', sans-serif",
+            fontFamily: "var(--font-fashion)",
             fontSize: "0.6rem",
             fontWeight: 500,
             letterSpacing: "0.3em",
@@ -164,7 +193,7 @@ function ProductCard({ product, index }: { product: Product; index: number }) {
         <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
           <p
             style={{
-              fontFamily: "'Montserrat', sans-serif",
+              fontFamily: "var(--font-sans)",
               fontSize: "0.85rem",
               fontWeight: 400,
               color: "var(--text-secondary)",
@@ -175,7 +204,7 @@ function ProductCard({ product, index }: { product: Product; index: number }) {
           <motion.button
             whileHover={{ x: 4 }}
             style={{
-              fontFamily: "'Montserrat', sans-serif",
+              fontFamily: "var(--font-fashion)",
               fontSize: "0.58rem",
               fontWeight: 500,
               letterSpacing: "0.3em",
@@ -239,7 +268,7 @@ export default function FeaturedCollection() {
               viewport={{ once: true }}
               transition={{ duration: 0.7 }}
               style={{
-                fontFamily: "'Montserrat', sans-serif",
+                fontFamily: "var(--font-fashion)",
                 fontSize: "0.62rem",
                 fontWeight: 500,
                 letterSpacing: "0.35em",
@@ -273,7 +302,7 @@ export default function FeaturedCollection() {
             viewport={{ once: true }}
             transition={{ duration: 0.9, delay: 0.2 }}
             style={{
-              fontFamily: "'Montserrat', sans-serif",
+              fontFamily: "var(--font-sans)",
               fontSize: "0.84rem",
               fontWeight: 300,
               lineHeight: 1.9,

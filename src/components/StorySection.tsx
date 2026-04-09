@@ -65,7 +65,7 @@ export default function StorySection() {
             >
               <p
                 style={{
-                  fontFamily: "'Montserrat', sans-serif",
+                  fontFamily: "var(--font-fashion)",
                   fontSize: "0.58rem",
                   fontWeight: 500,
                   letterSpacing: "0.3em",
@@ -97,7 +97,7 @@ export default function StorySection() {
               viewport={{ once: true }}
               transition={{ duration: 0.7 }}
               style={{
-                fontFamily: "'Montserrat', sans-serif",
+                fontFamily: "var(--font-fashion)",
                 fontSize: "0.62rem",
                 fontWeight: 500,
                 letterSpacing: "0.35em",
@@ -148,7 +148,7 @@ export default function StorySection() {
               viewport={{ once: true }}
               transition={{ duration: 0.9, delay: 0.2 }}
               style={{
-                fontFamily: "'Montserrat', sans-serif",
+                fontFamily: "var(--font-sans)",
                 fontSize: "0.86rem",
                 fontWeight: 300,
                 lineHeight: 1.95,
@@ -169,7 +169,7 @@ export default function StorySection() {
               viewport={{ once: true }}
               transition={{ duration: 0.9, delay: 0.3 }}
               style={{
-                fontFamily: "'Montserrat', sans-serif",
+                fontFamily: "var(--font-sans)",
                 fontSize: "0.86rem",
                 fontWeight: 300,
                 lineHeight: 1.95,
@@ -215,7 +215,7 @@ export default function StorySection() {
                   </p>
                   <p
                     style={{
-                      fontFamily: "'Montserrat', sans-serif",
+                      fontFamily: "var(--font-fashion)",
                       fontSize: "0.58rem",
                       fontWeight: 500,
                       letterSpacing: "0.3em",

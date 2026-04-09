@@ -36,14 +36,14 @@ export default function Hero() {
       ref={sectionRef}
       id="hero"
       style={{
-        minHeight: "100vh",
+        height: "100vh",
         background: "var(--cream)",
         position: "relative",
         overflow: "hidden",
         display: "flex",
         alignItems: "center",
-        /* push content below the fixed header (announcement ~40px + nav ~68px) */
-        paddingTop: "108px",
+        justifyContent: "center",
+        paddingTop: "120px", // space for fixed header (announcement + nav)
       }}
     >
       {/* Warm radial glow */}
@@ -74,7 +74,7 @@ export default function Hero() {
         <div style={{ width: "1px", height: "60px", background: "rgba(43,43,43,0.12)" }} />
         <span
           style={{
-            fontFamily: "'Montserrat', sans-serif",
+            fontFamily: "var(--font-fashion)",
             fontSize: "0.6rem",
             fontWeight: 500,
             letterSpacing: "0.38em",
@@ -101,10 +101,10 @@ export default function Hero() {
         <div
           style={{
             display: "grid",
-            gridTemplateColumns: "1fr 1fr",
-            gap: "4rem",
+            gridTemplateColumns: "1.1fr 0.9fr",
+            gap: "2rem",
             alignItems: "center",
-            minHeight: "calc(100vh - 160px)",
+            width: "100%",
           }}
           className="hero-grid"
         >
@@ -118,7 +118,7 @@ export default function Hero() {
             <motion.div variants={fadeUp} style={{ marginBottom: "2rem" }}>
               <span
                 style={{
-                  fontFamily: "'Montserrat', sans-serif",
+                  fontFamily: "var(--font-fashion)",
                   fontSize: "0.62rem",
                   fontWeight: 500,
                   letterSpacing: "0.35em",
@@ -163,7 +163,7 @@ export default function Hero() {
             <motion.p
               variants={fadeUp}
               style={{
-                fontFamily: "'Montserrat', sans-serif",
+                fontFamily: "var(--font-sans)",
                 fontSize: "0.88rem",
                 fontWeight: 300,
                 lineHeight: 1.85,
@@ -223,7 +223,7 @@ export default function Hero() {
                   </p>
                   <p
                     style={{
-                      fontFamily: "'Montserrat', sans-serif",
+                      fontFamily: "var(--font-fashion)",
                       fontSize: "0.58rem",
                       fontWeight: 500,
                       letterSpacing: "0.3em",
@@ -310,18 +310,19 @@ export default function Hero() {
                 transition={{ delay: 1.4, duration: 0.8 }}
                 style={{
                   position: "absolute",
-                  bottom: "20px",
-                  right: "-20px",
+                  bottom: "10%",
+                  right: "0",
                   background: "var(--white-soft)",
                   border: "1px solid rgba(43,43,43,0.1)",
                   padding: "1.4rem 1.8rem",
                   zIndex: 10,
                   minWidth: "170px",
+                  boxShadow: "0 20px 40px rgba(0,0,0,0.05)",
                 }}
               >
                 <p
                   style={{
-                    fontFamily: "'Montserrat', sans-serif",
+                    fontFamily: "var(--font-fashion)",
                     fontSize: "0.58rem",
                     fontWeight: 500,
                     letterSpacing: "0.3em",
@@ -345,7 +346,7 @@ export default function Hero() {
                 </p>
                 <p
                   style={{
-                    fontFamily: "'Montserrat', sans-serif",
+                    fontFamily: "var(--font-sans)",
                     fontSize: "0.78rem",
                     fontWeight: 500,
                     color: "var(--accent-brown)",

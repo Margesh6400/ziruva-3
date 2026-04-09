@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import Image from "next/image";
 
 export default function Newsletter() {
   const [email, setEmail] = useState("");
@@ -23,24 +24,62 @@ export default function Newsletter() {
         overflow: "hidden",
       }}
     >
-      {/* ZIRUVA watermark */}
-      <p
+      {/* Bespoke ZIRUVA watermark logo */}
+      <div
         style={{
           position: "absolute",
           left: "50%",
           top: "50%",
           transform: "translate(-50%, -50%)",
-          fontFamily: "'Cormorant Garamond', serif",
-          fontSize: "clamp(5rem, 18vw, 16rem)",
-          fontWeight: 300,
-          color: "rgba(252,248,240,0.025)",
-          whiteSpace: "nowrap",
+          display: "flex",
+          alignItems: "center",
+          opacity: 0.025,
           pointerEvents: "none",
           userSelect: "none",
+          filter: "brightness(0) invert(1)",
         }}
       >
-        ZIRUVA
-      </p>
+        {["z", "i", "r", "u", "v", "a"].map((letter, idx) => {
+          const watermarkWidths: Record<string, string> = {
+            z: "clamp(4rem, 15vw, 13rem)",
+            i: "clamp(1rem, 3.5vw, 3rem)",
+            r: "clamp(4rem, 15vw, 13rem)",
+            u: "clamp(4rem, 15vw, 13rem)",
+            v: "clamp(4.5rem, 16vw, 14rem)",
+            a: "clamp(4.5rem, 16vw, 14rem)",
+          };
+          const watermarkMargins: Record<string, string> = {
+            z: "calc(0.5rem + 2vw)",
+            i: "calc(0.5rem + 1.5vw)",
+            r: "calc(0.5rem + 1.2vw)",
+            u: "calc(0.5rem + 1.2vw)",
+            v: "calc(0.2rem + 0.5vw)",
+            a: "0",
+          };
+          return (
+            <motion.div
+              key={`newsletter-watermark-${letter}-${idx}`}
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 1.5, delay: idx * 0.1 }}
+              style={{
+                position: "relative",
+                height: "clamp(5rem, 18vw, 16rem)",
+                width: watermarkWidths[letter],
+                marginRight: watermarkMargins[letter]
+              }}
+            >
+              <Image
+                src={`/images/logo/${letter}.png`}
+                alt=""
+                fill
+                style={{ objectFit: "contain" }}
+              />
+            </motion.div>
+          );
+        })}
+      </div>
 
       <div
         style={{
@@ -58,7 +97,7 @@ export default function Newsletter() {
           viewport={{ once: true }}
           transition={{ duration: 0.7 }}
           style={{
-            fontFamily: "'Montserrat', sans-serif",
+            fontFamily: "var(--font-fashion)",
             fontSize: "0.62rem",
             fontWeight: 500,
             letterSpacing: "0.38em",
@@ -94,7 +133,7 @@ export default function Newsletter() {
           viewport={{ once: true }}
           transition={{ duration: 0.9, delay: 0.2 }}
           style={{
-            fontFamily: "'Montserrat', sans-serif",
+            fontFamily: "var(--font-sans)",
             fontSize: "0.86rem",
             fontWeight: 300,
             lineHeight: 1.9,
@@ -134,7 +173,7 @@ export default function Newsletter() {
                   style={{
                     flex: 1,
                     padding: "1.1rem 1.4rem",
-                    fontFamily: "'Montserrat', sans-serif",
+                    fontFamily: "var(--font-sans)",
                     fontSize: "0.84rem",
                     fontWeight: 300,
                     background: "rgba(252,248,240,0.06)",
@@ -150,7 +189,7 @@ export default function Newsletter() {
                   id="newsletter-submit"
                   style={{
                     padding: "1.1rem 2rem",
-                    fontFamily: "'Montserrat', sans-serif",
+                    fontFamily: "var(--font-fashion)",
                     fontSize: "0.62rem",
                     fontWeight: 500,
                     letterSpacing: "0.28em",
@@ -186,7 +225,7 @@ export default function Newsletter() {
                 </p>
                 <p
                   style={{
-                    fontFamily: "'Montserrat', sans-serif",
+                    fontFamily: "var(--font-fashion)",
                     fontSize: "0.62rem",
                     fontWeight: 500,
                     letterSpacing: "0.3em",
@@ -207,7 +246,7 @@ export default function Newsletter() {
           viewport={{ once: true }}
           transition={{ duration: 0.8, delay: 0.5 }}
           style={{
-            fontFamily: "'Montserrat', sans-serif",
+            fontFamily: "var(--font-sans)",
             fontSize: "0.58rem",
             letterSpacing: "0.2em",
             color: "rgba(252,248,240,0.2)",

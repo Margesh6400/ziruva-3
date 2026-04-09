@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import Link from "next/link";
+import Image from "next/image";
 
 const footerLinks = {
   Collection: ["La Signature", "La Saison", "L'Édition", "New Arrivals"],
@@ -38,22 +39,58 @@ export default function Footer() {
             transition={{ duration: 0.8 }}
           >
             <Link href="/" id="footer-logo" style={{ textDecoration: "none", display: "block", marginBottom: "1.5rem" }}>
-              <span
+              <div
                 style={{
-                  fontFamily: "'Cormorant Garamond', serif",
-                  fontSize: "1.5rem",
-                  fontWeight: 300,
-                  letterSpacing: "0.35em",
-                  textTransform: "uppercase",
-                  color: "var(--cream)",
+                  display: "flex",
+                  alignItems: "center",
+                  filter: "brightness(0) invert(0.9)", // Soft cream-white for dark background
                 }}
               >
-                ZIRUVA
-              </span>
+                {["z", "i", "r", "u", "v", "a"].map((letter, idx) => {
+                  const widths: Record<string, string> = {
+                    z: "18px",
+                    i: "4px",
+                    r: "18px",
+                    u: "17px",
+                    v: "20px",
+                    a: "20px",
+                  };
+                  const margins: Record<string, string> = {
+                    z: "0.8rem",
+                    i: "0.6rem",
+                    r: "0.5rem",
+                    u: "0.5rem",
+                    v: "0.3rem",
+                    a: "0",
+                  };
+                  return (
+                    <motion.div
+                      key={`${letter}-${idx}`}
+                      initial={{ opacity: 0, y: 10 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ duration: 1, delay: idx * 0.08 }}
+                      style={{ 
+                        position: "relative", 
+                        height: "22px", 
+                        width: widths[letter],
+                        marginRight: margins[letter]
+                      }}
+                    >
+                      <Image
+                        src={`/images/logo/${letter}.png`}
+                        alt={letter.toUpperCase()}
+                        fill
+                        style={{ objectFit: "contain" }}
+                      />
+                    </motion.div>
+                  );
+                })}
+              </div>
             </Link>
             <p
               style={{
-                fontFamily: "'Montserrat', sans-serif",
+                fontFamily: "var(--font-sans)",
                 fontSize: "0.78rem",
                 fontWeight: 300,
                 lineHeight: 1.9,
@@ -75,7 +112,7 @@ export default function Footer() {
                   href="#"
                   id={`social-${s.toLowerCase()}`}
                   style={{
-                    fontFamily: "'Montserrat', sans-serif",
+                    fontFamily: "var(--font-fashion)",
                     fontSize: "0.58rem",
                     fontWeight: 500,
                     letterSpacing: "0.25em",
@@ -104,7 +141,7 @@ export default function Footer() {
             >
               <h3
                 style={{
-                  fontFamily: "'Montserrat', sans-serif",
+                  fontFamily: "var(--font-fashion)",
                   fontSize: "0.58rem",
                   fontWeight: 500,
                   letterSpacing: "0.3em",
@@ -121,7 +158,7 @@ export default function Footer() {
                     <a
                       href="#"
                       style={{
-                        fontFamily: "'Montserrat', sans-serif",
+                        fontFamily: "var(--font-sans)",
                         fontSize: "0.78rem",
                         fontWeight: 300,
                         color: "rgba(252,248,240,0.5)",
@@ -158,7 +195,7 @@ export default function Footer() {
         >
           <p
             style={{
-              fontFamily: "'Montserrat', sans-serif",
+              fontFamily: "var(--font-sans)",
               fontSize: "0.58rem",
               letterSpacing: "0.2em",
               color: "rgba(252,248,240,0.18)",
@@ -168,7 +205,7 @@ export default function Footer() {
           </p>
           <p
             style={{
-              fontFamily: "'Montserrat', sans-serif",
+              fontFamily: "var(--font-sans)",
               fontSize: "0.58rem",
               letterSpacing: "0.2em",
               color: "rgba(252,248,240,0.18)",
@@ -179,26 +216,64 @@ export default function Footer() {
         </div>
       </div>
 
-      {/* Watermark */}
-      <p
+      {/* Watermark Logo */}
+      <div
         style={{
           position: "absolute",
           bottom: 0,
           left: "50%",
           transform: "translateX(-50%)",
-          fontFamily: "'Cormorant Garamond', serif",
-          fontSize: "clamp(4rem, 13vw, 11rem)",
-          fontWeight: 300,
-          color: "rgba(252,248,240,0.015)",
-          whiteSpace: "nowrap",
+          display: "flex",
+          alignItems: "center",
+          opacity: 0.015,
           pointerEvents: "none",
           userSelect: "none",
-          lineHeight: 1,
           paddingBottom: "0.5rem",
+          filter: "brightness(0) invert(1)",
         }}
       >
-        ZIRUVA
-      </p>
+        {["z", "i", "r", "u", "v", "a"].map((letter, idx) => {
+          // Approximate widths based on native aspect ratios for massive scale
+          const watermarkWidths: Record<string, string> = {
+            z: "clamp(3rem, 10vw, 9rem)",
+            i: "clamp(0.8rem, 2.5vw, 2.2rem)",
+            r: "clamp(3rem, 10vw, 9rem)",
+            u: "clamp(3rem, 10vw, 9rem)",
+            v: "clamp(3.5rem, 11vw, 10rem)",
+            a: "clamp(3.5rem, 11vw, 10rem)",
+          };
+          const watermarkMargins: Record<string, string> = {
+            z: "calc(0.5rem + 2vw)",
+            i: "calc(0.5rem + 1.5vw)",
+            r: "calc(0.5rem + 1.2vw)",
+            u: "calc(0.5rem + 1.2vw)",
+            v: "calc(0.2rem + 0.5vw)",
+            a: "0",
+          };
+          return (
+            <motion.div
+              key={`watermark-${letter}-${idx}`}
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 2, delay: idx * 0.15 }}
+              style={{
+                position: "relative",
+                height: "clamp(4rem, 13vw, 11rem)",
+                width: watermarkWidths[letter],
+                marginRight: watermarkMargins[letter],
+              }}
+            >
+              <Image
+                src={`/images/logo/${letter}.png`}
+                alt=""
+                fill
+                style={{ objectFit: "contain" }}
+              />
+            </motion.div>
+          );
+        })}
+      </div>
 
       <style>{`
         @media (max-width: 1000px) {
