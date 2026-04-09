@@ -41,9 +41,6 @@ export default function Hero() {
         position: "relative",
         overflow: "hidden",
         display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        paddingTop: "120px", // space for fixed header (announcement + nav)
       }}
     >
       {/* Warm radial glow */}
@@ -53,80 +50,89 @@ export default function Hero() {
           inset: 0,
           pointerEvents: "none",
           background:
-            "radial-gradient(ellipse 55% 65% at 72% 55%, rgba(139,107,78,0.07) 0%, transparent 68%)",
+            "radial-gradient(ellipse 55% 65% at 72% 55%, rgba(139,107,78,0.05) 0%, transparent 68%)",
+          zIndex: 1,
         }}
       />
 
-      {/* Vertical label — far left */}
       <div
         style={{
-          position: "absolute",
-          left: "2rem",
-          top: "50%",
-          transform: "translateY(-50%)",
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          gap: "1rem",
-        }}
-        className="hide-on-mobile"
-      >
-        <div style={{ width: "1px", height: "60px", background: "rgba(43,43,43,0.12)" }} />
-        <span
-          style={{
-            fontFamily: "var(--font-fashion)",
-            fontSize: "0.6rem",
-            fontWeight: 500,
-            letterSpacing: "0.38em",
-            textTransform: "uppercase",
-            color: "var(--text-meta)",
-            writingMode: "vertical-rl",
-            transform: "rotate(180deg)",
-          }}
-        >
-          Est. 2024 · London
-        </span>
-        <div style={{ width: "1px", height: "60px", background: "rgba(43,43,43,0.12)" }} />
-      </div>
-
-      {/* Content */}
-      <div
-        style={{
-          maxWidth: "1280px",
-          margin: "0 auto",
-          padding: "3rem 4rem 4rem",
+          display: "grid",
+          gridTemplateColumns: "1fr 1fr",
           width: "100%",
+          height: "100%",
         }}
+        className="hero-grid"
       >
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "1.1fr 0.9fr",
-            gap: "2rem",
-            alignItems: "center",
-            width: "100%",
-          }}
-          className="hero-grid"
+        {/* ── LEFT: Full-Bleed Editorial Imagery ── */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 1.2, ease: "easeOut" }}
+          style={{ position: "relative", height: "100vh", overflow: "hidden" }}
+          className="hero-editorial-image"
         >
-          {/* ── LEFT: Text ── */}
+          <motion.div 
+            style={{ 
+              scale: 1.1, 
+              y: imageY,
+              width: "100%",
+              height: "100%",
+              position: "relative"
+            }}
+          >
+            <Image
+              src="/images/hero-left.jpg"
+              alt="ZIRUVA SS25 Campaign — Handcrafted luxury leather goods"
+              fill
+              priority
+              style={{ objectFit: "cover" }}
+            />
+          </motion.div>
+
+          {/* Micro Badge Overlay */}
+          <div style={{
+            position: "absolute",
+            bottom: "3rem",
+            left: "3rem",
+            background: "var(--text-primary)",
+            color: "var(--cream)",
+            padding: "0.6rem 1.2rem",
+            fontFamily: "var(--font-fashion)",
+            fontSize: "0.55rem",
+            letterSpacing: "0.25em",
+            zIndex: 10
+          }}>
+            CAMPAIGN SS.25
+          </div>
+        </motion.div>
+
+        {/* ── RIGHT: Branding & Context ── */}
+        <div style={{ 
+          position: "relative", 
+          display: "flex", 
+          alignItems: "center", 
+          padding: "0 10%",
+          zIndex: 2 
+        }}>
           <motion.div
             variants={staggerContainer}
             initial="hidden"
             animate="show"
             style={{ opacity: textOpacity }}
           >
-            <motion.div variants={fadeUp} style={{ marginBottom: "2rem" }}>
+            <motion.div variants={fadeUp} style={{ marginBottom: "1.5rem" }}>
               <span
                 style={{
                   fontFamily: "var(--font-fashion)",
-                  fontSize: "0.62rem",
+                  fontSize: "0.65rem",
                   fontWeight: 500,
-                  letterSpacing: "0.35em",
+                  letterSpacing: "0.45em",
                   textTransform: "uppercase",
                   color: "var(--text-secondary)",
                 }}
               >
-                Maison ZIRUVA — SS25 Collection
+                Maison ZIRUVA — London
               </span>
             </motion.div>
 
@@ -134,11 +140,11 @@ export default function Hero() {
               variants={fadeUp}
               style={{
                 fontFamily: "'Cormorant Garamond', serif",
-                fontSize: "clamp(3.6rem, 7vw, 6.5rem)",
+                fontSize: "clamp(3.5rem, 6vw, 6.5rem)",
                 fontWeight: 300,
-                lineHeight: 1.04,
+                lineHeight: 1,
                 color: "var(--text-primary)",
-                marginBottom: "1.5rem",
+                marginBottom: "2rem",
               }}
             >
               Timeless
@@ -150,16 +156,6 @@ export default function Hero() {
               for You.
             </motion.h2>
 
-            <motion.div
-              variants={fadeUp}
-              style={{
-                width: "40px",
-                height: "1px",
-                background: "var(--accent-brown)",
-                marginBottom: "2rem",
-              }}
-            />
-
             <motion.p
               variants={fadeUp}
               style={{
@@ -168,197 +164,64 @@ export default function Hero() {
                 fontWeight: 300,
                 lineHeight: 1.85,
                 color: "var(--text-secondary)",
-                maxWidth: "340px",
-                marginBottom: "2.5rem",
-                letterSpacing: "0.02em",
+                maxWidth: "380px",
+                marginBottom: "3rem",
+                letterSpacing: "0.01em",
               }}
             >
               Exquisite leather handbags, designed in the UK. Each piece
-              is a quiet statement of enduring elegance.
+              is a quiet statement of artisan craftsmanship and enduring elegance.
             </motion.p>
 
             <motion.div
               variants={fadeUp}
-              style={{ display: "flex", flexWrap: "wrap", gap: "1rem" }}
+              style={{ display: "flex", gap: "2rem", marginBottom: "5rem" }}
             >
-              <a href="#collection" id="hero-shop-cta" className="btn-primary">
+              <a href="#collection" className="btn-primary">
                 <span>Shop Collection</span>
-                <svg width="13" height="13" viewBox="0 0 14 14" fill="none">
-                  <path d="M1 7h12M8 3l5 4-5 4" stroke="currentColor" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round"/>
-                </svg>
               </a>
-              <a href="#story" id="hero-story-cta" className="btn-secondary">
-                Our Story
+              <a href="#story" className="btn-secondary">
+                The Archive
               </a>
             </motion.div>
 
-            {/* Stats */}
+            {/* Micro Stats Layer */}
             <motion.div
               variants={fadeUp}
               style={{
                 display: "flex",
-                gap: "3rem",
-                marginTop: "3.5rem",
-                paddingTop: "2rem",
-                borderTop: "1px solid rgba(43,43,43,0.09)",
+                gap: "5rem",
+                opacity: 0.8
               }}
             >
               {[
-                { value: "40", label: "Pieces Per Drop" },
-                { value: "∞", label: "Years of Craft" },
-                { value: "UK", label: "Designed Here" },
-              ].map((stat) => (
-                <div key={stat.label}>
-                  <p
-                    style={{
-                      fontFamily: "'Cormorant Garamond', serif",
-                      fontSize: "2rem",
-                      fontWeight: 300,
-                      color: "var(--text-primary)",
-                      lineHeight: 1.1,
-                      marginBottom: "0.25rem",
-                    }}
-                  >
-                    {stat.value}
-                  </p>
-                  <p
-                    style={{
-                      fontFamily: "var(--font-fashion)",
-                      fontSize: "0.58rem",
-                      fontWeight: 500,
-                      letterSpacing: "0.3em",
-                      textTransform: "uppercase",
-                      color: "var(--text-secondary)",
-                    }}
-                  >
-                    {stat.label}
-                  </p>
+                { label: "COLLECTION", val: "SS25 Series" },
+                { label: "ARTISANAL", val: "Hand-Stitched" }
+              ].map(item => (
+                <div key={item.label}>
+                  <p style={{ fontFamily: "var(--font-fashion)", fontSize: "0.5rem", letterSpacing: "0.2em", color: "var(--text-secondary)", marginBottom: "0.5rem" }}>{item.label}</p>
+                  <p style={{ fontFamily: "var(--font-sans)", fontSize: "0.9rem", fontWeight: 400 }}>{item.val}</p>
                 </div>
               ))}
             </motion.div>
           </motion.div>
-
-          {/* ── RIGHT: Products ── */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 1.4 }}
-            style={{ position: "relative", y: imageY } as any}
-          >
-            <motion.div style={{ y: imageY }}>
-              {/* Radial glow behind bag */}
-              <div
-                style={{
-                  position: "absolute",
-                  inset: "-20%",
-                  borderRadius: "50%",
-                  background:
-                    "radial-gradient(circle, rgba(139,107,78,0.1) 0%, transparent 65%)",
-                  pointerEvents: "none",
-                }}
-              />
-
-              {/* Main hero bag — floating */}
-              <div
-                className="float-animation"
-                style={{
-                  position: "relative",
-                  zIndex: 2,
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
-              >
-                <div style={{ position: "relative", width: "380px", height: "380px" }}>
-                  <Image
-                    src="/images/bag-ivory-teal.png"
-                    alt="ZIRUVA La Signature Ivoire — luxury ivory leather handbag with teal handles, SS25 collection, designed in London"
-                    fill
-                    sizes="380px"
-                    priority
-                    style={{ objectFit: "contain", filter: "drop-shadow(0 30px 60px rgba(0,0,0,0.15))" }}
-                  />
-                </div>
-              </div>
-
-              {/* Secondary bag — top right, smaller */}
-              <div
-                className="float-animation-alt"
-                style={{
-                  position: "absolute",
-                  top: "-20px",
-                  right: "-30px",
-                  zIndex: 3,
-                  animationDelay: "2s",
-                }}
-              >
-                <div style={{ position: "relative", width: "160px", height: "160px" }}>
-                  <Image
-                    src="/images/bag-brown-croc.png"
-                    alt="ZIRUVA La Croco Fauve — limited edition brown crocodile leather handbag, L'Édition collection"
-                    fill
-                    sizes="160px"
-                    style={{ objectFit: "contain", filter: "drop-shadow(0 16px 40px rgba(0,0,0,0.18))" }}
-                  />
-                </div>
-              </div>
-
-              {/* Product info badge */}
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 1.4, duration: 0.8 }}
-                style={{
-                  position: "absolute",
-                  bottom: "10%",
-                  right: "0",
-                  background: "var(--white-soft)",
-                  border: "1px solid rgba(43,43,43,0.1)",
-                  padding: "1.4rem 1.8rem",
-                  zIndex: 10,
-                  minWidth: "170px",
-                  boxShadow: "0 20px 40px rgba(0,0,0,0.05)",
-                }}
-              >
-                <p
-                  style={{
-                    fontFamily: "var(--font-fashion)",
-                    fontSize: "0.58rem",
-                    fontWeight: 500,
-                    letterSpacing: "0.3em",
-                    textTransform: "uppercase",
-                    color: "var(--text-secondary)",
-                    marginBottom: "0.4rem",
-                  }}
-                >
-                  La Signature
-                </p>
-                <p
-                  style={{
-                    fontFamily: "'Cormorant Garamond', serif",
-                    fontSize: "1.15rem",
-                    fontWeight: 400,
-                    color: "var(--text-primary)",
-                    marginBottom: "0.4rem",
-                  }}
-                >
-                  The Ivory Edit
-                </p>
-                <p
-                  style={{
-                    fontFamily: "var(--font-sans)",
-                    fontSize: "0.78rem",
-                    fontWeight: 500,
-                    color: "var(--accent-brown)",
-                  }}
-                >
-                  £ 240
-                </p>
-              </motion.div>
-            </motion.div>
-          </motion.div>
         </div>
       </div>
+
+      <style>{`
+        @media (max-width: 1024px) {
+          .hero-grid { grid-template-columns: 1fr !important; gap: 4rem !important; }
+          .hero-editorial-image { height: 50vh !important; }
+        }
+        @media (max-width: 860px) {
+          .hide-on-mobile { display: none !important; }
+        }
+        @media (max-width: 640px) {
+          .hero-grid > div:last-child {
+            display: none !important;
+          }
+        }
+      `}</style>
 
       {/* Scroll indicator */}
       <motion.div
@@ -367,19 +230,20 @@ export default function Hero() {
         transition={{ delay: 2.2 }}
         style={{
           position: "absolute",
-          bottom: "2rem",
+          bottom: "2.5rem",
           left: "50%",
           transform: "translateX(-50%)",
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
           gap: "0.75rem",
+          zIndex: 20
         }}
       >
         <span
           style={{
-            fontFamily: "'Montserrat', sans-serif",
-            fontSize: "0.58rem",
+            fontFamily: "var(--font-fashion)",
+            fontSize: "0.5rem",
             letterSpacing: "0.35em",
             textTransform: "uppercase",
             color: "var(--text-meta)",
@@ -390,28 +254,13 @@ export default function Hero() {
         <div
           style={{
             width: "1px",
-            height: "50px",
+            height: "40px",
             background:
               "linear-gradient(to bottom, var(--accent-brown), transparent)",
             animation: "float 2s ease-in-out infinite",
           }}
         />
       </motion.div>
-
-      <style>{`
-        @media (max-width: 860px) {
-          .hero-grid {
-            grid-template-columns: 1fr !important;
-            gap: 2rem !important;
-          }
-          .hide-on-mobile { display: none !important; }
-        }
-        @media (max-width: 640px) {
-          .hero-grid > div:last-child {
-            display: none !important;
-          }
-        }
-      `}</style>
     </section>
   );
 }
