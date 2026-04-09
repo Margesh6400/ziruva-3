@@ -6,10 +6,10 @@ import Link from "next/link";
 import Image from "next/image";
 
 const navLinks = [
-  { label: "Collection", href: "#collection", hasDropdown: true },
-  { label: "Our Story", href: "#story" },
-  { label: "Atelier", href: "#features" },
-  { label: "Contact", href: "#newsletter" },
+  { label: "Collection", href: "/collection", hasDropdown: true },
+  { label: "Our Story", href: "/#story" },
+  { label: "Atelier", href: "/how" },
+  { label: "Contact", href: "/#newsletter" },
 ];
 
 const collections = [
@@ -583,7 +583,7 @@ export default function Navbar() {
                         setMobileCollectionOpen(!mobileCollectionOpen);
                       } else {
                         setMenuOpen(false);
-                        window.location.hash = link.href;
+                        window.location.href = link.href;
                       }
                     }}
                     style={{

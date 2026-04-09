@@ -84,7 +84,7 @@ export default function Hero() {
             }}
           >
             <Image
-              src="/images/hero-left.jpg"
+              src="/images/hero-geometric.jpg"
               alt="ZIRUVA SS25 Campaign — Handcrafted luxury leather goods"
               fill
               priority

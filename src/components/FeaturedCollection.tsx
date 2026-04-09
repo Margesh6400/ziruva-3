@@ -3,49 +3,8 @@
 import { useRef, useState } from "react";
 import { motion } from "framer-motion";
 import Image from "next/image";
-interface Product {
-  id: number;
-  name: string;
-  collection: string;
-  price: string;
-  tier: string;
-  image: string;
-  alt: string;
-  bg: string;
-}
-
-const products: Product[] = [
-  {
-    id: 1,
-    name: "La Signature Ivoire",
-    collection: "La Signature",
-    price: "£ 240",
-    tier: "Signature · Core Icon",
-    image: "/images/bag-ivory-teal.png",
-    alt: "ZIRUVA La Signature Ivoire — Ivory with Teal Handles",
-    bg: "#ECEAE7",
-  },
-  {
-    id: 2,
-    name: "L'Édition Noire",
-    collection: "L'Édition",
-    price: "£ 420",
-    tier: "L'Édition · Limited",
-    image: "/images/bag-ivory-black.png",
-    alt: "ZIRUVA L'Édition Noire — Ivory & Black Structured Tote",
-    bg: "#E6E3DF",
-  },
-  {
-    id: 3,
-    name: "La Croco Fauve",
-    collection: "L'Édition",
-    price: "£ 480",
-    tier: "L'Édition · 30 Pieces",
-    image: "/images/bag-brown-croc.png",
-    alt: "ZIRUVA La Croco Fauve — Brown Crocodile Leather",
-    bg: "#EDE7DC",
-  },
-];
+import { products, Product } from "@/data/products";
+import Link from "next/link";
 
 function ProductCard({ product, index }: { product: Product; index: number }) {
   const cardRef = useRef<HTMLDivElement>(null);
@@ -61,29 +20,30 @@ function ProductCard({ product, index }: { product: Product; index: number }) {
   };
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 50 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-60px" }}
-      transition={{ duration: 0.9, delay: index * 0.16, ease: [0.25, 0.46, 0.45, 0.94] }}
-      ref={cardRef}
-      onMouseMove={handleMouseMove}
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => { setTilt({ x: 0, y: 0 }); setHovered(false); }}
-      id={`product-card-${product.id}`}
-      style={{
-        background: product.bg,
-        borderRadius: "1.25rem",
-        overflow: "hidden",
-        cursor: "pointer",
-        position: "relative",
-        transform: `perspective(1000px) rotateX(${tilt.y}deg) rotateY(${tilt.x}deg)`,
-        transition: "transform 0.4s ease, box-shadow 0.5s ease",
-        boxShadow: hovered
-          ? "0 32px 64px rgba(43,43,43,0.12)"
-          : "0 4px 24px rgba(43,43,43,0.05)",
-      }}
-    >
+    <Link href={`/product/${product.id}`} style={{ textDecoration: "none" }}>
+      <motion.div
+        initial={{ opacity: 0, y: 50 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: "-60px" }}
+        transition={{ duration: 0.9, delay: index * 0.16, ease: [0.25, 0.46, 0.45, 0.94] }}
+        ref={cardRef}
+        onMouseMove={handleMouseMove}
+        onMouseEnter={() => setHovered(true)}
+        onMouseLeave={() => { setTilt({ x: 0, y: 0 }); setHovered(false); }}
+        id={`product-card-${product.id}`}
+        style={{
+          background: product.bg,
+          borderRadius: "1.25rem",
+          overflow: "hidden",
+          cursor: "pointer",
+          position: "relative",
+          transform: `perspective(1000px) rotateX(${tilt.y}deg) rotateY(${tilt.x}deg)`,
+          transition: "transform 0.4s ease, box-shadow 0.5s ease",
+          boxShadow: hovered
+            ? "0 32px 64px rgba(43,43,43,0.12)"
+            : "0 4px 24px rgba(43,43,43,0.05)",
+        }}
+      >
       {/* Tier badge */}
       <div style={{ position: "absolute", top: "1.6rem", left: "1.8rem", zIndex: 10 }}>
         <span
@@ -239,7 +199,8 @@ function ProductCard({ product, index }: { product: Product; index: number }) {
           transformOrigin: "left",
         }}
       />
-    </motion.div>
+      </motion.div>
+    </Link>
   );
 }
 
