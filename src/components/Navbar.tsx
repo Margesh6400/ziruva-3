@@ -120,12 +120,18 @@ export default function Navbar() {
         {/* Main nav */}
         <nav
           style={{
-            background: scrolled ? "rgba(252,248,240,0.95)" : "transparent",
-            backdropFilter: scrolled ? "blur(20px)" : "none",
-            borderBottom: scrolled
-              ? "1px solid rgba(43,43,43,0.07)"
-              : "1px solid transparent",
-            transition: "all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94)",
+            background: scrolled ? "rgba(252,248,240,0.88)" : "transparent",
+            backdropFilter: scrolled ? "blur(28px) saturate(200%)" : "none",
+            WebkitBackdropFilter: scrolled ? "blur(28px) saturate(200%)" : "none",
+            border: scrolled ? "1px solid rgba(255,255,255,0.55)" : "none",
+            borderBottom: scrolled ? "none" : "1px solid transparent",
+            borderRadius: scrolled ? "3px" : "0",
+            margin: scrolled ? "0 1.5rem" : "0",
+            transform: scrolled ? "translateY(10px)" : "translateY(0)",
+            boxShadow: scrolled
+              ? "0 2px 8px rgba(43,30,20,0.06), 0 8px 32px rgba(43,30,20,0.1), 0 24px 64px rgba(43,30,20,0.06), inset 0 1px 0 rgba(255,252,245,1)"
+              : "none",
+            transition: "all 0.65s cubic-bezier(0.25, 0.46, 0.45, 0.94)",
           }}
         >
           <div
@@ -136,7 +142,8 @@ export default function Navbar() {
               display: "flex",
               alignItems: "center",
               justifyContent: "space-between",
-              height: "68px",
+              height: scrolled ? "58px" : "68px",
+              transition: "height 0.65s cubic-bezier(0.25, 0.46, 0.45, 0.94)",
               position: "relative",
             }}
           >
@@ -147,11 +154,12 @@ export default function Navbar() {
                   key={link.label}
                   onMouseEnter={() => link.hasDropdown && setDropdownOpen(true)}
                   onMouseLeave={() => link.hasDropdown && setDropdownOpen(false)}
-                  style={{ 
-                    position: "relative", 
-                    height: "68px", 
-                    display: "flex", 
-                    alignItems: "center" 
+                  style={{
+                    position: "relative",
+                    height: scrolled ? "58px" : "68px",
+                    transition: "height 0.65s cubic-bezier(0.25, 0.46, 0.45, 0.94)",
+                    display: "flex",
+                    alignItems: "center"
                   }}
                 >
                   <a
