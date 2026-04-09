@@ -38,8 +38,9 @@ export default function Footer() {
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
           >
-            <Link href="/" id="footer-logo" style={{ textDecoration: "none", display: "block", marginBottom: "1.5rem" }}>
+            <Link href="/" id="footer-logo" aria-label="ZIRUVA — Luxury Leather Handbags, home" style={{ textDecoration: "none", display: "block", marginBottom: "1.5rem" }}>
               <div
+                aria-hidden="true"
                 style={{
                   display: "flex",
                   alignItems: "center",
@@ -79,7 +80,7 @@ export default function Footer() {
                     >
                       <Image
                         src={`/images/logo/${letter}.png`}
-                        alt={letter.toUpperCase()}
+                        alt=""
                         fill
                         style={{ objectFit: "contain" }}
                       />

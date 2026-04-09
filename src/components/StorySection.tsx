@@ -42,7 +42,7 @@ export default function StorySection() {
             >
               <Image
                 src="/images/story-editorial.png"
-                alt="ZIRUVA — editorial campaign, London marble steps"
+                alt="ZIRUVA editorial campaign — master artisan handcrafting a luxury leather handbag in a London atelier"
                 fill
                 sizes="(max-width: 860px) 100vw, 50vw"
                 style={{ objectFit: "cover" }}

@@ -5,10 +5,10 @@ import { motion } from "framer-motion";
 import Image from "next/image";
 
 const items = [
-  { id: 1, name: "La Signature Ivoire", sub: "Ivory · Teal Handles", price: "£ 240", image: "/images/bag-ivory-teal.png" },
-  { id: 2, name: "L'Édition Noire", sub: "Ivory · Black Structure", price: "£ 420", image: "/images/bag-ivory-black.png" },
-  { id: 3, name: "La Croco Fauve", sub: "Dark Brown · Crocodile", price: "£ 480", image: "/images/bag-brown-croc.png" },
-  { id: 4, name: "La Signature Rose", sub: "Classic · Limited Run", price: "£ 260", image: "/images/bag-ivory-teal.png" },
+  { id: 1, name: "La Signature Ivoire", sub: "Ivory · Teal Handles", price: "£ 240", image: "/images/bag-ivory-teal.png", alt: "ZIRUVA La Signature Ivoire — ivory leather handbag with teal handles, £240, SS25 luxury collection" },
+  { id: 2, name: "L'Édition Noire", sub: "Ivory · Black Structure", price: "£ 420", image: "/images/bag-ivory-black.png", alt: "ZIRUVA L'Édition Noire — structured ivory and black leather handbag, £420, limited edition" },
+  { id: 3, name: "La Croco Fauve", sub: "Dark Brown · Crocodile", price: "£ 480", image: "/images/bag-brown-croc.png", alt: "ZIRUVA La Croco Fauve — dark brown crocodile leather handbag, £480, limited to 30 pieces" },
+  { id: 4, name: "La Signature Rose", sub: "Classic · Limited Run", price: "£ 260", image: "/images/bag-ivory-teal.png", alt: "ZIRUVA La Signature Rose — classic ivory leather handbag, £260, limited run SS25 collection" },
 ];
 
 export default function HorizontalScroll() {
@@ -129,7 +129,7 @@ export default function HorizontalScroll() {
                 >
                   <Image
                     src={item.image}
-                    alt={item.name}
+                    alt={item.alt}
                     fill
                     sizes="320px"
                     style={{

@@ -272,7 +272,7 @@ export default function Hero() {
                 <div style={{ position: "relative", width: "380px", height: "380px" }}>
                   <Image
                     src="/images/bag-ivory-teal.png"
-                    alt="ZIRUVA La Signature — Ivory & Teal"
+                    alt="ZIRUVA La Signature Ivoire — luxury ivory leather handbag with teal handles, SS25 collection, designed in London"
                     fill
                     sizes="380px"
                     priority
@@ -295,7 +295,7 @@ export default function Hero() {
                 <div style={{ position: "relative", width: "160px", height: "160px" }}>
                   <Image
                     src="/images/bag-brown-croc.png"
-                    alt="ZIRUVA L'Édition — Brown Croc"
+                    alt="ZIRUVA La Croco Fauve — limited edition brown crocodile leather handbag, L'Édition collection"
                     fill
                     sizes="160px"
                     style={{ objectFit: "contain", filter: "drop-shadow(0 16px 40px rgba(0,0,0,0.18))" }}
