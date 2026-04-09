@@ -36,11 +36,13 @@ export default function Hero() {
       ref={sectionRef}
       id="hero"
       style={{
-        height: "100vh",
+        minHeight: "100vh",
         background: "var(--cream)",
         position: "relative",
         overflow: "hidden",
         display: "flex",
+        flexDirection: "column",
+        paddingTop: "120px", // Offset for Navbar and Logo clearance
       }}
     >
       {/* Warm radial glow */}
@@ -60,16 +62,16 @@ export default function Hero() {
           display: "grid",
           gridTemplateColumns: "1fr 1fr",
           width: "100%",
-          height: "100%",
+          flex: 1, // Fill remaining height
         }}
         className="hero-grid"
       >
-        {/* ── LEFT: Full-Bleed Editorial Imagery ── */}
+        {/* ── LEFT: Editorial Imagery ── */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 1.2, ease: "easeOut" }}
-          style={{ position: "relative", height: "100vh", overflow: "hidden" }}
+          style={{ position: "relative", width: "100%", height: "100%", overflow: "hidden" }}
           className="hero-editorial-image"
         >
           <motion.div 
@@ -113,7 +115,8 @@ export default function Hero() {
           display: "flex", 
           alignItems: "center", 
           padding: "0 10%",
-          zIndex: 2 
+          zIndex: 2,
+          background: "var(--cream)" 
         }}>
           <motion.div
             variants={staggerContainer}
