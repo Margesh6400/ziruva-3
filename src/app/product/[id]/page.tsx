@@ -1,6 +1,6 @@
 "use client";
 
-import { use } from "react";
+import { use, useState, useEffect } from "react";
 import { products, Product } from "@/data/products";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -24,6 +24,12 @@ const staggerContainer: Variants = {
 export default function ProductPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = use(params);
   const product = products.find((p) => p.id === id);
+
+  const [activeImage, setActiveImage] = useState(product?.image || "");
+
+  useEffect(() => {
+    if (product) setActiveImage(product.image);
+  }, [product]);
 
   if (!product) {
     return notFound();
@@ -100,13 +106,53 @@ export default function ProductPage({ params }: { params: Promise<{ id: string }
                 {product.narrative}
               </motion.p>
 
-              <motion.div variants={fadeUp} style={{ display: "flex", alignItems: "center", gap: "2.5rem", marginBottom: "4rem" }}>
-                <span style={{ fontFamily: "var(--font-sans)", fontSize: "1.2rem", fontWeight: 400, color: "var(--text-primary)" }}>
-                  {product.price}
-                </span>
-                <button className="btn-primary" style={{ padding: "0.8rem 2.5rem" }}>
-                  <span>Add to Waitlist</span>
-                </button>
+              <motion.div variants={fadeUp} style={{ display: "flex", flexDirection: "column", gap: "2.5rem", marginBottom: "4rem" }}>
+                <div style={{ display: "flex", alignItems: "center", gap: "2.5rem" }}>
+                  <span style={{ fontFamily: "var(--font-sans)", fontSize: "1.2rem", fontWeight: 400, color: "var(--text-primary)" }}>
+                    {product.price}
+                  </span>
+                  <button className="btn-primary" style={{ padding: "0.8rem 2.5rem" }}>
+                    <span>Add to Waitlist</span>
+                  </button>
+                </div>
+
+                {product.variants && (
+                  <div>
+                    <span style={{ 
+                      fontFamily: "var(--font-fashion)", 
+                      fontSize: "0.55rem", 
+                      letterSpacing: "0.2em", 
+                      textTransform: "uppercase", 
+                      color: "var(--text-meta)",
+                      display: "block",
+                      marginBottom: "1rem"
+                    }}>
+                      Select Colorway
+                    </span>
+                    <div style={{ display: "flex", gap: "1rem" }}>
+                      {product.variants.map((v) => (
+                        <button
+                          key={v.color}
+                          onClick={() => setActiveImage(v.image)}
+                          style={{
+                            width: "2.5rem",
+                            height: "2.5rem",
+                            borderRadius: "50%",
+                            background: v.color,
+                            border: activeImage === v.image ? "2px solid var(--text-primary)" : "1px solid rgba(0,0,0,0.1)",
+                            padding: "2px",
+                            cursor: "pointer",
+                            transition: "all 0.3s ease",
+                            transform: activeImage === v.image ? "scale(1.1)" : "scale(1)"
+                          }}
+                          title={v.label}
+                        >
+                          <div style={{ width: "100%", height: "100%", borderRadius: "50%", background: v.color, border: "2px solid var(--cream)" }} />
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                )}
               </motion.div>
 
               {/* Technical Mini-Dossier */}
@@ -138,17 +184,27 @@ export default function ProductPage({ params }: { params: Promise<{ id: string }
                    overflow: "hidden"
                  }}
               >
-                <Image src={product.image} alt={product.alt} fill style={{ objectFit: "cover" }} priority />
+                <Image src={activeImage} alt={product.alt} fill style={{ objectFit: "cover" }} priority />
               </motion.div>
               
               {/* Detail Mesh (Demo Close-ups) */}
               <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "2rem", marginTop: "2rem" }}>
-                <div style={{ position: "relative", aspectRatio: "1/1", background: product.bg, overflow: "hidden" }}>
-                  <Image src="https://images.unsplash.com/photo-1517142089942-ba376ce32a2e?q=80&w=800" alt="Detail 1" fill style={{ objectFit: "cover", opacity: 0.8 }} />
-                </div>
-                <div style={{ position: "relative", aspectRatio: "1/1", background: product.bg, overflow: "hidden" }}>
-                   <Image src="https://images.unsplash.com/photo-1544441893-675973e31985?q=80&w=800" alt="Detail 2" fill style={{ objectFit: "cover", opacity: 0.8 }} />
-                </div>
+                {product.variants ? (
+                  product.variants.map((v, i) => (
+                    <div key={i} onClick={() => setActiveImage(v.image)} style={{ position: "relative", aspectRatio: "1/1", background: product.bg, overflow: "hidden", cursor: "pointer" }}>
+                      <Image src={v.image} alt={`${product.name} - ${v.label}`} fill style={{ objectFit: "cover", opacity: activeImage === v.image ? 1 : 0.6 }} />
+                    </div>
+                  ))
+                ) : (
+                  <>
+                    <div style={{ position: "relative", aspectRatio: "1/1", background: product.bg, overflow: "hidden" }}>
+                      <Image src="https://images.unsplash.com/photo-1517142089942-ba376ce32a2e?q=80&w=800" alt="Detail 1" fill style={{ objectFit: "cover", opacity: 0.8 }} />
+                    </div>
+                    <div style={{ position: "relative", aspectRatio: "1/1", background: product.bg, overflow: "hidden" }}>
+                       <Image src="https://images.unsplash.com/photo-1544441893-675973e31985?q=80&w=800" alt="Detail 2" fill style={{ objectFit: "cover", opacity: 0.8 }} />
+                    </div>
+                  </>
+                )}
               </div>
             </div>
           </div>
