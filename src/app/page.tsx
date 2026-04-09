@@ -7,6 +7,7 @@ import Hero from "@/components/Hero";
 import ScrollTransition from "@/components/ScrollTransition";
 import FeaturedCollection from "@/components/FeaturedCollection";
 import StorySection from "@/components/StorySection";
+import Manifesto from "@/components/Manifesto";
 import HorizontalScroll from "@/components/HorizontalScroll";
 import Features from "@/components/Features";
 import Newsletter from "@/components/Newsletter";
@@ -41,6 +42,7 @@ export default function Home() {
       <ScrollTransition />
       <FeaturedCollection />
       <StorySection />
+      <Manifesto />
       <HorizontalScroll />
       <Features />
       <Newsletter />
