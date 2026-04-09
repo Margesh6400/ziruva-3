@@ -284,7 +284,7 @@ export default function FeaturedCollection() {
           }}
           className="products-grid"
         >
-          {products.map((p, i) => (
+          {products.slice(0, 4).map((p, i) => (
             <ProductCard key={p.id} product={p} index={i} />
           ))}
         </div>
@@ -297,9 +297,9 @@ export default function FeaturedCollection() {
           transition={{ duration: 0.8, delay: 0.3 }}
           style={{ textAlign: "center", marginTop: "4rem" }}
         >
-          <a href="#" className="btn-secondary" id="view-all-collection">
+          <Link href="/collection" className="btn-secondary" id="view-all-collection">
             View All Pieces
-          </a>
+          </Link>
         </motion.div>
       </div>
 

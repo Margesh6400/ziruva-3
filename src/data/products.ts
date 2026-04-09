@@ -94,5 +94,62 @@ export const products: Product[] = [
       serial: "ZR.CC-004.CL"
     },
     narrative: "The expansive day tote redefined. Le Cabas provides generous volume without sacrificing the signature ZIRUVA silhouette."
+  },
+  {
+    id: "l-enveloppe-soiree",
+    name: "L'Enveloppe Soirée",
+    collection: "L'Édition",
+    price: "£ 180",
+    tier: "Signature · Night",
+    image: "/images/story-detail.png",
+    alt: "ZIRUVA L'Enveloppe Soirée — Minimalist Evening Clutch",
+    bg: "#E8E6E3",
+    category: "Signature",
+    specs: {
+      material: "Satin-Finish Nappa Leather",
+      hardware: "Discreet Magnetic Closure",
+      dimensions: "22cm x 14cm x 2cm",
+      origin: "Florence, Italy",
+      serial: "ZR.ES-005.NV"
+    },
+    narrative: "A study in sleek minimalism. L'Enveloppe Soirée is designed for the transition from afternoon gallery visits to late-night soirées."
+  },
+  {
+    id: "le-portefeuille-archiviste",
+    name: "Le Portefeuille Archiviste",
+    collection: "La Maison",
+    price: "£ 120",
+    tier: "Archive · Essential",
+    image: "/images/bag-ivory-black.png",
+    alt: "ZIRUVA Le Portefeuille Archiviste",
+    bg: "#F0EFEB",
+    category: "Signature",
+    specs: {
+      material: "Smooth Grain Bovine Leather",
+      hardware: "Signature Foil Stamp",
+      dimensions: "19cm x 10cm x 1cm",
+      origin: "Tuscany, Italy",
+      serial: "ZR.PA-006.ES"
+    },
+    narrative: "Precision engineering applied to personal carry. Eight card slots and dual cash compartments in a profile less than 1cm thick."
+  },
+  {
+    id: "le-petit-sac-structure",
+    name: "Le Petit Sac Structure",
+    collection: "L'Édition",
+    price: "£ 360",
+    tier: "Edition · Limited Release",
+    image: "/images/bag-brown-croc.png",
+    alt: "ZIRUVA Le Petit Sac Structure",
+    bg: "#EBE8E3",
+    category: "Limited",
+    specs: {
+      material: "Reinforced Textured Calfskin",
+      hardware: "Polished Gold Pillars",
+      dimensions: "18cm x 15cm x 10cm",
+      origin: "Veneto, Italy",
+      serial: "ZR.PS-007.LR"
+    },
+    narrative: "Micro-proportions with macro-presence. Designed as an architectural object first, and a vessel second."
   }
 ];
