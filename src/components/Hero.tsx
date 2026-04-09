@@ -42,7 +42,7 @@ export default function Hero() {
         overflow: "hidden",
         display: "flex",
         flexDirection: "column",
-        paddingTop: "120px", // Offset for Navbar and Logo clearance
+        paddingTop: "100px", // Reduced offset for tighter editorial feel
       }}
     >
       {/* Warm radial glow */}
