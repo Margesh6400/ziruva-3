@@ -129,7 +129,7 @@ export const products: Product[] = [
     collection: "La Signature",
     price: "£ 325",
     tier: "Signature · Essential",
-    image: "/images/l-arc-hero.jpg",
+    image: "/images/la-arc-attached.jpg",
     alt: "ZIRUVA L'Arc — Taupe Crescent Moon Bag",
     bg: "#E8E4E1",
     category: "Signature",
