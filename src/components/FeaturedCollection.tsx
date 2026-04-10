@@ -88,6 +88,20 @@ function ProductCard({ product, index }: { product: Product; index: number }) {
               transition: "filter 0.6s ease",
             }}
           />
+          {product.variants && product.variants.length > 1 && (
+            <Image
+              src={product.variants[1].image}
+              alt={product.variants[1].label}
+              fill
+              sizes="(max-width: 768px) 100vw, 33vw"
+              style={{
+                objectFit: "cover",
+                opacity: hovered ? 1 : 0,
+                transition: "opacity 0.6s ease",
+                filter: hovered ? "none" : "brightness(0.96)",
+              }}
+            />
+          )}
         </motion.div>
 
         {/* Top-down gradient for badge legibility */}

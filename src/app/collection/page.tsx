@@ -67,6 +67,19 @@ function ProductCard({ product }: { product: Product }) {
               sizes="(max-width: 768px) 100vw, 33vw"
               style={{ objectFit: "cover" }}
             />
+            {product.variants && product.variants.length > 1 && (
+              <Image
+                src={product.variants[1].image}
+                alt={product.variants[1].label}
+                fill
+                sizes="(max-width: 768px) 100vw, 33vw"
+                style={{
+                  objectFit: "cover",
+                  opacity: hovered ? 1 : 0,
+                  transition: "opacity 0.6s ease",
+                }}
+              />
+            )}
           </motion.div>
         </div>
 
