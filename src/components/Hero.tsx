@@ -74,9 +74,9 @@ export default function Hero() {
           style={{ position: "relative", width: "100%", height: "100%", overflow: "hidden" }}
           className="hero-editorial-image"
         >
-          <motion.div 
-            style={{ 
-              scale: 1.1, 
+          <motion.div
+            style={{
+              scale: 1.1,
               y: imageY,
               width: "100%",
               height: "100%",
@@ -85,7 +85,7 @@ export default function Hero() {
           >
             <Image
               src="/images/hero-geometric.jpg"
-              alt="ZIRUVA SS25 Campaign — Handcrafted luxury leather goods"
+              alt="ZIRUVA SS25 Campaign — Luxury leather handbags designed in London, UK. Handcrafted by master artisans in Italy using Grade A full-grain leather"
               fill
               priority
               style={{ objectFit: "cover" }}
@@ -110,13 +110,13 @@ export default function Hero() {
         </motion.div>
 
         {/* ── RIGHT: Branding & Context ── */}
-        <div style={{ 
-          position: "relative", 
-          display: "flex", 
-          alignItems: "center", 
+        <div style={{
+          position: "relative",
+          display: "flex",
+          alignItems: "center",
           padding: "0 10%",
           zIndex: 2,
-          background: "var(--cream)" 
+          background: "var(--cream)"
         }}>
           <motion.div
             variants={staggerContainer}

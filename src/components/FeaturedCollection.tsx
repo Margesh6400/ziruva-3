@@ -44,175 +44,175 @@ function ProductCard({ product, index }: { product: Product; index: number }) {
             : "0 4px 24px rgba(43,43,43,0.05)",
         }}
       >
-      {/* Tier badge */}
-      <div style={{ position: "absolute", top: "1.6rem", left: "1.8rem", zIndex: 10 }}>
-        <span
-          style={{
-            fontFamily: "var(--font-fashion)",
-            fontSize: "0.58rem",
-            fontWeight: 600,
-            letterSpacing: "0.28em",
-            textTransform: "uppercase",
-            color: "white",
-            textShadow: "0 2px 10px rgba(0,0,0,0.2)"
-          }}
-        >
-          {product.tier}
-        </span>
-      </div>
-
-      {/* Image Container */}
-      <div
-        style={{
-          height: "400px",
-          position: "relative",
-          overflow: "hidden",
-        }}
-      >
-        {/* Hover-zoom image */}
-        <motion.div
-          animate={{
-            scale: hovered ? 1.1 : 1,
-            transition: { duration: 1.2, ease: [0.22, 1, 0.36, 1] }
-          }}
-          style={{ width: "100%", height: "100%", position: "relative" }}
-        >
-          <Image
-            src={product.image}
-            alt={product.alt}
-            fill
-            sizes="(max-width: 768px) 100vw, 33vw"
+        {/* Tier badge */}
+        <div style={{ position: "absolute", top: "1.6rem", left: "1.8rem", zIndex: 10 }}>
+          <span
             style={{
-              objectFit: "cover",
-              filter: hovered ? "none" : "brightness(0.96)",
-              transition: "filter 0.6s ease",
+              fontFamily: "var(--font-fashion)",
+              fontSize: "0.58rem",
+              fontWeight: 600,
+              letterSpacing: "0.28em",
+              textTransform: "uppercase",
+              color: "white",
+              textShadow: "0 2px 10px rgba(0,0,0,0.2)"
             }}
-          />
-          {product.variants && product.variants.length > 1 && (
+          >
+            {product.tier}
+          </span>
+        </div>
+
+        {/* Image Container */}
+        <div
+          style={{
+            height: "400px",
+            position: "relative",
+            overflow: "hidden",
+          }}
+        >
+          {/* Hover-zoom image */}
+          <motion.div
+            animate={{
+              scale: hovered ? 1.1 : 1,
+              transition: { duration: 1.2, ease: [0.22, 1, 0.36, 1] }
+            }}
+            style={{ width: "100%", height: "100%", position: "relative" }}
+          >
             <Image
-              src={product.variants[1].image}
-              alt={product.variants[1].label}
+              src={product.image}
+              alt={product.alt}
               fill
               sizes="(max-width: 768px) 100vw, 33vw"
               style={{
                 objectFit: "cover",
-                opacity: hovered ? 1 : 0,
-                transition: "opacity 0.6s ease",
                 filter: hovered ? "none" : "brightness(0.96)",
+                transition: "filter 0.6s ease",
               }}
             />
-          )}
-        </motion.div>
+            {product.variants && product.variants.length > 1 && (
+              <Image
+                src={product.variants[1].image}
+                alt={product.variants[1].label}
+                fill
+                sizes="(max-width: 768px) 100vw, 33vw"
+                style={{
+                  objectFit: "cover",
+                  opacity: hovered ? 1 : 0,
+                  transition: "opacity 0.6s ease",
+                  filter: hovered ? "none" : "brightness(0.96)",
+                }}
+              />
+            )}
+          </motion.div>
 
-        {/* Top-down gradient for badge legibility */}
-        <div
-          style={{
-            position: "absolute",
-            inset: 0,
-            background: "linear-gradient(to bottom, rgba(0,0,0,0.15) 0%, transparent 25%)",
-            pointerEvents: "none",
-          }}
-        />
-
-        {/* Brand Overlay (Subtle) */}
-        <div
-          style={{
-            position: "absolute",
-            bottom: "1.5rem",
-            right: "1.5rem",
-            zIndex: 3,
-            opacity: hovered ? 1 : 0.6,
-            transition: "opacity 0.4s ease",
-          }}
-        >
-          <span style={{
-            fontFamily: "'Cormorant Garamond', serif",
-            fontSize: "0.9rem",
-            fontStyle: "italic",
-            color: "white",
-            textShadow: "0 2px 10px rgba(0,0,0,0.1)"
-          }}>
-            Maison Ziruva
-          </span>
-        </div>
-      </div>
-
-      {/* Info */}
-      <div style={{ padding: "1.5rem 2rem 2rem" }}>
-        <p
-          style={{
-            fontFamily: "var(--font-fashion)",
-            fontSize: "0.6rem",
-            fontWeight: 500,
-            letterSpacing: "0.3em",
-            textTransform: "uppercase",
-            color: "var(--accent-brown)",
-            marginBottom: "0.5rem",
-          }}
-        >
-          {product.collection}
-        </p>
-        <h3
-          style={{
-            fontFamily: "'Cormorant Garamond', serif",
-            fontSize: "1.5rem",
-            fontWeight: 400,
-            color: "var(--text-primary)",
-            marginBottom: "1rem",
-          }}
-        >
-          {product.name}
-        </h3>
-        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-          <p
+          {/* Top-down gradient for badge legibility */}
+          <div
             style={{
-              fontFamily: "var(--font-sans)",
-              fontSize: "0.85rem",
-              fontWeight: 400,
-              color: "var(--text-secondary)",
+              position: "absolute",
+              inset: 0,
+              background: "linear-gradient(to bottom, rgba(0,0,0,0.15) 0%, transparent 25%)",
+              pointerEvents: "none",
+            }}
+          />
+
+          {/* Brand Overlay (Subtle) */}
+          <div
+            style={{
+              position: "absolute",
+              bottom: "1.5rem",
+              right: "1.5rem",
+              zIndex: 3,
+              opacity: hovered ? 1 : 0.6,
+              transition: "opacity 0.4s ease",
             }}
           >
-            {product.price}
-          </p>
-          <motion.button
-            whileHover={{ x: 4 }}
+            <span style={{
+              fontFamily: "'Cormorant Garamond', serif",
+              fontSize: "0.9rem",
+              fontStyle: "italic",
+              color: "white",
+              textShadow: "0 2px 10px rgba(0,0,0,0.1)"
+            }}>
+              Maison Ziruva
+            </span>
+          </div>
+        </div>
+
+        {/* Info */}
+        <div style={{ padding: "1.5rem 2rem 2rem" }}>
+          <p
             style={{
               fontFamily: "var(--font-fashion)",
-              fontSize: "0.58rem",
+              fontSize: "0.6rem",
               fontWeight: 500,
               letterSpacing: "0.3em",
               textTransform: "uppercase",
-              color: "var(--text-primary)",
-              background: "none",
-              border: "none",
-              cursor: "pointer",
-              display: "flex",
-              alignItems: "center",
-              gap: "0.5rem",
+              color: "var(--accent-brown)",
+              marginBottom: "0.5rem",
             }}
           >
-            Add to Waitlist
-            <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
-              <path d="M1 6h10M7 2l4 4-4 4" stroke="currentColor" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round"/>
-            </svg>
-          </motion.button>
+            {product.collection}
+          </p>
+          <h3
+            style={{
+              fontFamily: "'Cormorant Garamond', serif",
+              fontSize: "1.5rem",
+              fontWeight: 400,
+              color: "var(--text-primary)",
+              marginBottom: "1rem",
+            }}
+          >
+            {product.name}
+          </h3>
+          <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+            <p
+              style={{
+                fontFamily: "var(--font-sans)",
+                fontSize: "0.85rem",
+                fontWeight: 400,
+                color: "var(--text-secondary)",
+              }}
+            >
+              {product.price}
+            </p>
+            <motion.button
+              whileHover={{ x: 4 }}
+              style={{
+                fontFamily: "var(--font-fashion)",
+                fontSize: "0.58rem",
+                fontWeight: 500,
+                letterSpacing: "0.3em",
+                textTransform: "uppercase",
+                color: "var(--text-primary)",
+                background: "none",
+                border: "none",
+                cursor: "pointer",
+                display: "flex",
+                alignItems: "center",
+                gap: "0.5rem",
+              }}
+            >
+              Add to Waitlist
+              <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+                <path d="M1 6h10M7 2l4 4-4 4" stroke="currentColor" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+            </motion.button>
+          </div>
         </div>
-      </div>
 
-      {/* Bottom reveal bar */}
-      <motion.div
-        animate={{ scaleX: hovered ? 1 : 0 }}
-        transition={{ duration: 0.4 }}
-        style={{
-          position: "absolute",
-          bottom: 0,
-          left: 0,
-          right: 0,
-          height: "2px",
-          background: "var(--accent-brown)",
-          transformOrigin: "left",
-        }}
-      />
+        {/* Bottom reveal bar */}
+        <motion.div
+          animate={{ scaleX: hovered ? 1 : 0 }}
+          transition={{ duration: 0.4 }}
+          style={{
+            position: "absolute",
+            bottom: 0,
+            left: 0,
+            right: 0,
+            height: "2px",
+            background: "var(--accent-brown)",
+            transformOrigin: "left",
+          }}
+        />
       </motion.div>
     </Link>
   );

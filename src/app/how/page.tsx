@@ -73,10 +73,10 @@ export default function HowPage() {
               transition={{ duration: 1.4, ease: "easeOut" }}
               style={{ position: "relative", aspectRatio: "4/5", overflow: "hidden" }}
             >
-              <Image 
-                src="/images/story-editorial.png" 
-                alt="Atelier Process" 
-                fill 
+              <Image
+                src="/images/story-editorial.png"
+                alt="ZIRUVA London atelier — the 128-step process of crafting a luxury leather handbag, from design sketch to finished silhouette"
+                fill
                 style={{ objectFit: "cover", filter: "grayscale(10%)" }}
                 priority
               />
@@ -111,10 +111,10 @@ export default function HowPage() {
             <div style={{ position: "relative" }}>
               <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1.5rem" }}>
                 <div style={{ position: "relative", aspectRatio: "1/1.2", overflow: "hidden" }}>
-                  <Image src="https://images.unsplash.com/photo-1517142089942-ba376ce32a2e?q=80&w=800" alt="Leather Texture" fill style={{ objectFit: "cover" }} />
+                  <Image src="https://images.unsplash.com/photo-1517142089942-ba376ce32a2e?q=80&w=800" alt="Grade A full-grain Italian leather hide — ZIRUVA sources only the finest Tuscan calf leather, selected for natural character and durability" fill style={{ objectFit: "cover" }} />
                 </div>
                 <div style={{ position: "relative", aspectRatio: "1/1.2", overflow: "hidden", marginTop: "4rem" }}>
-                  <Image src="https://images.unsplash.com/photo-1473186578172-c141e6798ee4?q=80&w=800" alt="Tooling" fill style={{ objectFit: "cover" }} />
+                  <Image src="https://images.unsplash.com/photo-1473186578172-c141e6798ee4?q=80&w=800" alt="Traditional leather tooling and cutting — ZIRUVA artisans use the Trincietto blade with 0.5mm precision edge for each leather panel" fill style={{ objectFit: "cover" }} />
                 </div>
               </div>
               <div style={{
@@ -185,7 +185,7 @@ export default function HowPage() {
           </div>
           
           <div style={{ position: "relative", width: "100%", aspectRatio: "21/9", overflow: "hidden" }}>
-             <Image src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=1200" alt="Design Studio" fill style={{ objectFit: "cover", opacity: 0.7 }} />
+             <Image src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=1200" alt="ZIRUVA London design studio — architects of luxury leather silhouettes, modelling each bag in traditional paper card before cutting leather" fill style={{ objectFit: "cover", opacity: 0.7 }} />
              <div style={{ position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center" }}>
                 <div style={{ background: "var(--cream)", padding: "4rem", maxWidth: "500px", border: "1px solid rgba(0,0,0,0.1)" }}>
                   <p style={{ fontFamily: "var(--font-sans)", fontSize: "0.85rem", lineHeight: 1.8, color: "var(--text-primary)" }}>
@@ -202,23 +202,26 @@ export default function HowPage() {
         <div style={{ maxWidth: "1440px", margin: "0 auto", padding: "0 4rem" }}>
           <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "4rem" }}>
             {[
-              { 
-                step: "01", 
-                title: "Precision Cut", 
+              {
+                step: "01",
+                title: "Precision Cut",
                 desc: "Using the traditional 'Trincietto' blade, we cut each panel with a 0.5mm tolerance edge.",
-                img: "https://images.unsplash.com/photo-1544441893-675973e31985?q=80&w=800"
+                img: "https://images.unsplash.com/photo-1544441893-675973e31985?q=80&w=800",
+                alt: "ZIRUVA artisan precision-cutting full-grain leather panels using traditional Trincietto blade — 0.5mm tolerance craftsmanship for luxury handbags",
               },
-              { 
-                step: "02", 
-                title: "Hand Stitch", 
+              {
+                step: "02",
+                title: "Hand Stitch",
                 desc: "Eight stitches per inch, using two needles and a single length of waxed linen cord.",
-                img: "https://images.unsplash.com/photo-1531844251246-9a1bfaae09fc?q=80&w=800"
+                img: "https://images.unsplash.com/photo-1531844251246-9a1bfaae09fc?q=80&w=800",
+                alt: "ZIRUVA master artisan hand-stitching a luxury leather handbag — eight stitches per inch using waxed linen cord and traditional double-needle technique",
               },
-              { 
-                step: "03", 
-                title: "Burnish", 
+              {
+                step: "03",
+                title: "Burnish",
                 desc: "Edges are triple-painted and heat-sealed for a permanent, glass-like finish.",
-                img: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=80&w=800"
+                img: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=80&w=800",
+                alt: "ZIRUVA leather edge burnishing — triple-painted and heat-sealed edges for a permanent glass-like finish on luxury leather handbags",
               }
             ].map((item, idx) => (
               <motion.div 
@@ -230,7 +233,7 @@ export default function HowPage() {
                 style={{ position: "relative" }}
               >
                 <div style={{ position: "relative", width: "100%", aspectRatio: "3/4", marginBottom: "2.5rem", overflow: "hidden" }}>
-                  <Image src={item.img} alt={item.title} fill style={{ objectFit: "cover" }} />
+                  <Image src={item.img} alt={item.alt} fill style={{ objectFit: "cover" }} />
                   <div style={{ 
                     position: "absolute", 
                     top: "1.5rem", 

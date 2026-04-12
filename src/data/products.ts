@@ -31,7 +31,7 @@ export const products: Product[] = [
     price: "£ 445",
     tier: "L'Édition · Limited",
     image: "/images/la-lune-attached.jpg",
-    alt: "ZIRUVA La Lune — Cognac Moon Bag with Gold Chain",
+    alt: "ZIRUVA La Lune Luxury Leather Moon Bag — Handcrafted Cognac Genuine Calf Leather Handbag with 18k Gold Chain, Designed in London",
     bg: "#F2EDE8",
     category: "Limited",
     specs: {
@@ -50,7 +50,7 @@ export const products: Product[] = [
     price: "£ 425",
     tier: "Hero · 999 Numbered",
     image: "/images/la-prisme-new.png",
-    alt: "ZIRUVA La Prisme — Ivory Multi-Prism Satchel",
+    alt: "ZIRUVA La Prisme Ivory Multi-Prism Leather Satchel — Limited Edition Luxury Handcrafted Tote Bag with 18k Gold Pillars",
     bg: "#FDFCFB",
     category: "Hero",
     specs: {
@@ -73,7 +73,7 @@ export const products: Product[] = [
     price: "£ 375",
     tier: "Hero · 999 Numbered",
     image: "/images/la-barre-attached.jpg",
-    alt: "ZIRUVA La Barre — Two-Tone Teal & Ivory Tote",
+    alt: "ZIRUVA La Barre Two-Tone Teal and Ivory Designer Tote — Architectural Full-Grain Luxury Leather Handbag for Women",
     bg: "#FDFBFA",
     category: "Hero",
     specs: {
@@ -92,7 +92,7 @@ export const products: Product[] = [
     price: "£ 355",
     tier: "Signature · Essential",
     image: "/images/la-douce-attached.jpg",
-    alt: "ZIRUVA La Douce — Brown Croc-Embossed Tote",
+    alt: "ZIRUVA La Douce Brown Croc-Embossed Tote Bag — Classic Cognac Luxury Vachetta Leather Shoulder Bag, Made in Italy",
     bg: "#F2EDE8",
     category: "Signature",
     specs: {
@@ -111,7 +111,7 @@ export const products: Product[] = [
     price: "£ 345",
     tier: "Signature · Essential",
     image: "/images/la-peau-attached.jpg",
-    alt: "ZIRUVA La Peau — Two-Tone Black & Ivory Tote",
+    alt: "ZIRUVA La Peau Two-Tone Black and Ivory Tote — Premium Contrast Pebble Grain Leather Handbag with Gold-Foil Details",
     bg: "#FDFCFB",
     category: "Signature",
     specs: {
@@ -130,7 +130,7 @@ export const products: Product[] = [
     price: "£ 325",
     tier: "Signature · Essential",
     image: "/images/la-arc-attached.jpg",
-    alt: "ZIRUVA L'Arc — Taupe Crescent Moon Bag",
+    alt: "ZIRUVA L'Arc Taupe Crescent Moon Bag — Minimalist Luxury Semi-Aniline Leather Crossbody with Integrated Pouch",
     bg: "#E8E4E1",
     category: "Signature",
     specs: {
@@ -149,7 +149,7 @@ export const products: Product[] = [
     price: "£ 310",
     tier: "Signature · Essential",
     image: "/images/la-toile-attached.jpg",
-    alt: "ZIRUVA La Toile — Deep Burgundy Leather Tote",
+    alt: "ZIRUVA La Toile Deep Burgundy Leather Tote — Sophisticated Large Capacity Luxury Handbag with Gold-Plated Handles",
     bg: "#F2EDE8",
     category: "Signature",
     specs: {

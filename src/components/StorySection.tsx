@@ -74,7 +74,7 @@ export default function StorySection() {
               >
                 <Image
                   src="/images/story-editorial.png"
-                  alt="ZIRUVA editorial"
+                  alt="ZIRUVA master artisan hand-stitching a luxury leather handbag — traditional awl and needle technique at the Maison ZIRUVA atelier, London"
                   fill
                   sizes="(max-width: 860px) 100vw, 35vw"
                   style={{ objectFit: "cover" }}
