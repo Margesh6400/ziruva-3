@@ -52,7 +52,7 @@ const features = [
 
 export default function Features() {
   return (
-    <section id="features" style={{ background: "var(--surface)", padding: "7rem 0" }}>
+    <section id="features" style={{ background: "var(--cream)", padding: "7rem 0" }}>
       <div style={{ maxWidth: "1280px", margin: "0 auto", padding: "0 4rem" }}>
         {/* Header */}
         <div style={{ textAlign: "center", marginBottom: "5rem" }}>

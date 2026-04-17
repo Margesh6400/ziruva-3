@@ -21,7 +21,7 @@ export default function StorySection() {
       ref={sectionRef}
       id="story"
       style={{
-        background: "var(--surface)",
+        background: "var(--cream)",
         padding: "4rem 0",
         overflow: "hidden",
         position: "relative",

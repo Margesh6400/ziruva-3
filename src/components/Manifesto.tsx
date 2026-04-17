@@ -43,7 +43,7 @@ const declarations = [
 
 export default function Manifesto() {
   return (
-    <section id="manifesto" style={{ background: "var(--surface)", padding: "1.5rem 0" }}>
+    <section id="manifesto" style={{ background: "var(--cream)", padding: "1.5rem 0" }}>
       <div style={{ maxWidth: "1280px", margin: "0 auto", padding: "0 4rem" }}>
         
         {/* Compact Grid */}
@@ -65,7 +65,7 @@ export default function Manifesto() {
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: idx * 0.08 }}
               style={{
-                background: "var(--surface)",
+                background: "var(--cream)",
                 padding: "1.8rem 2rem",
                 display: "flex",
                 flexDirection: "column",

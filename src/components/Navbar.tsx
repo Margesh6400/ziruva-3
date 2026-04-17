@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import Image from "next/image";
@@ -45,7 +45,102 @@ export default function Navbar() {
 
   return (
     <>
-      {/* ── Fixed header wrapper (announcement + nav) ── */}
+      <style>{`
+        .nav-link {
+          position: relative;
+          font-family: var(--font-fashion);
+          font-size: 0.62rem;
+          font-weight: 500;
+          letter-spacing: 0.32em;
+          text-transform: uppercase;
+          color: var(--text-secondary);
+          text-decoration: none;
+          transition: color 0.35s ease;
+          padding-bottom: 2px;
+        }
+        .nav-link::after {
+          content: "";
+          position: absolute;
+          bottom: -1px;
+          left: 0;
+          width: 100%;
+          height: 1px;
+          background: var(--accent-brown);
+          transform: scaleX(0);
+          transform-origin: left;
+          transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+        .nav-link:hover {
+          color: var(--text-primary);
+        }
+        .nav-link:hover::after {
+          transform: scaleX(1);
+        }
+        .nav-shop-btn {
+          font-family: var(--font-fashion);
+          font-size: 0.58rem;
+          font-weight: 500;
+          letter-spacing: 0.32em;
+          text-transform: uppercase;
+          color: var(--text-primary);
+          text-decoration: none;
+          border: 1px solid rgba(43,43,43,0.35);
+          padding: 0.52rem 1.4rem;
+          transition: all 0.45s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+          display: inline-block;
+        }
+        .nav-shop-btn:hover {
+          background: var(--text-primary);
+          color: var(--cream);
+          border-color: var(--text-primary);
+        }
+        .mega-link {
+          text-decoration: none;
+          display: flex;
+          flex-direction: column;
+          gap: 3px;
+        }
+        .mega-link-title {
+          font-family: "Cormorant Garamond", serif;
+          font-size: 1.35rem;
+          font-weight: 300;
+          color: var(--text-primary);
+          transition: color 0.3s ease, transform 0.3s ease;
+          display: block;
+        }
+        .mega-link:hover .mega-link-title {
+          color: var(--accent-brown);
+          transform: translateX(4px);
+        }
+        .mega-link-desc {
+          font-family: var(--font-fashion);
+          font-size: 0.55rem;
+          color: var(--text-meta);
+          letter-spacing: 0.08em;
+          display: block;
+          transition: color 0.3s ease;
+        }
+        .mega-link:hover .mega-link-desc {
+          color: var(--text-secondary);
+        }
+        .mobile-nav-item {
+          font-family: "Cormorant Garamond", serif;
+          font-size: 2.6rem;
+          font-weight: 300;
+          color: var(--text-primary);
+          letter-spacing: 0.02em;
+          cursor: pointer;
+          transition: color 0.3s ease;
+          display: flex;
+          align-items: center;
+          gap: 0.6rem;
+        }
+        .mobile-nav-item:hover {
+          color: var(--accent-brown);
+        }
+      `}</style>
+
+      {/* ── Fixed header wrapper ── */}
       <div
         style={{
           position: "fixed",
@@ -55,39 +150,44 @@ export default function Navbar() {
           zIndex: 1000,
         }}
       >
+        {/* Announcement Bar */}
         <AnimatePresence>
           {showAnnouncement && (
             <motion.div
               initial={{ height: "auto", opacity: 1 }}
-              exit={{ height: 0, opacity: 0, marginTop: -40 }}
+              exit={{ height: 0, opacity: 0 }}
               transition={{ duration: 0.5, ease: [0.33, 1, 0.68, 1] }}
               style={{
                 background: "var(--text-primary)",
                 position: "relative",
                 overflow: "hidden",
-                textAlign: "center",
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
                 zIndex: 1001,
               }}
             >
-              <div style={{ padding: "10px 0", flex: 1 }}>
+              <div style={{ padding: "9px 0", flex: 1, textAlign: "center" }}>
                 <p
                   style={{
                     fontFamily: "var(--font-fashion)",
-                    fontSize: "0.62rem",
+                    fontSize: "0.58rem",
                     fontWeight: 500,
-                    letterSpacing: "0.3em",
+                    letterSpacing: "0.32em",
                     textTransform: "uppercase",
                     color: "var(--cream)",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    gap: "1rem",
                   }}
                 >
+                  <span style={{ opacity: 0.4, fontSize: "0.35rem" }}>◆</span>
                   New Drop: La Saison SS25 — Limited to 40 Pieces
+                  <span style={{ opacity: 0.4, fontSize: "0.35rem" }}>◆</span>
                 </p>
               </div>
-              
-              {/* Close button */}
+
               <button
                 onClick={() => setShowAnnouncement(false)}
                 style={{
@@ -96,31 +196,30 @@ export default function Navbar() {
                   background: "none",
                   border: "none",
                   cursor: "pointer",
-                  color: "var(--cream)",
-                  opacity: 0.6,
-                  transition: "opacity 0.3s ease",
+                  color: "rgba(252,248,240,0.45)",
+                  transition: "color 0.3s ease",
                   padding: "8px",
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
                 }}
-                onMouseEnter={(e) => (e.currentTarget.style.opacity = "1")}
-                onMouseLeave={(e) => (e.currentTarget.style.opacity = "0.6")}
+                onMouseEnter={(e) => (e.currentTarget.style.color = "var(--cream)")}
+                onMouseLeave={(e) => (e.currentTarget.style.color = "rgba(252,248,240,0.45)")}
                 aria-label="Close announcement"
               >
-                <svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M1 1L9 9M9 1L1 9" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round"/>
+                <svg width="9" height="9" viewBox="0 0 9 9" fill="none">
+                  <path d="M1 1L8 8M8 1L1 8" stroke="currentColor" strokeWidth="1.1" strokeLinecap="round" />
                 </svg>
               </button>
 
+              {/* Shimmer sweep */}
               <div
                 style={{
                   position: "absolute",
                   inset: 0,
-                  width: "8rem",
-                  background:
-                    "linear-gradient(90deg, transparent, rgba(255,255,255,0.07), transparent)",
-                  animation: "announcementShimmer 3s linear infinite",
+                  width: "6rem",
+                  background: "linear-gradient(90deg, transparent, rgba(255,255,255,0.06), transparent)",
+                  animation: "announcementShimmer 3.5s linear infinite",
                   pointerEvents: "none",
                 }}
               />
@@ -128,71 +227,51 @@ export default function Navbar() {
           )}
         </AnimatePresence>
 
-        {/* Main nav */}
+        {/* ── Main Nav ── */}
         <nav
           style={{
-            background: scrolled ? "rgba(252,248,240,0.88)" : "transparent",
-            backdropFilter: scrolled ? "blur(28px) saturate(200%)" : "none",
-            WebkitBackdropFilter: scrolled ? "blur(28px) saturate(200%)" : "none",
-            border: scrolled ? "1px solid rgba(255,255,255,0.55)" : "none",
-            borderBottom: scrolled ? "none" : "1px solid transparent",
-            borderRadius: scrolled ? "3px" : "0",
+            background: scrolled ? "rgba(252,248,240,0.9)" : "transparent",
+            backdropFilter: scrolled ? "blur(24px) saturate(180%)" : "none",
+            WebkitBackdropFilter: scrolled ? "blur(24px) saturate(180%)" : "none",
+            borderRadius: scrolled ? "4px" : "0",
             margin: scrolled ? "0 1.5rem" : "0",
             transform: scrolled ? "translateY(10px)" : "translateY(0)",
             boxShadow: scrolled
-              ? "0 2px 8px rgba(43,30,20,0.06), 0 8px 32px rgba(43,30,20,0.1), 0 24px 64px rgba(43,30,20,0.06), inset 0 1px 0 rgba(255,252,245,1)"
+              ? "0 1px 0 rgba(255,255,255,0.7) inset, 0 4px 24px rgba(43,30,20,0.07), 0 1px 3px rgba(43,30,20,0.04)"
               : "none",
-            transition: "all 0.65s cubic-bezier(0.25, 0.46, 0.45, 0.94)",
+            border: scrolled ? "1px solid rgba(255,255,255,0.5)" : "none",
+            transition: "all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94)",
           }}
         >
           <div
             style={{
-              maxWidth: "1280px",
+              maxWidth: "1320px",
               margin: "0 auto",
-              padding: "0 4rem",
+              padding: "0 3.5rem",
               display: "flex",
               alignItems: "center",
               justifyContent: "space-between",
-              height: isMobile ? "58px" : (scrolled ? "58px" : "68px"),
-              transition: "height 0.65s cubic-bezier(0.25, 0.46, 0.45, 0.94)",
+              height: isMobile ? "56px" : scrolled ? "56px" : "66px",
+              transition: "height 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94)",
               position: "relative",
             }}
           >
-            {/* Left nav links - Desktop Only */}
+            {/* ── Desktop: Left links ── */}
             {!isMobile && (
-              <div style={{ display: "flex", gap: "2.5rem", alignItems: "center" }}>
-                {navLinks.slice(0, 3).map((link) => (
+              <div style={{ display: "flex", gap: "2.8rem", alignItems: "center" }}>
+                {navLinks.slice(0, 2).map((link) => (
                   <div
                     key={link.label}
-                    onMouseEnter={() => link.hasDropdown && setActiveDropdown(link.hasDropdown as string)}
+                    onMouseEnter={() => link.hasDropdown && setActiveDropdown(link.hasDropdown)}
                     onMouseLeave={() => link.hasDropdown && setActiveDropdown(null)}
                     style={{
-                      position: "relative",
-                      height: scrolled ? "58px" : "68px",
-                      transition: "height 0.65s cubic-bezier(0.25, 0.46, 0.45, 0.94)",
+                      height: scrolled ? "56px" : "66px",
                       display: "flex",
-                      alignItems: "center"
+                      alignItems: "center",
+                      transition: "height 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94)",
                     }}
                   >
-                    <Link
-                      href={link.href}
-                      style={{
-                        fontFamily: "var(--font-fashion)",
-                        fontSize: "0.62rem",
-                        fontWeight: 500,
-                        letterSpacing: "0.3em",
-                        textTransform: "uppercase",
-                        color: "var(--text-secondary)",
-                        textDecoration: "none",
-                        transition: "color 0.3s ease",
-                      }}
-                      onMouseEnter={(e) =>
-                        ((e.target as HTMLElement).style.color = "var(--accent-brown)")
-                      }
-                      onMouseLeave={(e) =>
-                        ((e.target as HTMLElement).style.color = "var(--text-secondary)")
-                      }
-                    >
+                    <Link href={link.href} className="nav-link">
                       {link.label}
                     </Link>
                   </div>
@@ -200,7 +279,7 @@ export default function Navbar() {
               </div>
             )}
 
-            {/* Centered logo */}
+            {/* ── Centered Logo ── */}
             <Link
               href="/"
               style={{
@@ -218,49 +297,30 @@ export default function Navbar() {
                 initial="hidden"
                 animate="show"
                 variants={{
-                  show: {
-                    transition: {
-                      staggerChildren: 0.1,
-                      delayChildren: 0.2,
-                    },
-                  },
+                  show: { transition: { staggerChildren: 0.09, delayChildren: 0.2 } },
                 }}
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                }}
+                style={{ display: "flex", alignItems: "center" }}
               >
                 {["z", "i", "r", "u", "v", "a"].map((letter, idx) => {
                   const widths: Record<string, string> = {
-                    z: "22px",
-                    i: "6px",
-                    r: "22px",
-                    u: "21px",
-                    v: "24px",
-                    a: "24px",
+                    z: "22px", i: "6px", r: "22px", u: "21px", v: "24px", a: "24px",
                   };
-                  // Bespoke kerning for each character pair
                   const margins: Record<string, string> = {
-                    z: "0.9rem",
-                    i: "0.9rem",
-                    r: "0.7rem",
-                    u: "0.7rem",
-                    v: "0.4rem",
-                    a: "0",
+                    z: "0.9rem", i: "0.9rem", r: "0.7rem", u: "0.7rem", v: "0.4rem", a: "0",
                   };
                   return (
                     <motion.div
                       key={`${letter}-${idx}`}
                       variants={{
-                        hidden: { opacity: 0, y: 15 },
+                        hidden: { opacity: 0, y: 12 },
                         show: { opacity: 1, y: 0 },
                       }}
-                      transition={{ duration: 1.2, ease: [0.23, 1, 0.32, 1] }}
-                      style={{ 
-                        position: "relative", 
-                        height: "28px", 
+                      transition={{ duration: 1.1, ease: [0.23, 1, 0.32, 1] }}
+                      style={{
+                        position: "relative",
+                        height: "26px",
                         width: widths[letter],
-                        marginRight: margins[letter]
+                        marginRight: margins[letter],
                       }}
                     >
                       <Image
@@ -276,7 +336,7 @@ export default function Navbar() {
               </motion.div>
             </Link>
 
-            {/* Desktop Full-Width Mega Menu Dropdown */}
+            {/* ── Desktop: Full-width mega dropdown ── */}
             <div
               onMouseEnter={() => activeDropdown && setActiveDropdown(activeDropdown)}
               onMouseLeave={() => setActiveDropdown(null)}
@@ -291,177 +351,182 @@ export default function Navbar() {
               <AnimatePresence>
                 {activeDropdown && (
                   <motion.div
-                    initial={{ opacity: 0, y: -10 }}
+                    initial={{ opacity: 0, y: -8 }}
                     animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -5 }}
-                    transition={{ duration: 0.4, ease: [0.23, 1, 0.32, 1] }}
+                    exit={{ opacity: 0, y: -6 }}
+                    transition={{ duration: 0.35, ease: [0.23, 1, 0.32, 1] }}
                     style={{
                       width: "100%",
                       background: "rgba(252,248,240,0.98)",
-                      backdropFilter: "blur(20px)",
-                      borderTop: "1px solid rgba(43,43,43,0.05)",
-                      borderBottom: "1px solid rgba(43,43,43,0.08)",
-                      boxShadow: "0 25px 50px -12px rgba(0,0,0,0.08)",
-                      padding: "4rem",
+                      backdropFilter: "blur(24px)",
+                      borderTop: "1px solid rgba(43,43,43,0.06)",
+                      borderBottom: "1px solid rgba(43,43,43,0.06)",
+                      boxShadow: "0 20px 40px -8px rgba(0,0,0,0.07)",
+                      padding: "3.5rem 4rem",
                       display: "grid",
-                      gridTemplateColumns: "1fr 1fr 1.2fr",
+                      gridTemplateColumns: "1fr 1fr 1.3fr",
                       gap: "4rem",
-                      zIndex: 100,
                     }}
                   >
-                    {/* Dynamic List - Column 1 */}
-                    <div style={{ display: "flex", flexDirection: "column", gap: "2rem" }}>
-                      <span style={{ 
-                        fontFamily: "var(--font-fashion)",
-                        fontSize: "0.55rem",
-                        fontWeight: 600,
-                        letterSpacing: "0.2em",
-                        textTransform: "uppercase",
-                        color: "var(--text-meta)",
-                        marginBottom: "0.5rem",
-                        display: "block"
-                      }}>
-                        {activeDropdown === 'collection' ? 'The Archives' : 'Bespoke Services'}
+                    {/* Column 1 */}
+                    <div style={{ display: "flex", flexDirection: "column", gap: "0" }}>
+                      <span
+                        style={{
+                          fontFamily: "var(--font-fashion)",
+                          fontSize: "0.5rem",
+                          fontWeight: 600,
+                          letterSpacing: "0.22em",
+                          textTransform: "uppercase",
+                          color: "var(--text-meta)",
+                          marginBottom: "1.8rem",
+                          display: "block",
+                        }}
+                      >
+                        {activeDropdown === "collection" ? "The Archives" : "Bespoke Services"}
                       </span>
-                      {(activeDropdown === 'collection' ? collections : atelierLinks).slice(0, 2).map((col, idx) => (
-                        <motion.div
-                          key={col.name}
-                          initial={{ opacity: 0, x: -10 }}
-                          animate={{ opacity: 1, x: 0 }}
-                          transition={{ delay: idx * 0.05 }}
-                        >
-                          <Link href={col.href} style={{ textDecoration: "none" }}>
-                            <div style={{ display: "flex", flexDirection: "column" }}>
-                              <span style={{ 
-                                fontFamily: "'Cormorant Garamond', serif",
-                                fontSize: "1.4rem",
-                                color: "var(--text-primary)",
-                                display: "block"
-                              }}>
-                                {col.name}
-                              </span>
-                              <span style={{ 
-                                fontFamily: "var(--font-fashion)",
-                                fontSize: "0.6rem",
-                                color: "var(--text-secondary)",
-                                letterSpacing: "0.05em",
-                                marginTop: "4px"
-                              }}>
-                                {col.desc}
-                              </span>
-                            </div>
-                          </Link>
-                        </motion.div>
-                      ))}
+                      <div style={{ display: "flex", flexDirection: "column", gap: "1.6rem" }}>
+                        {(activeDropdown === "collection" ? collections : atelierLinks)
+                          .slice(0, 2)
+                          .map((col, idx) => (
+                            <motion.div
+                              key={col.name}
+                              initial={{ opacity: 0, x: -8 }}
+                              animate={{ opacity: 1, x: 0 }}
+                              transition={{ delay: idx * 0.06 }}
+                            >
+                              <Link href={col.href} className="mega-link">
+                                <span className="mega-link-title">{col.name}</span>
+                                <span className="mega-link-desc">{col.desc}</span>
+                              </Link>
+                            </motion.div>
+                          ))}
+                      </div>
                     </div>
 
-                    {/* Dynamic List - Column 2 */}
-                    <div style={{ display: "flex", flexDirection: "column", gap: "2rem" }}>
-                      <span style={{ 
-                        fontFamily: "var(--font-fashion)",
-                        fontSize: "0.55rem",
-                        opacity: 0,
-                        display: "block"
-                      }}>
-                        spacer
+                    {/* Column 2 */}
+                    <div style={{ display: "flex", flexDirection: "column", gap: "0" }}>
+                      <span
+                        style={{
+                          fontFamily: "var(--font-fashion)",
+                          fontSize: "0.5rem",
+                          opacity: 0,
+                          marginBottom: "1.8rem",
+                          display: "block",
+                          userSelect: "none",
+                          pointerEvents: "none",
+                        }}
+                      >
+                        ·
                       </span>
-                      {(activeDropdown === 'collection' ? collections : atelierLinks).slice(2).map((col, idx) => (
-                        <motion.div
-                          key={col.name}
-                          initial={{ opacity: 0, x: -10 }}
-                          animate={{ opacity: 1, x: 0 }}
-                          transition={{ delay: (idx + 2) * 0.05 }}
-                        >
-                          <Link href={col.href} style={{ textDecoration: "none" }}>
-                            <div style={{ display: "flex", flexDirection: "column" }}>
-                              <span style={{ 
-                                fontFamily: "'Cormorant Garamond', serif",
-                                fontSize: "1.4rem",
-                                color: "var(--text-primary)",
-                                display: "block"
-                              }}>
-                                {col.name}
-                              </span>
-                              <span style={{ 
-                                fontFamily: "var(--font-fashion)",
-                                fontSize: "0.6rem",
-                                color: "var(--text-secondary)",
-                                letterSpacing: "0.05em",
-                                marginTop: "4px"
-                              }}>
-                                {col.desc}
-                              </span>
-                            </div>
-                          </Link>
-                        </motion.div>
-                      ))}
+                      <div style={{ display: "flex", flexDirection: "column", gap: "1.6rem" }}>
+                        {(activeDropdown === "collection" ? collections : atelierLinks)
+                          .slice(2)
+                          .map((col, idx) => (
+                            <motion.div
+                              key={col.name}
+                              initial={{ opacity: 0, x: -8 }}
+                              animate={{ opacity: 1, x: 0 }}
+                              transition={{ delay: (idx + 2) * 0.06 }}
+                            >
+                              <Link href={col.href} className="mega-link">
+                                <span className="mega-link-title">{col.name}</span>
+                                <span className="mega-link-desc">{col.desc}</span>
+                              </Link>
+                            </motion.div>
+                          ))}
+                      </div>
                     </div>
 
-                    {/* Featured Preview - Column 3 */}
-                    <div style={{ display: "flex", flexDirection: "column", gap: "1.5rem" }}>
-                      <div style={{ 
-                        width: "100%", 
-                        aspectRatio: "16/9", 
-                        background: "var(--surface)",
-                        position: "relative",
-                        overflow: "hidden"
-                      }}>
-                        <Image 
-                          src={activeDropdown === 'collection' 
-                            ? (products.find(p => p.id === "la-prisme")?.image || "/images/hero-geometric.jpg")
-                            : "/images/story-detail.png"} 
-                          alt={activeDropdown === 'collection' ? "ZIRUVA La Prisme luxury leather satchel — SS25 featured piece, limited to 999 numbered pieces" : "ZIRUVA artisan atelier — master leather craftsman hand-stitching a luxury handbag, London design studio"}
+                    {/* Column 3: Featured image */}
+                    <div style={{ display: "flex", flexDirection: "column", gap: "1.2rem" }}>
+                      <div
+                        style={{
+                          width: "100%",
+                          aspectRatio: "4/3",
+                          position: "relative",
+                          overflow: "hidden",
+                        }}
+                      >
+                        <Image
+                          src={
+                            activeDropdown === "collection"
+                              ? products.find((p) => p.id === "la-prisme")?.image || "/images/hero-geometric.jpg"
+                              : "/images/story-detail.png"
+                          }
+                          alt={
+                            activeDropdown === "collection"
+                              ? "ZIRUVA La Prisme — SS25 featured piece"
+                              : "ZIRUVA Atelier — master craftsman at work"
+                          }
                           fill
+                          style={{ objectFit: "cover", transition: "transform 0.6s ease" }}
+                          className="mega-img"
+                        />
+                        <div
                           style={{
-                            objectFit: "cover"
+                            position: "absolute",
+                            inset: 0,
+                            background: "linear-gradient(to top, rgba(0,0,0,0.45) 0%, transparent 50%)",
                           }}
                         />
-                        <div style={{
-                          position: "absolute",
-                          inset: 0,
-                          background: "linear-gradient(to bottom, transparent 40%, rgba(0,0,0,0.4))"
-                        }} />
-                        <div style={{
-                          position: "absolute",
-                          bottom: "1.5rem",
-                          left: "1.5rem",
-                        }}>
-                          <span style={{
-                            color: "white",
-                            fontFamily: "var(--font-fashion)",
-                            fontSize: "0.5rem",
-                            fontWeight: 600,
-                            letterSpacing: "0.25em",
-                            textTransform: "uppercase",
-                            display: "block",
-                            marginBottom: "4px"
-                          }}>
-                            {activeDropdown === 'collection' ? 'New Highlight' : 'Our Legacy'}
+                        <div
+                          style={{
+                            position: "absolute",
+                            bottom: "1.4rem",
+                            left: "1.4rem",
+                          }}
+                        >
+                          <span
+                            style={{
+                              display: "flex",
+                              alignItems: "center",
+                              gap: "0.6rem",
+                              color: "rgba(252,248,240,0.6)",
+                              fontFamily: "var(--font-fashion)",
+                              fontSize: "0.48rem",
+                              letterSpacing: "0.28em",
+                              textTransform: "uppercase",
+                              marginBottom: "4px",
+                            }}
+                          >
+                            <span style={{ width: "16px", height: "1px", background: "rgba(252,248,240,0.4)", display: "inline-block" }} />
+                            {activeDropdown === "collection" ? "New Highlight" : "Our Legacy"}
                           </span>
-                          <span style={{
-                            color: "white",
-                            fontFamily: "'Cormorant Garamond', serif",
-                            fontSize: "1.2rem",
-                            display: "block"
-                          }}>
-                            {activeDropdown === 'collection' 
-                              ? (products.find(p => p.id === "la-prisme")?.name || "La Prisme")
+                          <span
+                            style={{
+                              color: "var(--cream)",
+                              fontFamily: "'Cormorant Garamond', serif",
+                              fontSize: "1.25rem",
+                              fontWeight: 300,
+                              display: "block",
+                            }}
+                          >
+                            {activeDropdown === "collection"
+                              ? products.find((p) => p.id === "la-prisme")?.name || "La Prisme"
                               : "The Art of Atelier"}
                           </span>
                         </div>
                       </div>
-                      <Link href={activeDropdown === 'collection' ? "/collection" : "/how"} style={{
-                        fontFamily: "var(--font-fashion)",
-                        fontSize: "0.62rem",
-                        color: "var(--text-primary)",
-                        textDecoration: "none",
-                        borderBottom: "1px solid var(--text-primary)",
-                        alignSelf: "flex-start",
-                        paddingBottom: "1px",
-                        letterSpacing: "0.1em",
-                        textTransform: "uppercase"
-                      }}>
-                        {activeDropdown === 'collection' ? 'Shop the Story' : 'Discover the Process'}
+
+                      <Link
+                        href={activeDropdown === "collection" ? "/collection" : "/how"}
+                        style={{
+                          fontFamily: "var(--font-fashion)",
+                          fontSize: "0.56rem",
+                          color: "var(--text-secondary)",
+                          textDecoration: "none",
+                          letterSpacing: "0.18em",
+                          textTransform: "uppercase",
+                          display: "flex",
+                          alignItems: "center",
+                          gap: "0.6rem",
+                          transition: "color 0.3s ease",
+                        }}
+                        onMouseEnter={(e) => (e.currentTarget.style.color = "var(--accent-brown)")}
+                        onMouseLeave={(e) => (e.currentTarget.style.color = "var(--text-secondary)")}
+                      >
+                        {activeDropdown === "collection" ? "Shop the Story" : "Discover the Process"}
+                        <span style={{ fontSize: "0.7rem" }}>→</span>
                       </Link>
                     </div>
                   </motion.div>
@@ -469,75 +534,36 @@ export default function Navbar() {
               </AnimatePresence>
             </div>
 
-            {/* Desktop-only right links */}
+            {/* ── Desktop: Right links + CTA ── */}
             {!isMobile && (
-              <div
-                style={{
-                  display: "flex",
-                  gap: "2.5rem",
-                  alignItems: "center",
-                }}
-              >
-                {navLinks.slice(3).map((link) => (
-                  <a
+              <div style={{ display: "flex", gap: "2.8rem", alignItems: "center" }}>
+                {navLinks.slice(2).map((link) => (
+                  <div
                     key={link.label}
-                    href={link.href}
+                    onMouseEnter={() => link.hasDropdown && setActiveDropdown(link.hasDropdown)}
+                    onMouseLeave={() => link.hasDropdown && setActiveDropdown(null)}
                     style={{
-                      fontFamily: "var(--font-fashion)",
-                      fontSize: "0.62rem",
-                      fontWeight: 500,
-                      letterSpacing: "0.3em",
-                      textTransform: "uppercase",
-                      color: "var(--text-secondary)",
-                      textDecoration: "none",
-                      transition: "color 0.3s ease",
+                      height: scrolled ? "56px" : "66px",
+                      display: "flex",
+                      alignItems: "center",
+                      transition: "height 0.6s ease",
                     }}
-                    onMouseEnter={(e) =>
-                      ((e.target as HTMLElement).style.color = "var(--accent-brown)")
-                    }
-                    onMouseLeave={(e) =>
-                      ((e.target as HTMLElement).style.color = "var(--text-secondary)")
-                    }
                   >
-                    {link.label}
-                  </a>
+                    <Link href={link.href} className="nav-link">
+                      {link.label}
+                    </Link>
+                  </div>
                 ))}
-                <a
-                  href="#collection"
-                  id="nav-shop-btn"
-                  style={{
-                    fontFamily: "'Montserrat', sans-serif",
-                    fontSize: "0.62rem",
-                    fontWeight: 500,
-                    letterSpacing: "0.28em",
-                    textTransform: "uppercase",
-                    color: "var(--text-primary)",
-                    textDecoration: "none",
-                    border: "1px solid var(--text-primary)",
-                    padding: "0.55rem 1.4rem",
-                    transition: "all 0.4s ease",
-                    display: "inline-block",
-                  }}
-                  onMouseEnter={(e) => {
-                    const el = e.currentTarget;
-                    el.style.background = "var(--text-primary)";
-                    el.style.color = "var(--cream)";
-                  }}
-                  onMouseLeave={(e) => {
-                    const el = e.currentTarget;
-                    el.style.background = "transparent";
-                    el.style.color = "var(--text-primary)";
-                  }}
-                >
+
+                <a href="#collection" className="nav-shop-btn">
                   Shop
                 </a>
               </div>
             )}
 
-            {/* Mobile-only hamburger */}
+            {/* ── Mobile: Hamburger ── */}
             {isMobile && (
               <button
-                id="mobile-menu-toggle"
                 onClick={() => setMenuOpen(!menuOpen)}
                 aria-label="Toggle menu"
                 style={{
@@ -547,26 +573,28 @@ export default function Navbar() {
                   padding: "8px",
                   display: "flex",
                   flexDirection: "column",
-                  gap: "5px",
-                  zIndex: 1000,
+                  gap: "6px",
+                  zIndex: 1001,
                 }}
               >
                 {[0, 1, 2].map((i) => (
-                  <span
+                  <motion.span
                     key={i}
+                    animate={
+                      menuOpen
+                        ? i === 0
+                          ? { rotate: 45, y: 7, width: 22 }
+                          : i === 1
+                          ? { opacity: 0, scaleX: 0 }
+                          : { rotate: -45, y: -7, width: 22 }
+                        : { rotate: 0, y: 0, opacity: 1, scaleX: 1, width: i === 1 ? 14 : 22 }
+                    }
+                    transition={{ duration: 0.3, ease: [0.25, 0.46, 0.45, 0.94] }}
                     style={{
                       display: "block",
                       height: "1px",
                       background: "var(--text-primary)",
-                      transition: "all 0.3s ease",
-                      width: i === 1 ? "16px" : "24px",
-                      opacity: menuOpen && i === 1 ? 0 : 1,
-                      transform:
-                        menuOpen && i === 0
-                          ? "rotate(45deg) translate(4px, 4px)"
-                          : menuOpen && i === 2
-                          ? "rotate(-45deg) translate(4px, -4px)"
-                          : "none",
+                      transformOrigin: "center",
                     }}
                   />
                 ))}
@@ -576,117 +604,218 @@ export default function Navbar() {
         </nav>
       </div>
 
-      {/* Mobile full-screen menu */}
+      {/* ── Mobile Full-Screen Menu ── */}
       <AnimatePresence>
         {menuOpen && (
           <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.4 }}
+            initial={{ x: "100%" }}
+            animate={{ x: 0 }}
+            exit={{ x: "100%" }}
+            transition={{ duration: 0.55, ease: [0.25, 0.46, 0.45, 0.94] }}
             style={{
               position: "fixed",
               inset: 0,
-              zIndex: 999,
+              zIndex: 998,
               background: "var(--cream)",
               display: "flex",
               flexDirection: "column",
-              alignItems: "center",
-              justifyContent: "center",
-              gap: "2.5rem",
+              padding: "0 2.5rem",
             }}
           >
-            {navLinks.map((link, i) => (
-              <div key={link.label} style={{ width: "100%", textAlign: "center" }}>
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.1 + i * 0.07 }}
-                  style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "1rem" }}
-                >
-                  <div 
-                    onClick={() => {
-                      if (link.hasDropdown === 'collection') {
-                        setMobileCollectionOpen(!mobileCollectionOpen);
-                      } else if (link.hasDropdown === 'atelier') {
-                        setMobileAtelierOpen(!mobileAtelierOpen);
-                      } else {
-                        setMenuOpen(false);
-                        window.location.href = link.href;
-                      }
-                    }}
-                    style={{
-                      fontFamily: "'Cormorant Garamond', serif",
-                      fontSize: "2.4rem",
-                      fontWeight: 400,
-                      color: "var(--text-primary)",
-                      textDecoration: "none",
-                      letterSpacing: "0.05em",
-                      cursor: "pointer",
-                      display: "flex",
-                      alignItems: "center",
-                      gap: "0.8rem"
-                    }}
-                  >
-                    {link.label}
-                    {link.hasDropdown && (
-                      <motion.span
-                        animate={{ rotate: (link.hasDropdown === 'collection' ? mobileCollectionOpen : mobileAtelierOpen) ? 180 : 0 }}
-                        style={{ fontSize: "1.2rem", display: "inline-block", marginTop: "4px" }}
-                      >
-                        ↓
-                      </motion.span>
-                    )}
-                  </div>
+            {/* Mobile menu header */}
+            <div
+              style={{
+                height: "56px",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-between",
+                borderBottom: "1px solid var(--border-light)",
+                marginBottom: "3rem",
+              }}
+            >
+              <Link href="/" onClick={() => setMenuOpen(false)} style={{ display: "flex", alignItems: "center" }}>
+                {["z", "i", "r", "u", "v", "a"].map((letter, idx) => {
+                  const widths: Record<string, string> = {
+                    z: "18px", i: "5px", r: "18px", u: "17px", v: "19px", a: "19px",
+                  };
+                  const margins: Record<string, string> = {
+                    z: "0.7rem", i: "0.7rem", r: "0.55rem", u: "0.55rem", v: "0.3rem", a: "0",
+                  };
+                  return (
+                    <div
+                      key={`m-${letter}-${idx}`}
+                      style={{ position: "relative", height: "21px", width: widths[letter], marginRight: margins[letter] }}
+                    >
+                      <Image src={`/images/logo/${letter}.png`} alt={letter.toUpperCase()} fill style={{ objectFit: "contain" }} />
+                    </div>
+                  );
+                })}
+              </Link>
+            </div>
 
-                  {link.hasDropdown && (
-                    <AnimatePresence>
-                      {((link.hasDropdown === 'collection' && mobileCollectionOpen) || (link.hasDropdown === 'atelier' && mobileAtelierOpen)) && (
-                        <motion.div
-                          initial={{ height: 0, opacity: 0 }}
-                          animate={{ height: "auto", opacity: 1 }}
-                          exit={{ height: 0, opacity: 0 }}
-                          style={{ overflow: "hidden", display: "flex", flexDirection: "column", gap: "1.2rem" }}
+            {/* Nav items */}
+            <nav style={{ flex: 1, display: "flex", flexDirection: "column", gap: "0" }}>
+              {navLinks.map((link, i) => (
+                <div
+                  key={link.label}
+                  style={{
+                    borderBottom: "1px solid var(--border-light)",
+                    padding: "1.4rem 0",
+                  }}
+                >
+                  <motion.div
+                    initial={{ opacity: 0, x: 20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: 0.15 + i * 0.07, ease: [0.25, 0.46, 0.45, 0.94] }}
+                    style={{ display: "flex", flexDirection: "column" }}
+                  >
+                    <div
+                      onClick={() => {
+                        if (link.hasDropdown === "collection") {
+                          setMobileCollectionOpen(!mobileCollectionOpen);
+                        } else if (link.hasDropdown === "atelier") {
+                          setMobileAtelierOpen(!mobileAtelierOpen);
+                        } else {
+                          setMenuOpen(false);
+                          window.location.href = link.href;
+                        }
+                      }}
+                      className="mobile-nav-item"
+                      style={{ justifyContent: "space-between" }}
+                    >
+                      <span>{link.label}</span>
+                      {link.hasDropdown && (
+                        <motion.span
+                          animate={{
+                            rotate:
+                              (link.hasDropdown === "collection" ? mobileCollectionOpen : mobileAtelierOpen) ? 45 : 0,
+                          }}
+                          transition={{ duration: 0.25 }}
+                          style={{
+                            fontSize: "1rem",
+                            color: "var(--text-meta)",
+                            display: "inline-block",
+                          }}
                         >
-                          {(link.hasDropdown === 'collection' ? collections : atelierLinks).map((col) => (
-                            <a
-                              key={col.name}
-                              href={col.href}
-                              onClick={() => setMenuOpen(false)}
-                              style={{
-                                fontFamily: "var(--font-fashion)",
-                                fontSize: "0.85rem",
-                                fontWeight: 500,
-                                color: "var(--text-secondary)",
-                                textDecoration: "none",
-                                letterSpacing: "0.2em",
-                                textTransform: "uppercase"
-                              }}
-                            >
-                              {col.name}
-                            </a>
-                          ))}
-                        </motion.div>
+                          +
+                        </motion.span>
                       )}
-                    </AnimatePresence>
-                  )}
-                </motion.div>
+                    </div>
+
+                    {link.hasDropdown && (
+                      <AnimatePresence>
+                        {((link.hasDropdown === "collection" && mobileCollectionOpen) ||
+                          (link.hasDropdown === "atelier" && mobileAtelierOpen)) && (
+                          <motion.div
+                            initial={{ height: 0, opacity: 0 }}
+                            animate={{ height: "auto", opacity: 1 }}
+                            exit={{ height: 0, opacity: 0 }}
+                            transition={{ duration: 0.3 }}
+                            style={{
+                              overflow: "hidden",
+                              display: "flex",
+                              flexDirection: "column",
+                              gap: "0.9rem",
+                              paddingTop: "1.2rem",
+                            }}
+                          >
+                            {(link.hasDropdown === "collection" ? collections : atelierLinks).map((col) => (
+                              <a
+                                key={col.name}
+                                href={col.href}
+                                onClick={() => setMenuOpen(false)}
+                                style={{
+                                  fontFamily: "var(--font-fashion)",
+                                  fontSize: "0.72rem",
+                                  fontWeight: 500,
+                                  color: "var(--text-secondary)",
+                                  textDecoration: "none",
+                                  letterSpacing: "0.22em",
+                                  textTransform: "uppercase",
+                                  display: "flex",
+                                  alignItems: "center",
+                                  gap: "0.6rem",
+                                }}
+                              >
+                                <span
+                                  style={{
+                                    width: "16px",
+                                    height: "1px",
+                                    background: "var(--accent-brown)",
+                                    display: "inline-block",
+                                    opacity: 0.5,
+                                  }}
+                                />
+                                {col.name}
+                              </a>
+                            ))}
+                          </motion.div>
+                        )}
+                      </AnimatePresence>
+                    )}
+                  </motion.div>
+                </div>
+              ))}
+            </nav>
+
+            {/* Mobile menu footer */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.5 }}
+              style={{
+                padding: "2rem 0",
+                borderTop: "1px solid var(--border-light)",
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "flex-end",
+              }}
+            >
+              <div>
+                <p
+                  style={{
+                    fontFamily: "var(--font-fashion)",
+                    fontSize: "0.5rem",
+                    letterSpacing: "0.25em",
+                    textTransform: "uppercase",
+                    color: "var(--text-meta)",
+                    marginBottom: "0.4rem",
+                  }}
+                >
+                  Maison ZIRUVA
+                </p>
+                <p
+                  style={{
+                    fontFamily: "var(--font-fashion)",
+                    fontSize: "0.5rem",
+                    letterSpacing: "0.18em",
+                    color: "var(--text-meta)",
+                    opacity: 0.7,
+                  }}
+                >
+                  London, United Kingdom
+                </p>
               </div>
-            ))}
+              <a
+                href="#collection"
+                onClick={() => setMenuOpen(false)}
+                style={{
+                  fontFamily: "var(--font-fashion)",
+                  fontSize: "0.58rem",
+                  letterSpacing: "0.28em",
+                  textTransform: "uppercase",
+                  color: "var(--cream)",
+                  background: "var(--text-primary)",
+                  padding: "0.7rem 1.6rem",
+                  textDecoration: "none",
+                }}
+              >
+                Shop Now
+              </a>
+            </motion.div>
           </motion.div>
         )}
       </AnimatePresence>
-
-      <style>{`
-        @media (min-width: 768px) {
-          .hidden-mobile { display: flex !important; }
-          .show-mobile { display: none !important; }
-        }
-        @media (max-width: 767px) {
-          .hidden-mobile { display: none !important; }
-          .show-mobile { display: flex !important; }
-        }
-      `}</style>
     </>
   );
 }

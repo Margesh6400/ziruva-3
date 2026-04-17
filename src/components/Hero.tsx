@@ -8,16 +8,16 @@ const staggerContainer: Variants = {
   hidden: { opacity: 0 },
   show: {
     opacity: 1,
-    transition: { staggerChildren: 0.16, delayChildren: 0.4 },
+    transition: { staggerChildren: 0.18, delayChildren: 0.5 },
   },
 };
 
 const fadeUp: Variants = {
-  hidden: { opacity: 0, y: 36 },
+  hidden: { opacity: 0, y: 28 },
   show: {
     opacity: 1,
     y: 0,
-    transition: { duration: 0.9, ease: [0.25, 0.46, 0.45, 0.94] },
+    transition: { duration: 1, ease: [0.25, 0.46, 0.45, 0.94] },
   },
 };
 
@@ -28,8 +28,9 @@ export default function Hero() {
     offset: ["start start", "end start"],
   });
 
-  const imageY = useTransform(scrollYProgress, [0, 1], [0, 80]);
-  const textOpacity = useTransform(scrollYProgress, [0, 0.6], [1, 0]);
+  const imageY = useTransform(scrollYProgress, [0, 1], [0, 70]);
+  const textOpacity = useTransform(scrollYProgress, [0, 0.55], [1, 0]);
+  const textY = useTransform(scrollYProgress, [0, 0.55], [0, -20]);
 
   return (
     <section
@@ -42,17 +43,17 @@ export default function Hero() {
         overflow: "hidden",
         display: "flex",
         flexDirection: "column",
-        paddingTop: "100px", // Reduced offset for tighter editorial feel
+        paddingTop: "90px",
       }}
     >
-      {/* Warm radial glow */}
+      {/* Warm radial atmosphere */}
       <div
         style={{
           position: "absolute",
           inset: 0,
           pointerEvents: "none",
           background:
-            "radial-gradient(ellipse 55% 65% at 72% 55%, rgba(139,107,78,0.05) 0%, transparent 68%)",
+            "radial-gradient(ellipse 60% 70% at 75% 50%, rgba(139,107,78,0.06) 0%, transparent 65%)",
           zIndex: 1,
         }}
       />
@@ -60,27 +61,27 @@ export default function Hero() {
       <div
         style={{
           display: "grid",
-          gridTemplateColumns: "1fr 1fr",
+          gridTemplateColumns: "1.18fr 1fr",
           width: "100%",
-          flex: 1, // Fill remaining height
+          flex: 1,
         }}
         className="hero-grid"
       >
-        {/* ── LEFT: Editorial Imagery ── */}
+        {/* ── LEFT: Editorial Image ── */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ duration: 1.2, ease: "easeOut" }}
+          transition={{ duration: 1.4, ease: "easeOut" }}
           style={{ position: "relative", width: "100%", height: "100%", overflow: "hidden" }}
           className="hero-editorial-image"
         >
           <motion.div
             style={{
-              scale: 1.1,
+              scale: 1.08,
               y: imageY,
               width: "100%",
               height: "100%",
-              position: "relative"
+              position: "relative",
             }}
           >
             <Image
@@ -92,93 +93,169 @@ export default function Hero() {
             />
           </motion.div>
 
-          {/* Micro Badge Overlay */}
-          <div style={{
-            position: "absolute",
-            bottom: "3rem",
-            left: "3rem",
-            background: "var(--text-primary)",
-            color: "var(--cream)",
-            padding: "0.6rem 1.2rem",
-            fontFamily: "var(--font-fashion)",
-            fontSize: "0.55rem",
-            letterSpacing: "0.25em",
-            zIndex: 10
-          }}>
-            CAMPAIGN SS.25
-          </div>
+          {/* Subtle bottom gradient for badge legibility */}
+          <div
+            style={{
+              position: "absolute",
+              inset: 0,
+              background: "linear-gradient(to top, rgba(26,24,3,0.35) 0%, transparent 40%)",
+              zIndex: 2,
+              pointerEvents: "none",
+            }}
+          />
+
+          {/* Campaign Badge */}
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 1.6, duration: 0.8 }}
+            style={{
+              position: "absolute",
+              bottom: "2.5rem",
+              left: "2.5rem",
+              zIndex: 10,
+              display: "flex",
+              alignItems: "center",
+              gap: "0.9rem",
+            }}
+          >
+            <div
+              style={{
+                width: "28px",
+                height: "1px",
+                background: "rgba(252,248,240,0.5)",
+              }}
+            />
+            <span
+              style={{
+                fontFamily: "var(--font-fashion)",
+                fontSize: "0.52rem",
+                letterSpacing: "0.35em",
+                textTransform: "uppercase",
+                color: "rgba(252,248,240,0.75)",
+              }}
+            >
+              Campaign SS.25
+            </span>
+          </motion.div>
         </motion.div>
 
-        {/* ── RIGHT: Branding & Context ── */}
-        <div style={{
-          position: "relative",
-          display: "flex",
-          alignItems: "center",
-          padding: "0 10%",
-          zIndex: 2,
-          background: "var(--cream)"
-        }}>
+        {/* ── RIGHT: Branding & Copy ── */}
+        <div
+          style={{
+            position: "relative",
+            display: "flex",
+            alignItems: "center",
+            padding: "0 9% 0 8%",
+            zIndex: 2,
+            background: "var(--cream)",
+          }}
+        >
+          {/* Vertical separator */}
+          <motion.div
+            initial={{ scaleY: 0 }}
+            animate={{ scaleY: 1 }}
+            transition={{ duration: 1.2, delay: 0.8, ease: [0.25, 0.46, 0.45, 0.94] }}
+            style={{
+              position: "absolute",
+              left: 0,
+              top: "15%",
+              bottom: "15%",
+              width: "1px",
+              background: "var(--border-light)",
+              transformOrigin: "top",
+            }}
+          />
+
           <motion.div
             variants={staggerContainer}
             initial="hidden"
             animate="show"
-            style={{ opacity: textOpacity }}
+            style={{ opacity: textOpacity, y: textY, width: "100%" }}
           >
-            <motion.div variants={fadeUp} style={{ marginBottom: "1.5rem" }}>
+            {/* Eyebrow */}
+            <motion.div
+              variants={fadeUp}
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: "1rem",
+                marginBottom: "2rem",
+              }}
+            >
+              <div
+                style={{
+                  width: "24px",
+                  height: "1px",
+                  background: "var(--accent-brown)",
+                }}
+              />
               <span
                 style={{
                   fontFamily: "var(--font-fashion)",
-                  fontSize: "0.65rem",
+                  fontSize: "0.58rem",
                   fontWeight: 500,
-                  letterSpacing: "0.45em",
+                  letterSpacing: "0.42em",
                   textTransform: "uppercase",
-                  color: "var(--text-secondary)",
+                  color: "var(--text-meta)",
                 }}
               >
                 Maison ZIRUVA — London
               </span>
             </motion.div>
 
-            <motion.h2
+            {/* Headline */}
+            <motion.h1
               variants={fadeUp}
               style={{
                 fontFamily: "'Cormorant Garamond', serif",
-                fontSize: "clamp(3.5rem, 6vw, 6.5rem)",
+                fontSize: "clamp(3.2rem, 5.5vw, 6rem)",
                 fontWeight: 300,
-                lineHeight: 1,
+                lineHeight: 1.02,
                 color: "var(--text-primary)",
-                marginBottom: "2rem",
+                letterSpacing: "-0.01em",
+                marginBottom: "2.2rem",
               }}
             >
               Timeless
               <br />
-              <span style={{ color: "var(--accent-brown)" }}>Luxury,</span>
+              <em
+                style={{
+                  color: "var(--accent-brown)",
+                  fontStyle: "italic",
+                  fontWeight: 300,
+                }}
+              >
+                Luxury,
+              </em>
               <br />
               Crafted
               <br />
               for You.
-            </motion.h2>
+            </motion.h1>
 
+            {/* Body */}
             <motion.p
               variants={fadeUp}
               style={{
                 fontFamily: "var(--font-sans)",
-                fontSize: "0.88rem",
+                fontSize: "0.86rem",
                 fontWeight: 300,
-                lineHeight: 1.85,
+                lineHeight: 1.9,
                 color: "var(--text-secondary)",
-                maxWidth: "380px",
+                maxWidth: "340px",
                 marginBottom: "3rem",
-                letterSpacing: "0.01em",
+                letterSpacing: "0.012em",
               }}
             >
-              Exquisite leather handbags, designed in the UK. Each piece
-              is a quiet statement of artisan craftsmanship and enduring elegance.
+              Exquisite leather handbags, designed in the UK. Each piece is a
+              quiet statement of artisan craftsmanship and enduring elegance.
             </motion.p>
 
+            {/* CTA Row */}
             <motion.div
               variants={fadeUp}
-              style={{ display: "flex", gap: "2rem", marginBottom: "5rem" }}
+              style={{ display: "flex", gap: "1.5rem", marginBottom: "4.5rem" }}
             >
               <a href="#collection" className="btn-primary">
                 <span>Shop Collection</span>
@@ -188,22 +265,48 @@ export default function Hero() {
               </a>
             </motion.div>
 
-            {/* Micro Stats Layer */}
+            {/* Micro Stats */}
             <motion.div
               variants={fadeUp}
               style={{
                 display: "flex",
-                gap: "5rem",
-                opacity: 0.8
+                gap: "0",
               }}
             >
               {[
-                { label: "COLLECTION", val: "SS25 Series" },
-                { label: "ARTISANAL", val: "Hand-Stitched" }
-              ].map(item => (
-                <div key={item.label}>
-                  <p style={{ fontFamily: "var(--font-fashion)", fontSize: "0.5rem", letterSpacing: "0.2em", color: "var(--text-secondary)", marginBottom: "0.5rem" }}>{item.label}</p>
-                  <p style={{ fontFamily: "var(--font-sans)", fontSize: "0.9rem", fontWeight: 400 }}>{item.val}</p>
+                { label: "Collection", val: "SS25 Series" },
+                { label: "Artisanal", val: "Hand-Stitched" },
+              ].map((item, i) => (
+                <div
+                  key={item.label}
+                  style={{
+                    paddingRight: i === 0 ? "3rem" : 0,
+                    paddingLeft: i === 1 ? "3rem" : 0,
+                    borderLeft: i === 1 ? "1px solid var(--border-light)" : "none",
+                  }}
+                >
+                  <p
+                    style={{
+                      fontFamily: "var(--font-fashion)",
+                      fontSize: "0.48rem",
+                      letterSpacing: "0.25em",
+                      textTransform: "uppercase",
+                      color: "var(--text-meta)",
+                      marginBottom: "0.45rem",
+                    }}
+                  >
+                    {item.label}
+                  </p>
+                  <p
+                    style={{
+                      fontFamily: "var(--font-sans)",
+                      fontSize: "0.85rem",
+                      fontWeight: 400,
+                      color: "var(--text-secondary)",
+                    }}
+                  >
+                    {item.val}
+                  </p>
                 </div>
               ))}
             </motion.div>
@@ -213,11 +316,8 @@ export default function Hero() {
 
       <style>{`
         @media (max-width: 1024px) {
-          .hero-grid { grid-template-columns: 1fr !important; gap: 4rem !important; }
-          .hero-editorial-image { height: 50vh !important; }
-        }
-        @media (max-width: 860px) {
-          .hide-on-mobile { display: none !important; }
+          .hero-grid { grid-template-columns: 1fr !important; }
+          .hero-editorial-image { height: 55vh !important; }
         }
         @media (max-width: 640px) {
           .hero-grid > div:last-child {
@@ -230,26 +330,26 @@ export default function Hero() {
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ delay: 2.2 }}
+        transition={{ delay: 2.4, duration: 0.8 }}
         style={{
           position: "absolute",
-          bottom: "2.5rem",
-          left: "50%",
-          transform: "translateX(-50%)",
+          bottom: "2.2rem",
+          right: "3.5rem",
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
-          gap: "0.75rem",
-          zIndex: 20
+          gap: "0.7rem",
+          zIndex: 20,
         }}
       >
         <span
           style={{
             fontFamily: "var(--font-fashion)",
-            fontSize: "0.5rem",
+            fontSize: "0.45rem",
             letterSpacing: "0.35em",
             textTransform: "uppercase",
             color: "var(--text-meta)",
+            writingMode: "vertical-rl",
           }}
         >
           Scroll
@@ -257,12 +357,18 @@ export default function Hero() {
         <div
           style={{
             width: "1px",
-            height: "40px",
+            height: "44px",
             background:
               "linear-gradient(to bottom, var(--accent-brown), transparent)",
-            animation: "float 2s ease-in-out infinite",
+            animation: "scrollPulse 2.2s ease-in-out infinite",
           }}
         />
+        <style>{`
+          @keyframes scrollPulse {
+            0%, 100% { opacity: 0.4; transform: scaleY(1); }
+            50% { opacity: 1; transform: scaleY(1.15); }
+          }
+        `}</style>
       </motion.div>
     </section>
   );

@@ -107,7 +107,7 @@ export default function HorizontalScroll() {
           >
             <div
               style={{
-                background: "var(--surface)",
+                background: "var(--cream)",
                 borderRadius: "1.25rem",
                 overflow: "hidden",
                 position: "relative",

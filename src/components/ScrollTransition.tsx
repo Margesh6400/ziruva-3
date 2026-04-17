@@ -20,7 +20,7 @@ export default function ScrollTransition() {
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-        background: "var(--surface)",
+        background: "var(--cream)",
         position: "relative",
         overflow: "hidden",
         padding: "3rem 0"
