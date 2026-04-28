@@ -20,7 +20,7 @@ function ProductCard({ product, index }: { product: Product; index: number }) {
   };
 
   return (
-    <Link href={`/product/${product.id}`} style={{ textDecoration: "none" }}>
+    <Link href={`/product/${product.id}`} style={{ textDecoration: "none", display: "block" }}>
       <motion.div
         initial={{ opacity: 0, y: 50 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -37,54 +37,49 @@ function ProductCard({ product, index }: { product: Product; index: number }) {
           overflow: "hidden",
           cursor: "pointer",
           position: "relative",
-          transform: `perspective(1000px) rotateX(${tilt.y}deg) rotateY(${tilt.x}deg)`,
-          transition: "transform 0.4s ease, box-shadow 0.5s ease",
+          transform: `perspective(1000px) rotateX(${tilt.y}deg) rotateY(${tilt.x}deg) translateY(${hovered ? -6 : 0}px)`,
+          transition: "transform 0.45s cubic-bezier(0.23,1,0.32,1), box-shadow 0.45s ease",
           boxShadow: hovered
-            ? "0 32px 64px rgba(43,43,43,0.12)"
-            : "0 4px 24px rgba(43,43,43,0.05)",
+            ? "0 36px 72px rgba(43,43,43,0.14), 0 8px 20px rgba(43,43,43,0.06)"
+            : "0 4px 24px rgba(43,43,43,0.06)",
         }}
       >
         {/* Tier badge */}
-        <div style={{ position: "absolute", top: "1.6rem", left: "1.8rem", zIndex: 10 }}>
+        <div style={{ position: "absolute", top: "1.5rem", left: "1.6rem", zIndex: 10 }}>
           <span
             style={{
               fontFamily: "var(--font-fashion)",
-              fontSize: "0.58rem",
+              fontSize: "0.56rem",
               fontWeight: 600,
               letterSpacing: "0.28em",
               textTransform: "uppercase",
               color: "white",
-              textShadow: "0 2px 10px rgba(0,0,0,0.2)"
+              textShadow: "0 1px 8px rgba(0,0,0,0.25)",
             }}
           >
             {product.tier}
           </span>
         </div>
 
-        {/* Image Container */}
-        <div
-          style={{
-            height: "400px",
-            position: "relative",
-            overflow: "hidden",
-          }}
-        >
-          {/* Hover-zoom image */}
+        {/* Image Container — aspect-ratio based so proportions hold on all screens */}
+        <div className="card-img-wrap" style={{ position: "relative", paddingTop: "115%", overflow: "hidden" }}>
+
+          {/* Zoom wrapper */}
           <motion.div
             animate={{
-              scale: hovered ? 1.1 : 1,
-              transition: { duration: 1.2, ease: [0.22, 1, 0.36, 1] }
+              scale: hovered ? 1.07 : 1,
+              transition: { duration: 1.3, ease: [0.22, 1, 0.36, 1] },
             }}
-            style={{ width: "100%", height: "100%", position: "relative" }}
+            style={{ position: "absolute", inset: 0 }}
           >
             <Image
               src={product.image}
               alt={product.alt}
               fill
-              sizes="(max-width: 768px) 100vw, 33vw"
+              sizes="(max-width: 560px) 100vw, (max-width: 860px) 50vw, 33vw"
               style={{
                 objectFit: "cover",
-                filter: hovered ? "none" : "brightness(0.96)",
+                filter: hovered ? "brightness(1)" : "brightness(0.97)",
                 transition: "filter 0.6s ease",
               }}
             />
@@ -93,107 +88,144 @@ function ProductCard({ product, index }: { product: Product; index: number }) {
                 src={product.variants[1].image}
                 alt={product.variants[1].label}
                 fill
-                sizes="(max-width: 768px) 100vw, 33vw"
+                sizes="(max-width: 560px) 100vw, (max-width: 860px) 50vw, 33vw"
                 style={{
                   objectFit: "cover",
                   opacity: hovered ? 1 : 0,
-                  transition: "opacity 0.6s ease",
-                  filter: hovered ? "none" : "brightness(0.96)",
+                  transition: "opacity 0.65s ease",
                 }}
               />
             )}
           </motion.div>
 
-          {/* Top-down gradient for badge legibility */}
+          {/* Top vignette — badge legibility */}
           <div
             style={{
               position: "absolute",
               inset: 0,
-              background: "linear-gradient(to bottom, rgba(0,0,0,0.15) 0%, transparent 25%)",
+              background: "linear-gradient(to bottom, rgba(0,0,0,0.18) 0%, transparent 28%)",
               pointerEvents: "none",
+              zIndex: 2,
             }}
           />
 
-          {/* Brand Overlay (Subtle) */}
+          {/* Bottom fade — seamlessly blends into info section */}
           <div
             style={{
               position: "absolute",
-              bottom: "1.5rem",
-              right: "1.5rem",
+              bottom: 0,
+              left: 0,
+              right: 0,
+              height: "70px",
+              background: `linear-gradient(to bottom, transparent 0%, ${product.bg} 100%)`,
+              pointerEvents: "none",
               zIndex: 3,
-              opacity: hovered ? 1 : 0.6,
+            }}
+          />
+
+          {/* Maison Ziruva watermark */}
+          <div
+            style={{
+              position: "absolute",
+              bottom: "1.6rem",
+              right: "1.4rem",
+              zIndex: 4,
+              opacity: hovered ? 0.9 : 0.5,
               transition: "opacity 0.4s ease",
             }}
           >
-            <span style={{
-              fontFamily: "'Cormorant Garamond', serif",
-              fontSize: "0.9rem",
-              fontStyle: "italic",
-              color: "white",
-              textShadow: "0 2px 10px rgba(0,0,0,0.1)"
-            }}>
+            <span
+              style={{
+                fontFamily: "'Cormorant Garamond', serif",
+                fontSize: "0.82rem",
+                fontStyle: "italic",
+                color: "white",
+                textShadow: "0 1px 6px rgba(0,0,0,0.18)",
+              }}
+            >
               Maison Ziruva
             </span>
           </div>
         </div>
 
-        {/* Info */}
-        <div style={{ padding: "1.5rem 2rem 2rem" }}>
+        {/* Info section */}
+        <div style={{ padding: "1.25rem 1.75rem 1.75rem" }}>
+
           <p
             style={{
               fontFamily: "var(--font-fashion)",
-              fontSize: "0.6rem",
+              fontSize: "0.58rem",
               fontWeight: 500,
               letterSpacing: "0.3em",
               textTransform: "uppercase",
               color: "var(--accent-brown)",
-              marginBottom: "0.5rem",
+              marginBottom: "0.45rem",
             }}
           >
             {product.collection}
           </p>
+
           <h3
             style={{
               fontFamily: "'Cormorant Garamond', serif",
-              fontSize: "1.5rem",
-              fontWeight: 400,
+              fontSize: "1.65rem",
+              fontWeight: 300,
+              lineHeight: 1.1,
               color: "var(--text-primary)",
-              marginBottom: "1rem",
+              marginBottom: "1.1rem",
             }}
           >
             {product.name}
           </h3>
+
+          {/* Divider */}
+          <div
+            style={{
+              height: "1px",
+              background: "rgba(43,43,43,0.1)",
+              marginBottom: "1rem",
+            }}
+          />
+
           <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
             <p
               style={{
                 fontFamily: "var(--font-sans)",
-                fontSize: "0.85rem",
-                fontWeight: 400,
-                color: "var(--text-secondary)",
+                fontSize: "0.9rem",
+                fontWeight: 500,
+                color: "var(--text-primary)",
+                letterSpacing: "0.02em",
               }}
             >
               {product.price}
             </p>
+
             <motion.button
               whileHover={{ x: 4 }}
               style={{
                 fontFamily: "var(--font-fashion)",
-                fontSize: "0.58rem",
+                fontSize: "0.56rem",
                 fontWeight: 500,
-                letterSpacing: "0.3em",
+                letterSpacing: "0.28em",
                 textTransform: "uppercase",
-                color: "var(--text-primary)",
+                color: "var(--text-secondary)",
                 background: "none",
                 border: "none",
                 cursor: "pointer",
                 display: "flex",
                 alignItems: "center",
-                gap: "0.5rem",
+                gap: "0.45rem",
               }}
             >
               Add to Waitlist
-              <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
-                <path d="M1 6h10M7 2l4 4-4 4" stroke="currentColor" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round" />
+              <svg width="11" height="11" viewBox="0 0 12 12" fill="none">
+                <path
+                  d="M1 6h10M7 2l4 4-4 4"
+                  stroke="currentColor"
+                  strokeWidth="1.1"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
               </svg>
             </motion.button>
           </div>
@@ -222,20 +254,16 @@ export default function FeaturedCollection() {
   return (
     <section
       id="collection"
-      style={{ background: "var(--cream)", padding: "7rem 0" }}
+      className="collection-section"
+      style={{ background: "var(--cream)", padding: "1.5rem 0 8rem" }}
     >
-      <div style={{ maxWidth: "1280px", margin: "0 auto", padding: "0 4rem" }}>
-        {/* Header */}
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            gap: "1rem",
-            marginBottom: "4.5rem",
-          }}
-          className="collection-header"
-        >
-          <div>
+      <div
+        className="collection-container"
+        style={{ maxWidth: "1280px", margin: "0 auto", padding: "0 4rem" }}
+      >
+        {/* Header — editorial two-column on desktop */}
+        <div className="collection-header collection-header-mb">
+          <div className="collection-header-left">
             <motion.span
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -249,47 +277,51 @@ export default function FeaturedCollection() {
                 textTransform: "uppercase",
                 color: "var(--text-secondary)",
                 display: "block",
-                marginBottom: "1rem",
+                marginBottom: "1.1rem",
               }}
             >
               SS25 · Featured Pieces
             </motion.span>
             <motion.h2
+              className="collection-title"
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.9, delay: 0.1 }}
               style={{
                 fontFamily: "'Cormorant Garamond', serif",
-                fontSize: "clamp(2.8rem, 5vw, 4.2rem)",
+                fontSize: "clamp(2.8rem, 4.5vw, 4.8rem)",
                 fontWeight: 300,
-                lineHeight: 1.05,
+                lineHeight: 1.0,
                 color: "var(--text-primary)",
               }}
             >
               The Collection
             </motion.h2>
           </div>
-          <motion.p
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.9, delay: 0.2 }}
-            style={{
-              fontFamily: "var(--font-sans)",
-              fontSize: "0.84rem",
-              fontWeight: 300,
-              lineHeight: 1.9,
-              color: "var(--text-secondary)",
-              maxWidth: "360px",
-            }}
-          >
-            Each design is created in limited quantities. Once a piece sells
-            out, it is retired forever — a true collector&apos;s object.
-          </motion.p>
+
+          <div className="collection-header-right">
+            <motion.p
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.9, delay: 0.25 }}
+              style={{
+                fontFamily: "var(--font-sans)",
+                fontSize: "0.84rem",
+                fontWeight: 300,
+                lineHeight: 1.95,
+                color: "var(--text-secondary)",
+                maxWidth: "320px",
+              }}
+            >
+              Each design is created in limited quantities. Once a piece sells
+              out, it is retired forever — a true collector&apos;s object.
+            </motion.p>
+          </div>
         </div>
 
-        {/* Grid */}
+        {/* Grid — 3 clean columns */}
         <div
           style={{
             display: "grid",
@@ -298,7 +330,7 @@ export default function FeaturedCollection() {
           }}
           className="products-grid"
         >
-          {products.slice(0, 4).map((p, i) => (
+          {products.slice(0, 3).map((p, i) => (
             <ProductCard key={p.id} product={p} index={i} />
           ))}
         </div>
@@ -309,7 +341,7 @@ export default function FeaturedCollection() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8, delay: 0.3 }}
-          style={{ textAlign: "center", marginTop: "4rem" }}
+          style={{ textAlign: "center", marginTop: "4.5rem" }}
         >
           <Link href="/collection" className="btn-secondary" id="view-all-collection">
             View All Pieces
@@ -318,11 +350,34 @@ export default function FeaturedCollection() {
       </div>
 
       <style>{`
-        @media (max-width: 900px) {
-          .products-grid { grid-template-columns: 1fr 1fr !important; }
+        .collection-header {
+          display: flex;
+          flex-direction: row;
+          align-items: flex-end;
+          justify-content: space-between;
+          gap: 2rem;
         }
-        @media (max-width: 600px) {
-          .products-grid { grid-template-columns: 1fr !important; }
+        .collection-header-mb { margin-bottom: 5rem; }
+        .collection-header-right { padding-bottom: 0.4rem; }
+
+        /* Tablet */
+        @media (max-width: 860px) {
+          .collection-header { flex-direction: column; align-items: flex-start; gap: 1rem; }
+          .collection-header-right { padding-bottom: 0; }
+          .collection-header-mb { margin-bottom: 3rem !important; }
+          .collection-section { padding: 4rem 0 5rem !important; }
+          .collection-container { padding: 0 2rem !important; }
+          .products-grid { grid-template-columns: 1fr 1fr !important; gap: 1.25rem !important; }
+        }
+
+        /* Mobile */
+        @media (max-width: 560px) {
+          .collection-section { padding: 3rem 0 4rem !important; }
+          .collection-container { padding: 0 1.25rem !important; }
+          .collection-title { font-size: 2.2rem !important; }
+          .collection-header-mb { margin-bottom: 2rem !important; }
+          .products-grid { grid-template-columns: 1fr !important; gap: 1rem !important; }
+          .card-img-wrap { padding-top: 90% !important; }
         }
       `}</style>
     </section>

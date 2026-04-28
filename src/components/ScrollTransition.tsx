@@ -23,7 +23,7 @@ export default function ScrollTransition() {
         background: "var(--cream)",
         position: "relative",
         overflow: "hidden",
-        padding: "3rem 0"
+        padding: "6rem 0",   /* equal top & bottom */
       }}
     >
       <div
@@ -39,7 +39,7 @@ export default function ScrollTransition() {
         style={{
           maxWidth: "800px",
           margin: "0 auto",
-          padding: "2rem 4rem",
+          padding: "0 4rem",   /* horizontal only — no extra vertical */
           textAlign: "center",
         }}
       >
@@ -93,7 +93,7 @@ export default function ScrollTransition() {
           viewport={{ once: true }}
           transition={{ duration: 1.2, delay: 0.8 }}
           style={{
-            margin: "2.5rem auto 0",
+            margin: "2.5rem auto 0",   /* matches the 2rem eyebrow gap above */
             height: "1px",
             width: "60px",
             background: "var(--accent-brown)",

@@ -243,9 +243,18 @@ export default function Navbar() {
             boxShadow: !isMobile && scrolled
               ? "0 1px 0 rgba(255,255,255,0.7) inset, 0 4px 24px rgba(43,30,20,0.07), 0 1px 3px rgba(43,30,20,0.04)"
               : "none",
-            border: !isMobile && scrolled ? "1px solid rgba(255,255,255,0.5)" : "none",
-            /* Mobile: clean hairline at bottom */
-            borderBottom: isMobile ? "1px solid rgba(43,43,43,0.08)" : undefined,
+            /* Explicit individual borders — no shorthand/longhand conflict */
+            borderTopWidth: "1px",
+            borderRightWidth: "1px",
+            borderLeftWidth: "1px",
+            borderBottomWidth: "1px",
+            borderStyle: "solid",
+            borderTopColor: !isMobile && scrolled ? "rgba(255,255,255,0.5)" : "transparent",
+            borderRightColor: !isMobile && scrolled ? "rgba(255,255,255,0.5)" : "transparent",
+            borderLeftColor: !isMobile && scrolled ? "rgba(255,255,255,0.5)" : "transparent",
+            borderBottomColor: isMobile
+              ? "rgba(43,43,43,0.08)"
+              : scrolled ? "rgba(255,255,255,0.5)" : "transparent",
             transition: "all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94)",
           }}
         >

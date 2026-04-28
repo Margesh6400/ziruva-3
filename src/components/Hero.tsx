@@ -9,21 +9,21 @@ const staggerContainer: Variants = {
   hidden: { opacity: 0 },
   show: {
     opacity: 1,
-    transition: { staggerChildren: 0.18, delayChildren: 0.5 },
+    transition: { staggerChildren: 0.15, delayChildren: 0.4 },
   },
 };
 
 const fadeUp: Variants = {
-  hidden: { opacity: 0, y: 28 },
+  hidden: { opacity: 0, y: 22 },
   show: {
     opacity: 1,
     y: 0,
-    transition: { duration: 1, ease: [0.25, 0.46, 0.45, 0.94] },
+    transition: { duration: 0.9, ease: [0.25, 0.46, 0.45, 0.94] },
   },
 };
 
 /* ─────────────────────────────────────────────
-   MOBILE HERO — full-screen editorial layout
+   MOBILE HERO
 ───────────────────────────────────────────── */
 function MobileHero() {
   return (
@@ -32,17 +32,18 @@ function MobileHero() {
       style={{
         position: "relative",
         width: "100%",
-        height: "100svh",
-        minHeight: "600px",
+        marginTop: "56px",                    /* push below fixed navbar */
+        height: "calc(100svh - 56px)",        /* fill remaining viewport */
+        minHeight: "520px",
         overflow: "hidden",
         background: "var(--cream)",
       }}
     >
       {/* Full-bleed image */}
       <motion.div
-        initial={{ scale: 1.06, opacity: 0 }}
-        animate={{ scale: 1, opacity: 0.55 }}
-        transition={{ duration: 1.6, ease: [0.25, 0.46, 0.45, 0.94] }}
+        initial={{ scale: 1.05, opacity: 0 }}
+        animate={{ scale: 1, opacity: 0.58 }}
+        transition={{ duration: 1.5, ease: [0.25, 0.46, 0.45, 0.94] }}
         style={{ position: "absolute", inset: 0 }}
       >
         <Image
@@ -50,57 +51,51 @@ function MobileHero() {
           alt="ZIRUVA SS25 Campaign — Luxury leather handbags"
           fill
           priority
-          style={{ objectFit: "cover", objectPosition: "center top" }}
+          style={{ objectFit: "cover", objectPosition: "center 15%" }}
         />
       </motion.div>
 
-      {/* Gradient scrim — strong enough to read all text */}
+      {/* Scrim — dark at bottom for text, light at top */}
       <div
         style={{
           position: "absolute",
           inset: 0,
           background:
-            "linear-gradient(to bottom, rgba(26,20,12,0.12) 0%, transparent 25%, rgba(14,10,4,0.55) 55%, rgba(14,10,4,0.92) 80%, rgba(14,10,4,0.97) 100%)",
+            "linear-gradient(to bottom, rgba(14,10,4,0.08) 0%, transparent 22%, rgba(14,10,4,0.5) 52%, rgba(14,10,4,0.93) 78%, rgba(14,10,4,0.98) 100%)",
           zIndex: 2,
         }}
       />
 
-      {/* Campaign badge — top-left */}
+      {/* Campaign badge — just below navbar */}
       <motion.div
-        initial={{ opacity: 0, x: -12 }}
+        initial={{ opacity: 0, x: -10 }}
         animate={{ opacity: 1, x: 0 }}
-        transition={{ delay: 1.2, duration: 0.7 }}
+        transition={{ delay: 1.0, duration: 0.6 }}
         style={{
           position: "absolute",
-          top: "72px",   /* clears fixed navbar */
+          top: "1.2rem",
           left: "1.5rem",
           zIndex: 10,
           display: "flex",
           alignItems: "center",
-          gap: "0.7rem",
+          gap: "0.65rem",
         }}
       >
-        <div
-          style={{
-            width: "22px",
-            height: "1px",
-            background: "rgba(252,248,240,0.45)",
-          }}
-        />
+        <div style={{ width: "18px", height: "1px", background: "rgba(252,248,240,0.4)" }} />
         <span
           style={{
             fontFamily: "var(--font-fashion)",
-            fontSize: "0.48rem",
+            fontSize: "0.46rem",
             letterSpacing: "0.38em",
             textTransform: "uppercase",
-            color: "rgba(252,248,240,0.65)",
+            color: "rgba(252,248,240,0.6)",
           }}
         >
           Campaign SS.25
         </span>
       </motion.div>
 
-      {/* Bottom content block */}
+      {/* Bottom content */}
       <motion.div
         initial="hidden"
         animate="show"
@@ -111,36 +106,23 @@ function MobileHero() {
           left: 0,
           right: 0,
           zIndex: 10,
-          /* safe-area for notch devices, fallback to 2.2rem */
-          padding: "0 1.75rem calc(2.2rem + env(safe-area-inset-bottom, 0px))",
+          padding: "0 1.6rem calc(1.8rem + env(safe-area-inset-bottom, 0px))",
         }}
       >
         {/* Eyebrow */}
         <motion.div
           variants={fadeUp}
-          style={{
-            display: "flex",
-            alignItems: "center",
-            gap: "0.75rem",
-            marginBottom: "1rem",
-          }}
+          style={{ display: "flex", alignItems: "center", gap: "0.65rem", marginBottom: "0.75rem" }}
         >
-          <div
-            style={{
-              width: "20px",
-              height: "1px",
-              background: "var(--accent-brown)",
-              opacity: 0.8,
-            }}
-          />
+          <div style={{ width: "18px", height: "1px", background: "var(--accent-brown)", opacity: 0.8 }} />
           <span
             style={{
               fontFamily: "var(--font-fashion)",
-              fontSize: "0.5rem",
+              fontSize: "0.48rem",
               fontWeight: 500,
-              letterSpacing: "0.4em",
+              letterSpacing: "0.38em",
               textTransform: "uppercase",
-              color: "rgba(252,248,240,0.85)",
+              color: "rgba(252,248,240,0.82)",
             }}
           >
             Maison ZIRUVA — London
@@ -152,12 +134,12 @@ function MobileHero() {
           variants={fadeUp}
           style={{
             fontFamily: "'Cormorant Garamond', serif",
-            fontSize: "clamp(2.8rem, 11vw, 4.2rem)",
+            fontSize: "clamp(2.6rem, 10.5vw, 3.8rem)",
             fontWeight: 300,
-            lineHeight: 1.05,
+            lineHeight: 1.06,
             color: "var(--cream)",
             letterSpacing: "-0.01em",
-            marginBottom: "1.1rem",
+            marginBottom: "0.85rem",
           }}
         >
           Timeless{" "}
@@ -166,7 +148,7 @@ function MobileHero() {
               color: "#f0d49a",
               fontStyle: "italic",
               fontWeight: 300,
-              textShadow: "0 2px 12px rgba(0,0,0,0.55)",
+              textShadow: "0 2px 14px rgba(0,0,0,0.6)",
             }}
           >
             Luxury,
@@ -180,42 +162,37 @@ function MobileHero() {
           variants={fadeUp}
           style={{
             fontFamily: "var(--font-sans)",
-            fontSize: "0.82rem",
+            fontSize: "0.8rem",
             fontWeight: 300,
-            lineHeight: 1.8,
-            color: "rgba(252,248,240,0.9)",
-            marginBottom: "1.5rem",
+            lineHeight: 1.75,
+            color: "rgba(252,248,240,0.88)",
+            marginBottom: "1.25rem",
             letterSpacing: "0.01em",
-            maxWidth: "320px",
+            maxWidth: "300px",
           }}
         >
-          Exquisite leather handbags, designed in the UK and crafted by
-          master artisans in Italy.
+          Exquisite leather handbags, designed in the UK and crafted by master artisans in Italy.
         </motion.p>
 
-        {/* CTA buttons */}
+        {/* CTA row */}
         <motion.div
           variants={fadeUp}
-          style={{
-            display: "flex",
-            gap: "0.9rem",
-            flexWrap: "wrap",
-          }}
+          style={{ display: "flex", gap: "0.75rem", flexWrap: "wrap" }}
         >
           <a
             href="#collection"
             style={{
               fontFamily: "var(--font-fashion)",
-              fontSize: "0.58rem",
+              fontSize: "0.56rem",
               fontWeight: 500,
-              letterSpacing: "0.3em",
+              letterSpacing: "0.28em",
               textTransform: "uppercase",
               textDecoration: "none",
               color: "var(--cream)",
               background: "var(--accent-brown)",
-              padding: "0.85rem 1.8rem",
+              padding: "0.75rem 1.6rem",
               display: "inline-block",
-              transition: "background 0.35s ease, transform 0.25s ease",
+              transition: "background 0.3s ease",
             }}
             onTouchStart={(e) => ((e.currentTarget as HTMLAnchorElement).style.background = "#a07848")}
             onTouchEnd={(e) => ((e.currentTarget as HTMLAnchorElement).style.background = "var(--accent-brown)")}
@@ -226,14 +203,14 @@ function MobileHero() {
             href="#story"
             style={{
               fontFamily: "var(--font-fashion)",
-              fontSize: "0.58rem",
+              fontSize: "0.56rem",
               fontWeight: 500,
-              letterSpacing: "0.3em",
+              letterSpacing: "0.28em",
               textTransform: "uppercase",
               textDecoration: "none",
-              color: "rgba(252,248,240,0.85)",
-              border: "1px solid rgba(252,248,240,0.3)",
-              padding: "0.85rem 1.6rem",
+              color: "rgba(252,248,240,0.88)",
+              border: "1px solid rgba(252,248,240,0.28)",
+              padding: "0.75rem 1.4rem",
               display: "inline-block",
             }}
           >
@@ -241,15 +218,15 @@ function MobileHero() {
           </a>
         </motion.div>
 
-        {/* Micro stats row */}
+        {/* Micro stats */}
         <motion.div
           variants={fadeUp}
           style={{
             display: "flex",
             gap: "0",
-            marginTop: "1.4rem",
-            paddingTop: "1.1rem",
-            borderTop: "1px solid rgba(252,248,240,0.2)",
+            marginTop: "1.2rem",
+            paddingTop: "1rem",
+            borderTop: "1px solid rgba(252,248,240,0.18)",
           }}
         >
           {[
@@ -259,19 +236,19 @@ function MobileHero() {
             <div
               key={item.label}
               style={{
-                paddingRight: i === 0 ? "2.2rem" : 0,
-                paddingLeft: i === 1 ? "2.2rem" : 0,
+                paddingRight: i === 0 ? "2rem" : 0,
+                paddingLeft: i === 1 ? "2rem" : 0,
                 borderLeft: i === 1 ? "1px solid rgba(252,248,240,0.18)" : "none",
               }}
             >
               <p
                 style={{
                   fontFamily: "var(--font-fashion)",
-                  fontSize: "0.44rem",
-                  letterSpacing: "0.25em",
+                  fontSize: "0.42rem",
+                  letterSpacing: "0.24em",
                   textTransform: "uppercase",
-                  color: "rgba(252,248,240,0.75)",
-                  marginBottom: "0.35rem",
+                  color: "rgba(252,248,240,0.72)",
+                  marginBottom: "0.28rem",
                 }}
               >
                 {item.label}
@@ -279,7 +256,7 @@ function MobileHero() {
               <p
                 style={{
                   fontFamily: "var(--font-sans)",
-                  fontSize: "0.78rem",
+                  fontSize: "0.76rem",
                   fontWeight: 400,
                   color: "rgba(252,248,240,0.95)",
                 }}
@@ -295,25 +272,25 @@ function MobileHero() {
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ delay: 2.6, duration: 0.8 }}
+        transition={{ delay: 2.4, duration: 0.8 }}
         style={{
           position: "absolute",
-          bottom: "2.5rem",
-          right: "1.5rem",
+          bottom: "calc(1.8rem + env(safe-area-inset-bottom, 0px))",
+          right: "1.25rem",
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
-          gap: "0.6rem",
+          gap: "0.5rem",
           zIndex: 20,
         }}
       >
         <span
           style={{
             fontFamily: "var(--font-fashion)",
-            fontSize: "0.42rem",
+            fontSize: "0.4rem",
             letterSpacing: "0.35em",
             textTransform: "uppercase",
-            color: "rgba(252,248,240,0.4)",
+            color: "rgba(252,248,240,0.38)",
             writingMode: "vertical-rl",
           }}
         >
@@ -322,8 +299,8 @@ function MobileHero() {
         <div
           style={{
             width: "1px",
-            height: "38px",
-            background: "linear-gradient(to bottom, rgba(201,169,122,0.8), transparent)",
+            height: "34px",
+            background: "linear-gradient(to bottom, rgba(201,169,122,0.75), transparent)",
             animation: "scrollPulse 2.2s ease-in-out infinite",
           }}
         />
@@ -340,7 +317,7 @@ function MobileHero() {
 }
 
 /* ─────────────────────────────────────────────
-   DESKTOP HERO — original layout, untouched
+   DESKTOP HERO
 ───────────────────────────────────────────── */
 function DesktopHero() {
   const sectionRef = useRef<HTMLElement>(null);
@@ -349,22 +326,23 @@ function DesktopHero() {
     offset: ["start start", "end start"],
   });
 
-  const imageY = useTransform(scrollYProgress, [0, 1], [0, 70]);
-  const textOpacity = useTransform(scrollYProgress, [0, 0.55], [1, 0]);
-  const textY = useTransform(scrollYProgress, [0, 0.55], [0, -20]);
+  const imageY = useTransform(scrollYProgress, [0, 1], [0, 60]);
+  const textOpacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
+  const textY = useTransform(scrollYProgress, [0, 0.5], [0, -18]);
 
   return (
     <section
       ref={sectionRef}
       id="hero"
       style={{
-        minHeight: "100vh",
+        height: "100vh",
         background: "var(--cream)",
         position: "relative",
         overflow: "hidden",
         display: "flex",
         flexDirection: "column",
-        paddingTop: "90px",
+        /* announcement bar (~35px) + navbar (66px) = ~100px clearance */
+        paddingTop: "100px",
       }}
     >
       {/* Warm radial atmosphere */}
@@ -374,7 +352,7 @@ function DesktopHero() {
           inset: 0,
           pointerEvents: "none",
           background:
-            "radial-gradient(ellipse 60% 70% at 75% 50%, rgba(139,107,78,0.06) 0%, transparent 65%)",
+            "radial-gradient(ellipse 60% 70% at 72% 50%, rgba(139,107,78,0.07) 0%, transparent 65%)",
           zIndex: 1,
         }}
       />
@@ -382,7 +360,7 @@ function DesktopHero() {
       <div
         style={{
           display: "grid",
-          gridTemplateColumns: "1.18fr 1fr",
+          gridTemplateColumns: "1.15fr 1fr",
           width: "100%",
           flex: 1,
         }}
@@ -391,12 +369,12 @@ function DesktopHero() {
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ duration: 1.4, ease: "easeOut" }}
+          transition={{ duration: 1.3, ease: "easeOut" }}
           style={{ position: "relative", width: "100%", height: "100%", overflow: "hidden" }}
         >
           <motion.div
             style={{
-              scale: 1.08,
+              scale: 1.07,
               y: imageY,
               width: "100%",
               height: "100%",
@@ -405,19 +383,19 @@ function DesktopHero() {
           >
             <Image
               src="/images/hero-geometric.jpg"
-              alt="ZIRUVA SS25 Campaign — Luxury leather handbags designed in London, UK. Handcrafted by master artisans in Italy using Grade A full-grain leather"
+              alt="ZIRUVA SS25 Campaign — Luxury leather handbags designed in London, UK"
               fill
               priority
               style={{ objectFit: "cover" }}
             />
           </motion.div>
 
-          {/* Subtle bottom gradient for badge legibility */}
+          {/* Bottom gradient */}
           <div
             style={{
               position: "absolute",
               inset: 0,
-              background: "linear-gradient(to top, rgba(26,24,3,0.35) 0%, transparent 40%)",
+              background: "linear-gradient(to top, rgba(26,24,3,0.32) 0%, transparent 38%)",
               zIndex: 2,
               pointerEvents: "none",
             }}
@@ -425,30 +403,24 @@ function DesktopHero() {
 
           {/* Campaign Badge */}
           <motion.div
-            initial={{ opacity: 0, y: 10 }}
+            initial={{ opacity: 0, y: 8 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 1.6, duration: 0.8 }}
+            transition={{ delay: 1.4, duration: 0.7 }}
             style={{
               position: "absolute",
-              bottom: "2.5rem",
-              left: "2.5rem",
+              bottom: "2rem",
+              left: "2rem",
               zIndex: 10,
               display: "flex",
               alignItems: "center",
-              gap: "0.9rem",
+              gap: "0.85rem",
             }}
           >
-            <div
-              style={{
-                width: "28px",
-                height: "1px",
-                background: "rgba(252,248,240,0.5)",
-              }}
-            />
+            <div style={{ width: "26px", height: "1px", background: "rgba(252,248,240,0.5)" }} />
             <span
               style={{
                 fontFamily: "var(--font-fashion)",
-                fontSize: "0.52rem",
+                fontSize: "0.5rem",
                 letterSpacing: "0.35em",
                 textTransform: "uppercase",
                 color: "rgba(252,248,240,0.75)",
@@ -465,7 +437,7 @@ function DesktopHero() {
             position: "relative",
             display: "flex",
             alignItems: "center",
-            padding: "0 9% 0 8%",
+            padding: "0 8% 0 7%",
             zIndex: 2,
             background: "var(--cream)",
           }}
@@ -474,12 +446,12 @@ function DesktopHero() {
           <motion.div
             initial={{ scaleY: 0 }}
             animate={{ scaleY: 1 }}
-            transition={{ duration: 1.2, delay: 0.8, ease: [0.25, 0.46, 0.45, 0.94] }}
+            transition={{ duration: 1.1, delay: 0.7, ease: [0.25, 0.46, 0.45, 0.94] }}
             style={{
               position: "absolute",
               left: 0,
-              top: "15%",
-              bottom: "15%",
+              top: "12%",
+              bottom: "12%",
               width: "1px",
               background: "var(--border-light)",
               transformOrigin: "top",
@@ -495,24 +467,13 @@ function DesktopHero() {
             {/* Eyebrow */}
             <motion.div
               variants={fadeUp}
-              style={{
-                display: "flex",
-                alignItems: "center",
-                gap: "1rem",
-                marginBottom: "2rem",
-              }}
+              style={{ display: "flex", alignItems: "center", gap: "0.9rem", marginBottom: "1.6rem" }}
             >
-              <div
-                style={{
-                  width: "24px",
-                  height: "1px",
-                  background: "var(--accent-brown)",
-                }}
-              />
+              <div style={{ width: "22px", height: "1px", background: "var(--accent-brown)" }} />
               <span
                 style={{
                   fontFamily: "var(--font-fashion)",
-                  fontSize: "0.58rem",
+                  fontSize: "0.56rem",
                   fontWeight: 500,
                   letterSpacing: "0.42em",
                   textTransform: "uppercase",
@@ -523,34 +484,25 @@ function DesktopHero() {
               </span>
             </motion.div>
 
-            {/* Headline */}
+            {/* Headline — tighter, 3-line layout */}
             <motion.h1
               variants={fadeUp}
               style={{
                 fontFamily: "'Cormorant Garamond', serif",
-                fontSize: "clamp(3.2rem, 5.5vw, 6rem)",
+                fontSize: "clamp(3rem, 5.2vw, 5.6rem)",
                 fontWeight: 300,
-                lineHeight: 1.02,
+                lineHeight: 1.04,
                 color: "var(--text-primary)",
                 letterSpacing: "-0.01em",
-                marginBottom: "2.2rem",
+                marginBottom: "1.6rem",
               }}
             >
-              Timeless
-              <br />
-              <em
-                style={{
-                  color: "var(--accent-brown)",
-                  fontStyle: "italic",
-                  fontWeight: 300,
-                }}
-              >
+              Timeless{" "}
+              <em style={{ color: "var(--accent-brown)", fontStyle: "italic", fontWeight: 300 }}>
                 Luxury,
               </em>
               <br />
-              Crafted
-              <br />
-              for You.
+              Crafted for You.
             </motion.h1>
 
             {/* Body */}
@@ -558,23 +510,23 @@ function DesktopHero() {
               variants={fadeUp}
               style={{
                 fontFamily: "var(--font-sans)",
-                fontSize: "0.86rem",
+                fontSize: "0.85rem",
                 fontWeight: 300,
-                lineHeight: 1.9,
+                lineHeight: 1.85,
                 color: "var(--text-secondary)",
-                maxWidth: "340px",
-                marginBottom: "3rem",
+                maxWidth: "320px",
+                marginBottom: "2.2rem",
                 letterSpacing: "0.012em",
               }}
             >
-              Exquisite leather handbags, designed in the UK. Each piece is a
-              quiet statement of artisan craftsmanship and enduring elegance.
+              Exquisite leather handbags, designed in the UK. Each piece is a quiet statement of
+              artisan craftsmanship and enduring elegance.
             </motion.p>
 
             {/* CTA Row */}
             <motion.div
               variants={fadeUp}
-              style={{ display: "flex", gap: "1.5rem", marginBottom: "4.5rem" }}
+              style={{ display: "flex", gap: "1.2rem", marginBottom: "3rem" }}
             >
               <a href="#collection" className="btn-primary">
                 <span>Shop Collection</span>
@@ -585,13 +537,7 @@ function DesktopHero() {
             </motion.div>
 
             {/* Micro Stats */}
-            <motion.div
-              variants={fadeUp}
-              style={{
-                display: "flex",
-                gap: "0",
-              }}
-            >
+            <motion.div variants={fadeUp} style={{ display: "flex", gap: "0" }}>
               {[
                 { label: "Collection", val: "SS25 Series" },
                 { label: "Artisanal", val: "Hand-Stitched" },
@@ -599,19 +545,19 @@ function DesktopHero() {
                 <div
                   key={item.label}
                   style={{
-                    paddingRight: i === 0 ? "3rem" : 0,
-                    paddingLeft: i === 1 ? "3rem" : 0,
+                    paddingRight: i === 0 ? "2.5rem" : 0,
+                    paddingLeft: i === 1 ? "2.5rem" : 0,
                     borderLeft: i === 1 ? "1px solid var(--border-light)" : "none",
                   }}
                 >
                   <p
                     style={{
                       fontFamily: "var(--font-fashion)",
-                      fontSize: "0.48rem",
+                      fontSize: "0.46rem",
                       letterSpacing: "0.25em",
                       textTransform: "uppercase",
                       color: "var(--text-meta)",
-                      marginBottom: "0.45rem",
+                      marginBottom: "0.4rem",
                     }}
                   >
                     {item.label}
@@ -619,7 +565,7 @@ function DesktopHero() {
                   <p
                     style={{
                       fontFamily: "var(--font-sans)",
-                      fontSize: "0.85rem",
+                      fontSize: "0.83rem",
                       fontWeight: 400,
                       color: "var(--text-secondary)",
                     }}
@@ -637,22 +583,22 @@ function DesktopHero() {
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ delay: 2.4, duration: 0.8 }}
+        transition={{ delay: 2.2, duration: 0.8 }}
         style={{
           position: "absolute",
-          bottom: "2.2rem",
-          right: "3.5rem",
+          bottom: "2rem",
+          right: "3rem",
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
-          gap: "0.7rem",
+          gap: "0.6rem",
           zIndex: 20,
         }}
       >
         <span
           style={{
             fontFamily: "var(--font-fashion)",
-            fontSize: "0.45rem",
+            fontSize: "0.44rem",
             letterSpacing: "0.35em",
             textTransform: "uppercase",
             color: "var(--text-meta)",
@@ -664,9 +610,8 @@ function DesktopHero() {
         <div
           style={{
             width: "1px",
-            height: "44px",
-            background:
-              "linear-gradient(to bottom, var(--accent-brown), transparent)",
+            height: "42px",
+            background: "linear-gradient(to bottom, var(--accent-brown), transparent)",
             animation: "scrollPulse 2.2s ease-in-out infinite",
           }}
         />
@@ -682,7 +627,7 @@ function DesktopHero() {
 }
 
 /* ─────────────────────────────────────────────
-   EXPORT — branch by device at runtime
+   EXPORT
 ───────────────────────────────────────────── */
 export default function Hero() {
   const isMobile = useIsMobile();
