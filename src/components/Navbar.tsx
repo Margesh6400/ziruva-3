@@ -152,7 +152,7 @@ export default function Navbar() {
       >
         {/* Announcement Bar */}
         <AnimatePresence>
-          {showAnnouncement && (
+          {showAnnouncement && !isMobile && (
             <motion.div
               initial={{ height: "auto", opacity: 1 }}
               exit={{ height: 0, opacity: 0 }}
@@ -230,16 +230,22 @@ export default function Navbar() {
         {/* ── Main Nav ── */}
         <nav
           style={{
-            background: scrolled ? "rgba(252,248,240,0.9)" : "transparent",
-            backdropFilter: scrolled ? "blur(24px) saturate(180%)" : "none",
-            WebkitBackdropFilter: scrolled ? "blur(24px) saturate(180%)" : "none",
-            borderRadius: scrolled ? "4px" : "0",
-            margin: scrolled ? "0 1.5rem" : "0",
-            transform: scrolled ? "translateY(10px)" : "translateY(0)",
-            boxShadow: scrolled
+            /* Mobile: always solid cream — never transparent */
+            background: isMobile
+              ? "rgba(252,248,240,1)"
+              : scrolled ? "rgba(252,248,240,0.9)" : "transparent",
+            backdropFilter: !isMobile && scrolled ? "blur(24px) saturate(180%)" : "none",
+            WebkitBackdropFilter: !isMobile && scrolled ? "blur(24px) saturate(180%)" : "none",
+            /* Desktop only: floating-pill shape + side margin */
+            borderRadius: !isMobile && scrolled ? "4px" : "0",
+            margin: !isMobile && scrolled ? "0 1.5rem" : "0",
+            transform: !isMobile && scrolled ? "translateY(10px)" : "translateY(0)",
+            boxShadow: !isMobile && scrolled
               ? "0 1px 0 rgba(255,255,255,0.7) inset, 0 4px 24px rgba(43,30,20,0.07), 0 1px 3px rgba(43,30,20,0.04)"
               : "none",
-            border: scrolled ? "1px solid rgba(255,255,255,0.5)" : "none",
+            border: !isMobile && scrolled ? "1px solid rgba(255,255,255,0.5)" : "none",
+            /* Mobile: clean hairline at bottom */
+            borderBottom: isMobile ? "1px solid rgba(43,43,43,0.08)" : undefined,
             transition: "all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94)",
           }}
         >
@@ -247,7 +253,8 @@ export default function Navbar() {
             style={{
               maxWidth: "1320px",
               margin: "0 auto",
-              padding: "0 3.5rem",
+              /* Tighter side padding on mobile so hamburger + logo don't clash */
+              padding: isMobile ? "0 1.25rem" : "0 3.5rem",
               display: "flex",
               alignItems: "center",
               justifyContent: "space-between",

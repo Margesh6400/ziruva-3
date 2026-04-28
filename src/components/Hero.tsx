@@ -3,6 +3,7 @@
 import { useRef } from "react";
 import { motion, useScroll, useTransform, Variants } from "framer-motion";
 import Image from "next/image";
+import { useIsMobile } from "@/hooks/useMediaQuery";
 
 const staggerContainer: Variants = {
   hidden: { opacity: 0 },
@@ -21,7 +22,327 @@ const fadeUp: Variants = {
   },
 };
 
-export default function Hero() {
+/* ─────────────────────────────────────────────
+   MOBILE HERO — full-screen editorial layout
+───────────────────────────────────────────── */
+function MobileHero() {
+  return (
+    <section
+      id="hero"
+      style={{
+        position: "relative",
+        width: "100%",
+        height: "100svh",
+        minHeight: "600px",
+        overflow: "hidden",
+        background: "var(--cream)",
+      }}
+    >
+      {/* Full-bleed image */}
+      <motion.div
+        initial={{ scale: 1.06, opacity: 0 }}
+        animate={{ scale: 1, opacity: 0.55 }}
+        transition={{ duration: 1.6, ease: [0.25, 0.46, 0.45, 0.94] }}
+        style={{ position: "absolute", inset: 0 }}
+      >
+        <Image
+          src="/images/hero-geometric.jpg"
+          alt="ZIRUVA SS25 Campaign — Luxury leather handbags"
+          fill
+          priority
+          style={{ objectFit: "cover", objectPosition: "center top" }}
+        />
+      </motion.div>
+
+      {/* Gradient scrim — strong enough to read all text */}
+      <div
+        style={{
+          position: "absolute",
+          inset: 0,
+          background:
+            "linear-gradient(to bottom, rgba(26,20,12,0.12) 0%, transparent 25%, rgba(14,10,4,0.55) 55%, rgba(14,10,4,0.92) 80%, rgba(14,10,4,0.97) 100%)",
+          zIndex: 2,
+        }}
+      />
+
+      {/* Campaign badge — top-left */}
+      <motion.div
+        initial={{ opacity: 0, x: -12 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ delay: 1.2, duration: 0.7 }}
+        style={{
+          position: "absolute",
+          top: "72px",   /* clears fixed navbar */
+          left: "1.5rem",
+          zIndex: 10,
+          display: "flex",
+          alignItems: "center",
+          gap: "0.7rem",
+        }}
+      >
+        <div
+          style={{
+            width: "22px",
+            height: "1px",
+            background: "rgba(252,248,240,0.45)",
+          }}
+        />
+        <span
+          style={{
+            fontFamily: "var(--font-fashion)",
+            fontSize: "0.48rem",
+            letterSpacing: "0.38em",
+            textTransform: "uppercase",
+            color: "rgba(252,248,240,0.65)",
+          }}
+        >
+          Campaign SS.25
+        </span>
+      </motion.div>
+
+      {/* Bottom content block */}
+      <motion.div
+        initial="hidden"
+        animate="show"
+        variants={staggerContainer}
+        style={{
+          position: "absolute",
+          bottom: 0,
+          left: 0,
+          right: 0,
+          zIndex: 10,
+          /* safe-area for notch devices, fallback to 2.2rem */
+          padding: "0 1.75rem calc(2.2rem + env(safe-area-inset-bottom, 0px))",
+        }}
+      >
+        {/* Eyebrow */}
+        <motion.div
+          variants={fadeUp}
+          style={{
+            display: "flex",
+            alignItems: "center",
+            gap: "0.75rem",
+            marginBottom: "1rem",
+          }}
+        >
+          <div
+            style={{
+              width: "20px",
+              height: "1px",
+              background: "var(--accent-brown)",
+              opacity: 0.8,
+            }}
+          />
+          <span
+            style={{
+              fontFamily: "var(--font-fashion)",
+              fontSize: "0.5rem",
+              fontWeight: 500,
+              letterSpacing: "0.4em",
+              textTransform: "uppercase",
+              color: "rgba(252,248,240,0.85)",
+            }}
+          >
+            Maison ZIRUVA — London
+          </span>
+        </motion.div>
+
+        {/* Headline */}
+        <motion.h1
+          variants={fadeUp}
+          style={{
+            fontFamily: "'Cormorant Garamond', serif",
+            fontSize: "clamp(2.8rem, 11vw, 4.2rem)",
+            fontWeight: 300,
+            lineHeight: 1.05,
+            color: "var(--cream)",
+            letterSpacing: "-0.01em",
+            marginBottom: "1.1rem",
+          }}
+        >
+          Timeless{" "}
+          <em
+            style={{
+              color: "#f0d49a",
+              fontStyle: "italic",
+              fontWeight: 300,
+              textShadow: "0 2px 12px rgba(0,0,0,0.55)",
+            }}
+          >
+            Luxury,
+          </em>
+          <br />
+          Crafted for You.
+        </motion.h1>
+
+        {/* Sub-copy */}
+        <motion.p
+          variants={fadeUp}
+          style={{
+            fontFamily: "var(--font-sans)",
+            fontSize: "0.82rem",
+            fontWeight: 300,
+            lineHeight: 1.8,
+            color: "rgba(252,248,240,0.9)",
+            marginBottom: "1.5rem",
+            letterSpacing: "0.01em",
+            maxWidth: "320px",
+          }}
+        >
+          Exquisite leather handbags, designed in the UK and crafted by
+          master artisans in Italy.
+        </motion.p>
+
+        {/* CTA buttons */}
+        <motion.div
+          variants={fadeUp}
+          style={{
+            display: "flex",
+            gap: "0.9rem",
+            flexWrap: "wrap",
+          }}
+        >
+          <a
+            href="#collection"
+            style={{
+              fontFamily: "var(--font-fashion)",
+              fontSize: "0.58rem",
+              fontWeight: 500,
+              letterSpacing: "0.3em",
+              textTransform: "uppercase",
+              textDecoration: "none",
+              color: "var(--cream)",
+              background: "var(--accent-brown)",
+              padding: "0.85rem 1.8rem",
+              display: "inline-block",
+              transition: "background 0.35s ease, transform 0.25s ease",
+            }}
+            onTouchStart={(e) => ((e.currentTarget as HTMLAnchorElement).style.background = "#a07848")}
+            onTouchEnd={(e) => ((e.currentTarget as HTMLAnchorElement).style.background = "var(--accent-brown)")}
+          >
+            Shop Collection
+          </a>
+          <a
+            href="#story"
+            style={{
+              fontFamily: "var(--font-fashion)",
+              fontSize: "0.58rem",
+              fontWeight: 500,
+              letterSpacing: "0.3em",
+              textTransform: "uppercase",
+              textDecoration: "none",
+              color: "rgba(252,248,240,0.85)",
+              border: "1px solid rgba(252,248,240,0.3)",
+              padding: "0.85rem 1.6rem",
+              display: "inline-block",
+            }}
+          >
+            Our Story
+          </a>
+        </motion.div>
+
+        {/* Micro stats row */}
+        <motion.div
+          variants={fadeUp}
+          style={{
+            display: "flex",
+            gap: "0",
+            marginTop: "1.4rem",
+            paddingTop: "1.1rem",
+            borderTop: "1px solid rgba(252,248,240,0.2)",
+          }}
+        >
+          {[
+            { label: "Collection", val: "SS25 Series" },
+            { label: "Artisanal", val: "Hand-Stitched" },
+          ].map((item, i) => (
+            <div
+              key={item.label}
+              style={{
+                paddingRight: i === 0 ? "2.2rem" : 0,
+                paddingLeft: i === 1 ? "2.2rem" : 0,
+                borderLeft: i === 1 ? "1px solid rgba(252,248,240,0.18)" : "none",
+              }}
+            >
+              <p
+                style={{
+                  fontFamily: "var(--font-fashion)",
+                  fontSize: "0.44rem",
+                  letterSpacing: "0.25em",
+                  textTransform: "uppercase",
+                  color: "rgba(252,248,240,0.75)",
+                  marginBottom: "0.35rem",
+                }}
+              >
+                {item.label}
+              </p>
+              <p
+                style={{
+                  fontFamily: "var(--font-sans)",
+                  fontSize: "0.78rem",
+                  fontWeight: 400,
+                  color: "rgba(252,248,240,0.95)",
+                }}
+              >
+                {item.val}
+              </p>
+            </div>
+          ))}
+        </motion.div>
+      </motion.div>
+
+      {/* Scroll indicator */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 2.6, duration: 0.8 }}
+        style={{
+          position: "absolute",
+          bottom: "2.5rem",
+          right: "1.5rem",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          gap: "0.6rem",
+          zIndex: 20,
+        }}
+      >
+        <span
+          style={{
+            fontFamily: "var(--font-fashion)",
+            fontSize: "0.42rem",
+            letterSpacing: "0.35em",
+            textTransform: "uppercase",
+            color: "rgba(252,248,240,0.4)",
+            writingMode: "vertical-rl",
+          }}
+        >
+          Scroll
+        </span>
+        <div
+          style={{
+            width: "1px",
+            height: "38px",
+            background: "linear-gradient(to bottom, rgba(201,169,122,0.8), transparent)",
+            animation: "scrollPulse 2.2s ease-in-out infinite",
+          }}
+        />
+      </motion.div>
+
+      <style>{`
+        @keyframes scrollPulse {
+          0%, 100% { opacity: 0.4; transform: scaleY(1); }
+          50%       { opacity: 1;   transform: scaleY(1.15); }
+        }
+      `}</style>
+    </section>
+  );
+}
+
+/* ─────────────────────────────────────────────
+   DESKTOP HERO — original layout, untouched
+───────────────────────────────────────────── */
+function DesktopHero() {
   const sectionRef = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({
     target: sectionRef,
@@ -65,7 +386,6 @@ export default function Hero() {
           width: "100%",
           flex: 1,
         }}
-        className="hero-grid"
       >
         {/* ── LEFT: Editorial Image ── */}
         <motion.div
@@ -73,7 +393,6 @@ export default function Hero() {
           animate={{ opacity: 1 }}
           transition={{ duration: 1.4, ease: "easeOut" }}
           style={{ position: "relative", width: "100%", height: "100%", overflow: "hidden" }}
-          className="hero-editorial-image"
         >
           <motion.div
             style={{
@@ -314,18 +633,6 @@ export default function Hero() {
         </div>
       </div>
 
-      <style>{`
-        @media (max-width: 1024px) {
-          .hero-grid { grid-template-columns: 1fr !important; }
-          .hero-editorial-image { height: 55vh !important; }
-        }
-        @media (max-width: 640px) {
-          .hero-grid > div:last-child {
-            display: none !important;
-          }
-        }
-      `}</style>
-
       {/* Scroll indicator */}
       <motion.div
         initial={{ opacity: 0 }}
@@ -372,4 +679,12 @@ export default function Hero() {
       </motion.div>
     </section>
   );
+}
+
+/* ─────────────────────────────────────────────
+   EXPORT — branch by device at runtime
+───────────────────────────────────────────── */
+export default function Hero() {
+  const isMobile = useIsMobile();
+  return isMobile ? <MobileHero /> : <DesktopHero />;
 }
