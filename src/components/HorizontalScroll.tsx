@@ -110,15 +110,10 @@ function MobileHorizontalScroll() {
         `}</style>
 
         {items.map((item, i) => (
-          <motion.div
+          <div
             key={item.id}
-            initial={{ opacity: 0, x: 30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, margin: "-40px" }}
-            transition={{ duration: 0.7, delay: i * 0.08 }}
             style={{
               flexShrink: 0,
-              /* Show ~1.15 cards so user knows it scrolls */
               width: "calc(78vw)",
               maxWidth: "300px",
               scrollSnapAlign: "start",
@@ -246,7 +241,7 @@ function MobileHorizontalScroll() {
                 </div>
               </div>
             </div>
-          </motion.div>
+          </div>
         ))}
       </div>
     </section>
