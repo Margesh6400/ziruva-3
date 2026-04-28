@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { useIsMobile } from "@/hooks/useMediaQuery";
 
 const declarations = [
   {
@@ -41,11 +42,175 @@ const declarations = [
   },
 ];
 
-export default function Manifesto() {
+/* ─────────────────────────────────────────────
+   MOBILE MANIFESTO — vertical stagger list
+───────────────────────────────────────────── */
+function MobileManifesto() {
+  return (
+    <section
+      id="manifesto"
+      style={{
+        background: "var(--cream)",
+        padding: "3rem 0 4rem",
+        overflow: "hidden",
+      }}
+    >
+      {/* Section header */}
+      <motion.div
+        initial={{ opacity: 0, y: 14 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.6 }}
+        style={{ padding: "0 1.5rem", marginBottom: "2.2rem" }}
+      >
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            gap: "0.7rem",
+            marginBottom: "0.9rem",
+          }}
+        >
+          <div
+            style={{ width: "20px", height: "1px", background: "var(--accent-brown)" }}
+          />
+          <span
+            style={{
+              fontFamily: "var(--font-fashion)",
+              fontSize: "0.46rem",
+              fontWeight: 500,
+              letterSpacing: "0.38em",
+              textTransform: "uppercase",
+              color: "var(--text-meta)",
+            }}
+          >
+            The ZIRUVA Principles
+          </span>
+        </div>
+        <h2
+          style={{
+            fontFamily: "'Cormorant Garamond', serif",
+            fontSize: "clamp(2rem, 8vw, 2.8rem)",
+            fontWeight: 300,
+            lineHeight: 1.05,
+            color: "var(--text-primary)",
+          }}
+        >
+          Built on{" "}
+          <em style={{ color: "var(--accent-brown)", fontStyle: "italic" }}>
+            Conviction.
+          </em>
+        </h2>
+      </motion.div>
+
+      {/* Staggered declaration list */}
+      <div style={{ padding: "0 1.5rem" }}>
+        {declarations.map((item, idx) => (
+          <motion.div
+            key={item.id}
+            initial={{ opacity: 0, y: 18 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-30px" }}
+            transition={{
+              duration: 0.65,
+              delay: idx * 0.07,
+              ease: [0.25, 0.46, 0.45, 0.94],
+            }}
+            style={{
+              borderBottom: "1px solid rgba(43,43,43,0.1)",
+              paddingTop: "1.3rem",
+              paddingBottom: "1.3rem",
+            }}
+          >
+            {/* Number + label row */}
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-between",
+                marginBottom: "0.55rem",
+              }}
+            >
+              <span
+                style={{
+                  fontFamily: "var(--font-fashion)",
+                  fontSize: "0.44rem",
+                  letterSpacing: "0.22em",
+                  textTransform: "uppercase",
+                  color: "var(--accent-brown)",
+                  fontWeight: 600,
+                }}
+              >
+                {item.label}
+              </span>
+              <span
+                style={{
+                  fontFamily: "var(--font-fashion)",
+                  fontSize: "0.44rem",
+                  color: "rgba(43,43,43,0.22)",
+                  letterSpacing: "0.05em",
+                }}
+              >
+                {item.id}
+              </span>
+            </div>
+
+            {/* Title */}
+            <h3
+              style={{
+                fontFamily: "'Cormorant Garamond', serif",
+                fontSize: "1.45rem",
+                fontWeight: 300,
+                lineHeight: 1.1,
+                color: "var(--text-primary)",
+                marginBottom: "0.5rem",
+              }}
+            >
+              {item.title}
+            </h3>
+
+            {/* Body */}
+            <p
+              style={{
+                fontFamily: "var(--font-sans)",
+                fontSize: "0.76rem",
+                fontWeight: 300,
+                lineHeight: 1.65,
+                color: "var(--text-secondary)",
+              }}
+            >
+              {item.text}
+            </p>
+          </motion.div>
+        ))}
+      </div>
+
+      {/* Decorative closer */}
+      <motion.div
+        initial={{ scaleX: 0 }}
+        whileInView={{ scaleX: 1 }}
+        viewport={{ once: true }}
+        transition={{ duration: 1, delay: 0.5 }}
+        style={{
+          height: "1px",
+          background: "var(--accent-brown)",
+          width: "48px",
+          margin: "2.2rem auto 0",
+          transformOrigin: "center",
+          opacity: 0.5,
+        }}
+      />
+    </section>
+  );
+}
+
+/* ─────────────────────────────────────────────
+   DESKTOP MANIFESTO — original 3-col grid
+───────────────────────────────────────────── */
+function DesktopManifesto() {
   return (
     <section id="manifesto" style={{ background: "var(--cream)", padding: "1.5rem 0" }}>
       <div style={{ maxWidth: "1280px", margin: "0 auto", padding: "0 4rem" }}>
-        
         {/* Compact Grid */}
         <div
           style={{
@@ -55,7 +220,6 @@ export default function Manifesto() {
             background: "rgba(43,43,43,0.06)",
             border: "1px solid rgba(43,43,43,0.06)",
           }}
-          className="manifesto-grid"
         >
           {declarations.map((item, idx) => (
             <motion.div
@@ -71,63 +235,76 @@ export default function Manifesto() {
                 flexDirection: "column",
                 justifyContent: "space-between",
                 height: "100%",
-                minHeight: "160px"
+                minHeight: "160px",
               }}
             >
               <div>
-                <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "1rem" }}>
-                  <span style={{ 
-                    fontFamily: "var(--font-fashion)", 
-                    fontSize: "0.45rem", 
-                    letterSpacing: "0.2em",
-                    color: "var(--accent-brown)",
-                    fontWeight: 600
-                  }}>
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    marginBottom: "1rem",
+                  }}
+                >
+                  <span
+                    style={{
+                      fontFamily: "var(--font-fashion)",
+                      fontSize: "0.45rem",
+                      letterSpacing: "0.2em",
+                      color: "var(--accent-brown)",
+                      fontWeight: 600,
+                    }}
+                  >
                     {item.label}
                   </span>
-                  <span style={{ 
-                    fontFamily: "var(--font-fashion)", 
-                    fontSize: "0.45rem", 
-                    color: "rgba(43,43,43,0.25)"
-                  }}>
+                  <span
+                    style={{
+                      fontFamily: "var(--font-fashion)",
+                      fontSize: "0.45rem",
+                      color: "rgba(43,43,43,0.25)",
+                    }}
+                  >
                     {item.id}
                   </span>
                 </div>
-                
-                <h3 style={{
-                  fontFamily: "'Cormorant Garamond', serif",
-                  fontSize: "1.2rem",
-                  fontWeight: 400,
-                  color: "var(--text-primary)",
-                  marginBottom: "0.6rem",
-                  lineHeight: 1.1
-                }}>
+
+                <h3
+                  style={{
+                    fontFamily: "'Cormorant Garamond', serif",
+                    fontSize: "1.2rem",
+                    fontWeight: 400,
+                    color: "var(--text-primary)",
+                    marginBottom: "0.6rem",
+                    lineHeight: 1.1,
+                  }}
+                >
                   {item.title}
                 </h3>
               </div>
 
-              <p style={{
-                fontFamily: "var(--font-sans)",
-                fontSize: "0.74rem",
-                fontWeight: 300,
-                lineHeight: 1.5,
-                color: "var(--text-secondary)",
-              }}>
+              <p
+                style={{
+                  fontFamily: "var(--font-sans)",
+                  fontSize: "0.74rem",
+                  fontWeight: 300,
+                  lineHeight: 1.5,
+                  color: "var(--text-secondary)",
+                }}
+              >
                 {item.text}
               </p>
             </motion.div>
           ))}
         </div>
       </div>
-
-      <style>{`
-        @media (max-width: 1024px) {
-          .manifesto-grid { grid-template-columns: repeat(2, 1fr) !important; }
-        }
-        @media (max-width: 640px) {
-          .manifesto-grid { grid-template-columns: 1fr !important; }
-        }
-      `}</style>
     </section>
   );
+}
+
+/* ─────────────────────────────────────────────
+   EXPORT
+───────────────────────────────────────────── */
+export default function Manifesto() {
+  const isMobile = useIsMobile();
+  return isMobile ? <MobileManifesto /> : <DesktopManifesto />;
 }

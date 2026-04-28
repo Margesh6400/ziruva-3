@@ -1,56 +1,178 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { useIsMobile } from "@/hooks/useMediaQuery";
 
 const features = [
   {
     id: 1,
     icon: (
-      <svg width="26" height="26" viewBox="0 0 28 28" fill="none" stroke="currentColor" strokeWidth="1">
+      <svg width="22" height="22" viewBox="0 0 28 28" fill="none" stroke="currentColor" strokeWidth="1">
         <path d="M14 3L25 8v12l-11 5L3 20V8l11-5z" />
         <path d="M14 3v22M3 8l11 5 11-5" strokeLinecap="round" />
       </svg>
     ),
+    num: "01",
     title: "100% Genuine Leather",
     text: "Only the finest full-grain leathers, sourced responsibly from certified tanneries.",
   },
   {
     id: 2,
     icon: (
-      <svg width="26" height="26" viewBox="0 0 28 28" fill="none" stroke="currentColor" strokeWidth="1">
+      <svg width="22" height="22" viewBox="0 0 28 28" fill="none" stroke="currentColor" strokeWidth="1">
         <circle cx="14" cy="14" r="10" />
         <path d="M14 8v6l4 4" strokeLinecap="round" />
       </svg>
     ),
+    num: "02",
     title: "True Scarcity",
     text: "Each design is produced in limited quantities. Once retired, never restocked.",
   },
   {
     id: 3,
     icon: (
-      <svg width="26" height="26" viewBox="0 0 28 28" fill="none" stroke="currentColor" strokeWidth="1">
+      <svg width="22" height="22" viewBox="0 0 28 28" fill="none" stroke="currentColor" strokeWidth="1">
         <path d="M5 14c0-5 4-9 9-9s9 4 9 9" strokeLinecap="round" />
         <path d="M14 14l-4 8M14 14l4 8M10 22h8" strokeLinecap="round" />
       </svg>
     ),
+    num: "03",
     title: "Hand Stitched",
     text: "Assembled by master artisans whose hands carry decades of leatherwork expertise.",
   },
   {
     id: 4,
     icon: (
-      <svg width="26" height="26" viewBox="0 0 28 28" fill="none" stroke="currentColor" strokeWidth="1">
+      <svg width="22" height="22" viewBox="0 0 28 28" fill="none" stroke="currentColor" strokeWidth="1">
         <rect x="4" y="8" width="20" height="14" rx="1" />
         <path d="M10 8V6a4 4 0 018 0v2" strokeLinecap="round" />
         <path d="M11 15l2 2 4-4" strokeLinecap="round" strokeLinejoin="round" />
       </svg>
     ),
+    num: "04",
     title: "Certified Authenticity",
     text: "Every piece ships with a numbered certificate and a handwritten care note.",
   },
 ];
 
-export default function Features() {
+/* ─────────────────────────────────────────────
+   MOBILE FEATURES — simple vertical list
+───────────────────────────────────────────── */
+function MobileFeatures() {
+  return (
+    <section
+      id="features"
+      style={{ background: "var(--cream)", padding: "3rem 1.5rem 4rem" }}
+    >
+      {/* Header */}
+      <motion.div
+        initial={{ opacity: 0, y: 12 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.6 }}
+        style={{ marginBottom: "2rem" }}
+      >
+        <div style={{ display: "flex", alignItems: "center", gap: "0.65rem", marginBottom: "0.7rem" }}>
+          <div style={{ width: "18px", height: "1px", background: "var(--accent-brown)" }} />
+          <span
+            style={{
+              fontFamily: "var(--font-fashion)",
+              fontSize: "0.46rem",
+              letterSpacing: "0.38em",
+              textTransform: "uppercase",
+              color: "var(--text-meta)",
+            }}
+          >
+            The ZIRUVA Promise
+          </span>
+        </div>
+        <h2
+          style={{
+            fontFamily: "'Cormorant Garamond', serif",
+            fontSize: "clamp(2rem, 8vw, 2.6rem)",
+            fontWeight: 300,
+            lineHeight: 1.05,
+            color: "var(--text-primary)",
+          }}
+        >
+          Why Choose{" "}
+          <em style={{ color: "var(--accent-brown)", fontStyle: "italic" }}>ZIRUVA</em>
+        </h2>
+      </motion.div>
+
+      {/* Stacked list */}
+      <div>
+        {features.map((f, i) => (
+          <motion.div
+            key={f.id}
+            initial={{ opacity: 0, y: 14 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-20px" }}
+            transition={{ duration: 0.55, delay: i * 0.07 }}
+            style={{
+              display: "flex",
+              gap: "1rem",
+              alignItems: "flex-start",
+              paddingTop: "1.2rem",
+              paddingBottom: "1.2rem",
+              borderBottom: "1px solid rgba(43,43,43,0.08)",
+            }}
+          >
+            {/* Icon */}
+            <div
+              style={{
+                flexShrink: 0,
+                width: "42px",
+                height: "42px",
+                borderRadius: "50%",
+                border: "1px solid rgba(43,43,43,0.1)",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                color: "var(--accent-brown)",
+                marginTop: "0.1rem",
+              }}
+            >
+              {f.icon}
+            </div>
+
+            {/* Text */}
+            <div>
+              <h3
+                style={{
+                  fontFamily: "'Cormorant Garamond', serif",
+                  fontSize: "1.2rem",
+                  fontWeight: 300,
+                  lineHeight: 1.1,
+                  color: "var(--text-primary)",
+                  marginBottom: "0.35rem",
+                }}
+              >
+                {f.title}
+              </h3>
+              <p
+                style={{
+                  fontFamily: "var(--font-sans)",
+                  fontSize: "0.76rem",
+                  fontWeight: 300,
+                  lineHeight: 1.6,
+                  color: "var(--text-secondary)",
+                }}
+              >
+                {f.text}
+              </p>
+            </div>
+          </motion.div>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+/* ─────────────────────────────────────────────
+   DESKTOP FEATURES — original 4-col grid
+───────────────────────────────────────────── */
+function DesktopFeatures() {
   return (
     <section id="features" style={{ background: "var(--cream)", padding: "7rem 0" }}>
       <div style={{ maxWidth: "1280px", margin: "0 auto", padding: "0 4rem" }}>
@@ -172,4 +294,12 @@ export default function Features() {
       `}</style>
     </section>
   );
+}
+
+/* ─────────────────────────────────────────────
+   EXPORT
+───────────────────────────────────────────── */
+export default function Features() {
+  const isMobile = useIsMobile();
+  return isMobile ? <MobileFeatures /> : <DesktopFeatures />;
 }
