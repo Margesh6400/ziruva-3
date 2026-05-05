@@ -6,7 +6,7 @@ import Image from "next/image";
 import { useIsMobile } from "@/hooks/useMediaQuery";
 
 const items = [
-  { id: 1, name: "La Signature Ivoire", sub: "Ivory · Teal Handles", price: "£ 240", image: "/images/bag-ivory-teal-new.png", alt: "ZIRUVA La Signature Ivoire — ivory leather handbag with teal handles, £240, SS25 luxury collection" },
+  { id: 1, name: "La Signature Ivoire", sub: "Ivory · Teal Handles", price: "£ 240", image: "https://images.unsplash.com/photo-1547949003-9792a18a2601?auto=format&fit=crop&w=800&q=80", alt: "ZIRUVA La Signature Ivoire — ivory leather handbag with teal handles, £240, SS25 luxury collection" },
   { id: 2, name: "L'Édition Noire", sub: "Ivory · Black Structure", price: "£ 420", image: "/images/bag-ivory-black.png", alt: "ZIRUVA L'Édition Noire — structured ivory and black leather handbag, £420, limited edition" },
   { id: 3, name: "La Croco Fauve", sub: "Dark Brown · Crocodile", price: "£ 480", image: "/images/bag-brown-croc.png", alt: "ZIRUVA La Croco Fauve — dark brown crocodile leather handbag, £480, limited to 30 pieces" },
   { id: 4, name: "La Signature Rose", sub: "Classic · Limited Run", price: "£ 260", image: "/images/bag-ivory-teal-new.png", alt: "ZIRUVA La Signature Rose — classic ivory leather handbag, £260, limited run SS25 collection" },
@@ -138,15 +138,17 @@ function MobileHorizontalScroll() {
                   overflow: "hidden",
                 }}
               >
-                <Image
+                <img
                   src={item.image}
                   alt={item.alt}
-                  fill
-                  priority={i === 0}
-                  sizes="(max-width: 560px) 85vw, 300px"
-                  style={{ objectFit: "cover", objectPosition: "center" }}
+                  style={{
+                    width: "100%",
+                    height: "100%",
+                    objectFit: "cover",
+                    objectPosition: "center",
+                  }}
                 />
-                {/* Bottom scrim */}
+                {/* Bottom scrim 
                 <div
                   style={{
                     position: "absolute",
@@ -156,6 +158,7 @@ function MobileHorizontalScroll() {
                     pointerEvents: "none",
                   }}
                 />
+                */}
                 {/* Watermark */}
                 <div
                   style={{

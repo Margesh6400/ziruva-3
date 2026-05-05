@@ -5,9 +5,10 @@ import Script from "next/script";
 import { Product, products } from "@/data/products";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import { motion, Variants } from "framer-motion";
+import { motion, Variants, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
+import { useIsMobile } from "@/hooks/useMediaQuery";
 
 const siteUrl = "https://ziruvaofficial.com";
 
@@ -23,71 +24,298 @@ const staggerContainer: Variants = {
   show: { opacity: 1, transition: { staggerChildren: 0.1 } },
 };
 
-export default function ProductClient({ product }: { product: Product }) {
+/* ─────────────────────────────────────────────
+   MOBILE PRODUCT VIEW
+───────────────────────────────────────────── */
+
+function MobileProduct({ product }: { product: Product }) {
   const [activeImage, setActiveImage] = useState(product.image);
-
-  const relatedProducts = products.filter((p) => p.id !== product.id).slice(0, 3);
-
-  const productJsonLd = {
-    "@context": "https://schema.org",
-    "@type": "Product",
-    "@id": `${siteUrl}/product/${product.id}`,
-    name: product.name,
-    description: product.narrative,
-    image: `${siteUrl}${product.image}`,
-    brand: {
-      "@type": "Brand",
-      name: "ZIRUVA",
-      url: siteUrl,
-    },
-    manufacturer: {
-      "@type": "Organization",
-      name: "ZIRUVA",
-      address: { "@type": "PostalAddress", addressLocality: "London", addressCountry: "GB" },
-    },
-    material: product.specs.material,
-    countryOfAssembly: "IT",
-    identifier: product.specs.serial,
-    offers: {
-      "@type": "Offer",
-      priceCurrency: "GBP",
-      price: product.price.replace(/[^0-9]/g, ""),
-      availability: "https://schema.org/LimitedAvailability",
-      itemCondition: "https://schema.org/NewCondition",
-      seller: {
-        "@type": "Organization",
-        name: "ZIRUVA",
-        url: siteUrl,
-        sameAs: ["https://ziruva.co", "https://ziruva.uk", "https://ziruvaofficial.com"],
-      },
-      shippingDetails: {
-        "@type": "OfferShippingDetails",
-        shippingDestination: { "@type": "DefinedRegion", addressCountry: "GB" },
-        shippingRate: { "@type": "MonetaryAmount", value: "0", currency: "GBP" },
-        deliveryTime: {
-          "@type": "ShippingDeliveryTime",
-          handlingTime: { "@type": "QuantitativeValue", minValue: 1, maxValue: 2, unitCode: "DAY" },
-          transitTime: { "@type": "QuantitativeValue", minValue: 1, maxValue: 3, unitCode: "DAY" },
-        },
-      },
-    },
-    breadcrumb: {
-      "@type": "BreadcrumbList",
-      itemListElement: [
-        { "@type": "ListItem", position: 1, name: "ZIRUVA", item: siteUrl },
-        { "@type": "ListItem", position: 2, name: "Collection", item: `${siteUrl}/collection` },
-        { "@type": "ListItem", position: 3, name: product.name, item: `${siteUrl}/product/${product.id}` },
-      ],
-    },
-  };
+  const relatedProducts = products.filter((p) => p.id !== product.id).slice(0, 4);
 
   return (
     <main style={{ background: "var(--cream)", minHeight: "100vh" }}>
-      <Script
-        id={`json-ld-product-${product.id}`}
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(productJsonLd) }}
-      />
+      <Navbar />
+      
+      {/* ── IMAGE GALLERY ── */}
+      <section style={{ paddingTop: "70px" }}>
+        <div style={{ position: "relative", width: "100%", aspectRatio: "1/1.2", background: product.bg, overflow: "hidden" }}>
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={activeImage}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.5 }}
+              style={{ width: "100%", height: "100%", position: "relative" }}
+            >
+              <Image
+                src={activeImage}
+                alt={product.alt}
+                fill
+                style={{ objectFit: "cover" }}
+                priority
+              />
+            </motion.div>
+          </AnimatePresence>
+          
+          {/* Tier Badge */}
+          <div style={{ position: "absolute", top: "1.5rem", left: "1.5rem", zIndex: 10 }}>
+            <span style={{ 
+              fontFamily: "var(--font-fashion)", 
+              fontSize: "0.45rem", 
+              letterSpacing: "0.3em", 
+              textTransform: "uppercase",
+              background: "rgba(255,255,255,0.8)",
+              backdropFilter: "blur(4px)",
+              padding: "0.4rem 0.8rem",
+              color: "var(--text-primary)",
+              borderRadius: "0.1rem"
+            }}>
+              {product.tier.split(' · ')[0]}
+            </span>
+          </div>
+        </div>
+
+        {/* Thumbnails */}
+        <div style={{ 
+          display: "flex", 
+          gap: "0.8rem", 
+          padding: "1rem 1.5rem", 
+          overflowX: "auto",
+          scrollbarWidth: "none"
+        }} className="no-scrollbar">
+          <style>{`.no-scrollbar::-webkit-scrollbar { display: none; }`}</style>
+          {[product.image, ...(product.variants?.map(v => v.image) || [])].map((img, i) => (
+            <button
+              key={i}
+              onClick={() => setActiveImage(img)}
+              style={{
+                flexShrink: 0,
+                width: "60px",
+                height: "60px",
+                position: "relative",
+                border: activeImage === img ? "1px solid var(--text-primary)" : "1px solid transparent",
+                padding: "2px",
+                background: "none",
+                cursor: "pointer"
+              }}
+            >
+              <div style={{ width: "100%", height: "100%", position: "relative", overflow: "hidden" }}>
+                <Image src={img} alt="" fill style={{ objectFit: "cover" }} />
+              </div>
+            </button>
+          ))}
+        </div>
+      </section>
+
+      {/* ── INFO SECTION ── */}
+      <section style={{ padding: "1rem 1.5rem 3rem" }}>
+        <motion.div initial="hidden" animate="show" variants={staggerContainer}>
+          <motion.div variants={fadeUp} style={{ marginBottom: "0.5rem" }}>
+            <span style={{ 
+              fontFamily: "var(--font-fashion)", 
+              fontSize: "0.5rem", 
+              letterSpacing: "0.3em", 
+              textTransform: "uppercase",
+              color: "var(--accent-brown)" 
+            }}>
+              {product.collection}
+            </span>
+          </motion.div>
+          
+          <motion.h1 variants={fadeUp} style={{ 
+            fontFamily: "'Cormorant Garamond', serif", 
+            fontSize: "2.4rem", 
+            fontWeight: 300, 
+            color: "var(--text-primary)",
+            marginBottom: "1rem",
+            lineHeight: 1.1
+          }}>
+            {product.name}
+          </motion.h1>
+
+          <motion.div variants={fadeUp} style={{ marginBottom: "2rem" }}>
+            <span style={{ 
+              fontFamily: "var(--font-sans)", 
+              fontSize: "1.1rem", 
+              color: "var(--text-primary)",
+              display: "block",
+              marginBottom: "1.5rem"
+            }}>
+              {product.price}
+            </span>
+            <button className="btn-primary" style={{ width: "100%", padding: "1.1rem" }}>
+              <span>Add to Waitlist</span>
+            </button>
+          </motion.div>
+
+          <motion.p variants={fadeUp} style={{ 
+            fontFamily: "var(--font-sans)", 
+            fontSize: "0.9rem", 
+            lineHeight: 1.7, 
+            color: "var(--text-secondary)",
+            marginBottom: "2.5rem"
+          }}>
+            {product.narrative}
+          </motion.p>
+
+          {product.variants && (
+            <motion.div variants={fadeUp} style={{ marginBottom: "3rem" }}>
+              <span style={{ 
+                fontFamily: "var(--font-fashion)", 
+                fontSize: "0.5rem", 
+                letterSpacing: "0.15em", 
+                textTransform: "uppercase",
+                color: "var(--text-meta)",
+                display: "block",
+                marginBottom: "1rem"
+              }}>
+                Colourway
+              </span>
+              <div style={{ display: "flex", gap: "0.8rem" }}>
+                {product.variants.map((v) => (
+                  <button
+                    key={v.color}
+                    onClick={() => setActiveImage(v.image)}
+                    style={{
+                      width: "2.2rem",
+                      height: "2.2rem",
+                      borderRadius: "50%",
+                      background: v.color,
+                      border: activeImage === v.image ? "2px solid var(--text-primary)" : "1px solid rgba(0,0,0,0.1)",
+                      padding: "2px",
+                      cursor: "pointer"
+                    }}
+                  >
+                    <div style={{ width: "100%", height: "100%", borderRadius: "50%", background: v.color, border: "2px solid var(--cream)" }} />
+                  </button>
+                ))}
+              </div>
+            </motion.div>
+          )}
+
+          {/* Tech Specs */}
+          <motion.div variants={fadeUp} style={{ borderTop: "1px solid rgba(43,43,43,0.1)", paddingTop: "2rem", marginBottom: "4rem" }}>
+            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1.5rem" }}>
+              <div>
+                <span style={{ fontSize: "0.45rem", fontFamily: "var(--font-fashion)", color: "var(--text-meta)", display: "block", marginBottom: "0.3rem" }}>SERIAL</span>
+                <span style={{ fontSize: "0.75rem", fontFamily: "var(--font-sans)", color: "var(--text-primary)" }}>{product.specs.serial}</span>
+              </div>
+              <div>
+                <span style={{ fontSize: "0.45rem", fontFamily: "var(--font-fashion)", color: "var(--text-meta)", display: "block", marginBottom: "0.3rem" }}>ORIGIN</span>
+                <span style={{ fontSize: "0.75rem", fontFamily: "var(--font-sans)", color: "var(--text-primary)" }}>{product.specs.origin}</span>
+              </div>
+            </div>
+          </motion.div>
+        </motion.div>
+      </section>
+
+      {/* ── THE DOSSIER (Stacked) ── */}
+      <section style={{ padding: "4rem 1.5rem", background: "rgba(255,255,255,0.3)", borderTop: "1px solid rgba(43,43,43,0.06)" }}>
+        <div style={{ display: "flex", flexDirection: "column", gap: "3.5rem" }}>
+          {[
+            { id: "01", label: "THE MATERIAL", text: product.specs.material + ". Selected for its strength and ability to develop a unique patina." },
+            { id: "02", label: "HARDWARE", text: product.specs.hardware + ". Custom cast and hand-polished to a mirror finish." },
+            { id: "03", label: "VOLUME", text: product.specs.dimensions + ". Calculated for optimal center-of-gravity when carried." }
+          ].map((item) => (
+            <div key={item.id}>
+              <h4 style={{ fontFamily: "var(--font-fashion)", fontSize: "0.55rem", letterSpacing: "0.2em", marginBottom: "1rem", color: "var(--text-primary)" }}>
+                {item.id} / {item.label}
+              </h4>
+              <p style={{ fontFamily: "var(--font-sans)", fontSize: "0.88rem", lineHeight: 1.6, color: "var(--text-secondary)" }}>
+                {item.text}
+              </p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* ── RELATED (Horizontal Scroll) ── */}
+      <section style={{ padding: "5rem 0", background: "white", overflow: "hidden" }}>
+        <h2 style={{ 
+          fontFamily: "'Cormorant Garamond', serif", 
+          fontSize: "2.2rem", 
+          fontWeight: 300, 
+          marginBottom: "2.5rem", 
+          padding: "0 1.5rem" 
+        }}>
+          Related Archives.
+        </h2>
+        <div 
+          className="no-scrollbar"
+          style={{ 
+            display: "flex", 
+            gap: "1.2rem", 
+            overflowX: "auto", 
+            padding: "0 1.5rem", 
+            scrollSnapType: "x mandatory", 
+            scrollPadding: "0 1.5rem",
+            scrollbarWidth: "none",
+            WebkitOverflowScrolling: "touch"
+          }} 
+        >
+          {relatedProducts.map((p) => (
+            <Link 
+              key={p.id} 
+              href={`/product/${p.id}`} 
+              style={{ 
+                textDecoration: "none", 
+                flexShrink: 0, 
+                width: "260px", 
+                scrollSnapAlign: "start" 
+              }}
+            >
+              <div style={{ 
+                background: p.bg, 
+                aspectRatio: "1/1", 
+                position: "relative", 
+                marginBottom: "1.2rem", 
+                overflow: "hidden",
+                borderRadius: "0.1rem",
+                border: "1px solid rgba(0,0,0,0.03)"
+              }}>
+                <Image src={p.image} alt={p.alt} fill style={{ objectFit: "cover" }} />
+              </div>
+              <h3 style={{ 
+                fontFamily: "'Cormorant Garamond', serif", 
+                fontSize: "1.2rem", 
+                fontWeight: 400, 
+                color: "var(--text-primary)", 
+                marginBottom: "0.3rem" 
+              }}>
+                {p.name}
+              </h3>
+              <span style={{ 
+                fontFamily: "var(--font-fashion)", 
+                fontSize: "0.55rem", 
+                letterSpacing: "0.2em", 
+                color: "var(--accent-brown)", 
+                textTransform: "uppercase" 
+              }}>
+                {p.collection}
+              </span>
+            </Link>
+          ))}
+          {/* Spacer for right side padding */}
+          <div style={{ flexShrink: 0, width: "1.5rem", height: "1px" }} />
+        </div>
+      </section>
+
+      <Footer />
+    </main>
+  );
+}
+
+/* ─────────────────────────────────────────────
+   DESKTOP PRODUCT VIEW
+───────────────────────────────────────────── */
+
+function DesktopProduct({ product }: { product: Product }) {
+  const [activeImage, setActiveImage] = useState(product.image);
+  const relatedProducts = products.filter((p) => p.id !== product.id).slice(0, 3);
+
+  return (
+    <main style={{ background: "var(--cream)", minHeight: "100vh" }}>
       <Navbar />
 
       {/* ── PRODUCT HERO ── */}
@@ -545,5 +773,77 @@ export default function ProductClient({ product }: { product: Product }) {
 
       <Footer />
     </main>
+  );
+}
+
+/* ─────────────────────────────────────────────
+   MAIN COMPONENT
+───────────────────────────────────────────── */
+
+export default function ProductClient({ product }: { product: Product }) {
+  const isMobile = useIsMobile();
+
+  const productJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    "@id": `${siteUrl}/product/${product.id}`,
+    name: product.name,
+    description: product.narrative,
+    image: `${siteUrl}${product.image}`,
+    brand: {
+      "@type": "Brand",
+      name: "ZIRUVA",
+      url: siteUrl,
+    },
+    manufacturer: {
+      "@type": "Organization",
+      name: "ZIRUVA",
+      address: { "@type": "PostalAddress", addressLocality: "London", addressCountry: "GB" },
+    },
+    material: product.specs.material,
+    countryOfAssembly: "IT",
+    identifier: product.specs.serial,
+    offers: {
+      "@type": "Offer",
+      priceCurrency: "GBP",
+      price: product.price.replace(/[^0-9]/g, ""),
+      availability: "https://schema.org/LimitedAvailability",
+      itemCondition: "https://schema.org/NewCondition",
+      seller: {
+        "@type": "Organization",
+        name: "ZIRUVA",
+        url: siteUrl,
+        sameAs: ["https://ziruva.co", "https://ziruva.uk", "https://ziruvaofficial.com"],
+      },
+      shippingDetails: {
+        "@type": "OfferShippingDetails",
+        shippingDestination: { "@type": "DefinedRegion", addressCountry: "GB" },
+        shippingRate: { "@type": "MonetaryAmount", value: "0", currency: "GBP" },
+        deliveryTime: {
+          "@type": "ShippingDeliveryTime",
+          handlingTime: { "@type": "QuantitativeValue", minValue: 1, maxValue: 2, unitCode: "DAY" },
+          transitTime: { "@type": "QuantitativeValue", minValue: 1, maxValue: 3, unitCode: "DAY" },
+        },
+      },
+    },
+    breadcrumb: {
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        { "@type": "ListItem", position: 1, name: "ZIRUVA", item: siteUrl },
+        { "@type": "ListItem", position: 2, name: "Collection", item: `${siteUrl}/collection` },
+        { "@type": "ListItem", position: 3, name: product.name, item: `${siteUrl}/product/${product.id}` },
+      ],
+    },
+  };
+
+  return (
+    <>
+      <Script
+        id={`json-ld-product-${product.id}`}
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(productJsonLd) }}
+      />
+      {isMobile ? <MobileProduct product={product} /> : <DesktopProduct product={product} />}
+    </>
   );
 }
