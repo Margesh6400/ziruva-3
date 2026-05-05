@@ -5,8 +5,10 @@ import { motion } from "framer-motion";
 import Image from "next/image";
 import { products, Product } from "@/data/products";
 import Link from "next/link";
+import { useIsMobile } from "@/hooks/useMediaQuery";
 
 function ProductCard({ product, index }: { product: Product; index: number }) {
+  const isMobile = useIsMobile();
   const cardRef = useRef<HTMLDivElement>(null);
   const [tilt, setTilt] = useState({ x: 0, y: 0 });
   const [hovered, setHovered] = useState(false);
@@ -38,11 +40,11 @@ function ProductCard({ product, index }: { product: Product; index: number }) {
         id={`product-card-${product.id}`}
         style={{
           background: product.bg,
-          borderRadius: "1.25rem",
+          borderRadius: isMobile ? "0.4rem" : "1.25rem",
           overflow: "hidden",
           cursor: "pointer",
           position: "relative",
-          transform: `perspective(1000px) rotateX(${tilt.y}deg) rotateY(${tilt.x}deg) translateY(${hovered ? -6 : 0}px)`,
+          transform: isMobile ? "none" : `perspective(1000px) rotateX(${tilt.y}deg) rotateY(${tilt.x}deg) translateY(${hovered ? -6 : 0}px)`,
           transition: "transform 0.45s cubic-bezier(0.23,1,0.32,1), box-shadow 0.45s ease",
           boxShadow: hovered
             ? "0 36px 72px rgba(43,43,43,0.14), 0 8px 20px rgba(43,43,43,0.06)"
@@ -54,7 +56,7 @@ function ProductCard({ product, index }: { product: Product; index: number }) {
           <span
             style={{
               fontFamily: "var(--font-fashion)",
-              fontSize: "0.56rem",
+              fontSize: isMobile ? "0.42rem" : "0.56rem",
               fontWeight: 600,
               letterSpacing: "0.28em",
               textTransform: "uppercase",
@@ -166,7 +168,7 @@ function ProductCard({ product, index }: { product: Product; index: number }) {
         {/* Info — slides up on hover */}
         <div
           style={{
-            padding: "1.25rem 1.75rem 1.75rem",
+            padding: isMobile ? "0.8rem 1rem 1rem" : "1.25rem 1.75rem 1.75rem",
             transform: `translateY(${hovered ? -4 : 0}px)`,
             transition: "transform 0.4s cubic-bezier(0.23,1,0.32,1)",
           }}
@@ -174,7 +176,7 @@ function ProductCard({ product, index }: { product: Product; index: number }) {
           <p
             style={{
               fontFamily: "var(--font-fashion)",
-              fontSize: "0.58rem",
+              fontSize: isMobile ? "0.42rem" : "0.58rem",
               fontWeight: 500,
               letterSpacing: "0.3em",
               textTransform: "uppercase",
@@ -188,7 +190,7 @@ function ProductCard({ product, index }: { product: Product; index: number }) {
           <h3
             style={{
               fontFamily: "'Cormorant Garamond', serif",
-              fontSize: "1.65rem",
+              fontSize: isMobile ? "1.05rem" : "1.65rem",
               fontWeight: 300,
               lineHeight: 1.1,
               color: "var(--text-primary)",
@@ -219,7 +221,7 @@ function ProductCard({ product, index }: { product: Product; index: number }) {
             <p
               style={{
                 fontFamily: "var(--font-sans)",
-                fontSize: "0.9rem",
+                fontSize: isMobile ? "0.75rem" : "0.9rem",
                 fontWeight: 500,
                 color: "var(--text-primary)",
                 letterSpacing: "0.02em",
@@ -228,36 +230,38 @@ function ProductCard({ product, index }: { product: Product; index: number }) {
               {product.price}
             </p>
 
-            <motion.button
-              whileHover={{ x: 4 }}
-              style={{
-                fontFamily: "var(--font-fashion)",
-                fontSize: "0.56rem",
-                fontWeight: 500,
-                letterSpacing: "0.28em",
-                textTransform: "uppercase",
-                color: "var(--text-secondary)",
-                background: "none",
-                border: "none",
-                cursor: "pointer",
-                display: "flex",
-                alignItems: "center",
-                gap: "0.45rem",
-                opacity: hovered ? 1 : 0.7,
-                transition: "opacity 0.35s ease",
-              }}
-            >
-              Add to Waitlist
-              <svg width="11" height="11" viewBox="0 0 12 12" fill="none">
-                <path
-                  d="M1 6h10M7 2l4 4-4 4"
-                  stroke="currentColor"
-                  strokeWidth="1.1"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
-            </motion.button>
+            {!isMobile && (
+              <motion.button
+                whileHover={{ x: 4 }}
+                style={{
+                  fontFamily: "var(--font-fashion)",
+                  fontSize: "0.56rem",
+                  fontWeight: 500,
+                  letterSpacing: "0.28em",
+                  textTransform: "uppercase",
+                  color: "var(--text-secondary)",
+                  background: "none",
+                  border: "none",
+                  cursor: "pointer",
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "0.45rem",
+                  opacity: hovered ? 1 : 0.7,
+                  transition: "opacity 0.35s ease",
+                }}
+              >
+                Add to Waitlist
+                <svg width="11" height="11" viewBox="0 0 12 12" fill="none">
+                  <path
+                    d="M1 6h10M7 2l4 4-4 4"
+                    stroke="currentColor"
+                    strokeWidth="1.1"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+              </motion.button>
+            )}
           </div>
         </div>
 
@@ -280,6 +284,7 @@ function ProductCard({ product, index }: { product: Product; index: number }) {
 }
 
 export default function FeaturedCollection() {
+  const isMobile = useIsMobile();
   return (
     <section
       id="collection"
@@ -288,7 +293,7 @@ export default function FeaturedCollection() {
     >
       <div
         className="collection-container"
-        style={{ maxWidth: "1280px", margin: "0 auto", padding: "0 4rem" }}
+        style={{ maxWidth: isMobile ? "100%" : "1440px", margin: "0 auto", padding: isMobile ? "0 1rem" : "0 4rem" }}
       >
         <div className="collection-header collection-header-mb">
           <div className="collection-header-left">
@@ -350,10 +355,14 @@ export default function FeaturedCollection() {
         </div>
 
         <div
-          style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "1.5rem" }}
+          style={{ 
+            display: "grid", 
+            gridTemplateColumns: isMobile ? "repeat(2, 1fr)" : "repeat(4, 1fr)", 
+            gap: isMobile ? "0.75rem" : "1.5rem" 
+          }}
           className="products-grid"
         >
-          {products.slice(0, 3).map((p, i) => (
+          {products.slice(0, 4).map((p, i) => (
             <ProductCard key={p.id} product={p} index={i} />
           ))}
         </div>
@@ -393,11 +402,11 @@ export default function FeaturedCollection() {
 
         @media (max-width: 560px) {
           .collection-section { padding: 3rem 0 4rem !important; }
-          .collection-container { padding: 0 1.25rem !important; }
+          .collection-container { padding: 0 1rem !important; }
           .collection-title { font-size: 2.2rem !important; }
           .collection-header-mb { margin-bottom: 2rem !important; }
-          .products-grid { grid-template-columns: 1fr !important; gap: 1rem !important; }
-          .card-img-wrap { padding-top: 90% !important; }
+          .products-grid { grid-template-columns: 1fr 1fr !important; gap: 0.75rem !important; }
+          .card-img-wrap { padding-top: 105% !important; }
         }
       `}</style>
     </section>
