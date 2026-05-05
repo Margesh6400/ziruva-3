@@ -68,7 +68,7 @@ function MobileStory() {
           <motion.div 
             initial={{ opacity: 0, scale: 1.05 }}
             animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 1.4, ease: EASE }}
+            transition={{ duration: 1.4, ease: EASE as any }}
             style={{ position: "relative", aspectRatio: "4/5", overflow: "hidden", borderRadius: "0.1rem", marginBottom: "3rem" }}
           >
             <Image
@@ -197,7 +197,7 @@ function DesktopStory() {
             <motion.div 
               initial={{ opacity: 0, x: 40 }}
               animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 1.4, ease: EASE }}
+              transition={{ duration: 1.4, ease: EASE as any }}
               style={{ position: "relative", aspectRatio: "4/5", overflow: "hidden", borderRadius: "0.1rem" }}
             >
               <Image
