@@ -214,9 +214,13 @@ function MobileProduct({ product }: { product: Product }) {
       <section style={{ padding: "4rem 1.5rem", background: "rgba(255,255,255,0.3)", borderTop: "1px solid rgba(43,43,43,0.06)" }}>
         <div style={{ display: "flex", flexDirection: "column", gap: "3.5rem" }}>
           {[
-            { id: "01", label: "THE MATERIAL", text: product.specs.material + ". Selected for its strength and ability to develop a unique patina." },
-            { id: "02", label: "HARDWARE", text: product.specs.hardware + ". Custom cast and hand-polished to a mirror finish." },
-            { id: "03", label: "VOLUME", text: product.specs.dimensions + ". Calculated for optimal center-of-gravity when carried." }
+            { id: "01", label: "THE MATERIAL", text: product.specs.material },
+            { id: "02", label: "HARDWARE", text: product.specs.hardware },
+            { id: "03", label: "VOLUME", text: product.specs.dimensions },
+            { id: "04", label: "LINING", text: product.specs.lining },
+            { id: "05", label: "STRAP", text: product.specs.strap },
+            { id: "06", label: "CLOSURE", text: product.specs.closure },
+            { id: "07", label: "INTERIOR", text: product.specs.interior }
           ].map((item) => (
             <div key={item.id}>
               <h4 style={{ fontFamily: "var(--font-fashion)", fontSize: "0.55rem", letterSpacing: "0.2em", marginBottom: "1rem", color: "var(--text-primary)" }}>
@@ -636,76 +640,39 @@ function DesktopProduct({ product }: { product: Product }) {
       {/* ── THE DOSSIER ── */}
       <section style={{ padding: "100px 0", borderTop: "1px solid rgba(43,43,43,0.08)" }}>
         <div style={{ maxWidth: "1440px", margin: "0 auto", padding: "0 4rem" }}>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "4rem" }}>
-            <div>
-              <h4
-                style={{
-                  fontFamily: "var(--font-fashion)",
-                  fontSize: "0.6rem",
-                  letterSpacing: "0.2em",
-                  marginBottom: "1.5rem",
-                }}
-              >
-                01 / THE MATERIAL
-              </h4>
-              <p
-                style={{
-                  fontFamily: "var(--font-sans)",
-                  fontSize: "0.9rem",
-                  lineHeight: 1.8,
-                  color: "var(--text-secondary)",
-                }}
-              >
-                {product.specs.material}. Selected for its strength and ability to develop a unique
-                patina over decades of use.
-              </p>
-            </div>
-            <div>
-              <h4
-                style={{
-                  fontFamily: "var(--font-fashion)",
-                  fontSize: "0.6rem",
-                  letterSpacing: "0.2em",
-                  marginBottom: "1.5rem",
-                }}
-              >
-                02 / HARDWARE
-              </h4>
-              <p
-                style={{
-                  fontFamily: "var(--font-sans)",
-                  fontSize: "0.9rem",
-                  lineHeight: 1.8,
-                  color: "var(--text-secondary)",
-                }}
-              >
-                {product.specs.hardware}. Custom cast and hand-polished to a mirror finish before
-                architectural assembly.
-              </p>
-            </div>
-            <div>
-              <h4
-                style={{
-                  fontFamily: "var(--font-fashion)",
-                  fontSize: "0.6rem",
-                  letterSpacing: "0.2em",
-                  marginBottom: "1.5rem",
-                }}
-              >
-                03 / VOLUME
-              </h4>
-              <p
-                style={{
-                  fontFamily: "var(--font-sans)",
-                  fontSize: "0.9rem",
-                  lineHeight: 1.8,
-                  color: "var(--text-secondary)",
-                }}
-              >
-                {product.specs.dimensions}. Calculated for optimal center-of-gravity when carried,
-                ensuring the silhouette remains constant.
-              </p>
-            </div>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: "4rem 6rem" }}>
+            {[
+              { id: "01", label: "THE MATERIAL", text: product.specs.material },
+              { id: "02", label: "HARDWARE", text: product.specs.hardware },
+              { id: "03", label: "VOLUME", text: product.specs.dimensions },
+              { id: "04", label: "LINING", text: product.specs.lining },
+              { id: "05", label: "STRAP", text: product.specs.strap },
+              { id: "06", label: "CLOSURE", text: product.specs.closure },
+              { id: "07", label: "INTERIOR", text: product.specs.interior }
+            ].map((item) => (
+              <div key={item.id}>
+                <h4
+                  style={{
+                    fontFamily: "var(--font-fashion)",
+                    fontSize: "0.6rem",
+                    letterSpacing: "0.2em",
+                    marginBottom: "1.5rem",
+                  }}
+                >
+                  {item.id} / {item.label}
+                </h4>
+                <p
+                  style={{
+                    fontFamily: "var(--font-sans)",
+                    fontSize: "0.9rem",
+                    lineHeight: 1.8,
+                    color: "var(--text-secondary)",
+                  }}
+                >
+                  {item.text}
+                </p>
+              </div>
+            ))}
           </div>
         </div>
       </section>

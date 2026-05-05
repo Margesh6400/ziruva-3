@@ -9,7 +9,7 @@ import { useIsMobile } from "@/hooks/useMediaQuery";
 
 const navLinks = [
   { label: "Collection", href: "/collection", hasDropdown: "collection" },
-  { label: "Our Story", href: "/#story" },
+  { label: "Our Story", href: "/story" },
   { label: "Atelier", href: "/how", hasDropdown: "atelier" },
   { label: "Contact", href: "/#newsletter" },
 ];
@@ -152,7 +152,7 @@ export default function Navbar() {
       >
         {/* Announcement Bar */}
         <AnimatePresence>
-          {showAnnouncement && !isMobile && (
+          {showAnnouncement && (
             <motion.div
               initial={{ height: "auto", opacity: 1 }}
               exit={{ height: 0, opacity: 0 }}
@@ -167,24 +167,24 @@ export default function Navbar() {
                 zIndex: 1001,
               }}
             >
-              <div style={{ padding: "9px 0", flex: 1, textAlign: "center" }}>
+              <div style={{ padding: isMobile ? "7px 0" : "9px 0", flex: 1, textAlign: "center" }}>
                 <p
                   style={{
                     fontFamily: "var(--font-fashion)",
-                    fontSize: "0.58rem",
+                    fontSize: isMobile ? "0.5rem" : "0.58rem",
                     fontWeight: 500,
-                    letterSpacing: "0.32em",
+                    letterSpacing: "0.25em",
                     textTransform: "uppercase",
                     color: "var(--cream)",
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center",
-                    gap: "1rem",
+                    gap: isMobile ? "0.5rem" : "1rem",
                   }}
                 >
-                  <span style={{ opacity: 0.4, fontSize: "0.35rem" }}>◆</span>
-                  New Drop: La Saison SS25 — Limited to 40 Pieces
-                  <span style={{ opacity: 0.4, fontSize: "0.35rem" }}>◆</span>
+                  {!isMobile && <span style={{ opacity: 0.4, fontSize: "0.35rem" }}>◆</span>}
+                  SS25: La Saison — Limited Edition
+                  {!isMobile && <span style={{ opacity: 0.4, fontSize: "0.35rem" }}>◆</span>}
                 </p>
               </div>
 
@@ -192,7 +192,7 @@ export default function Navbar() {
                 onClick={() => setShowAnnouncement(false)}
                 style={{
                   position: "absolute",
-                  right: "1.5rem",
+                  right: isMobile ? "0.8rem" : "1.5rem",
                   background: "none",
                   border: "none",
                   cursor: "pointer",
@@ -207,22 +207,10 @@ export default function Navbar() {
                 onMouseLeave={(e) => (e.currentTarget.style.color = "rgba(252,248,240,0.45)")}
                 aria-label="Close announcement"
               >
-                <svg width="9" height="9" viewBox="0 0 9 9" fill="none">
+                <svg width="8" height="8" viewBox="0 0 9 9" fill="none">
                   <path d="M1 1L8 8M8 1L1 8" stroke="currentColor" strokeWidth="1.1" strokeLinecap="round" />
                 </svg>
               </button>
-
-              {/* Shimmer sweep */}
-              <div
-                style={{
-                  position: "absolute",
-                  inset: 0,
-                  width: "6rem",
-                  background: "linear-gradient(90deg, transparent, rgba(255,255,255,0.06), transparent)",
-                  animation: "announcementShimmer 3.5s linear infinite",
-                  pointerEvents: "none",
-                }}
-              />
             </motion.div>
           )}
         </AnimatePresence>
@@ -319,10 +307,20 @@ export default function Navbar() {
               >
                 {["z", "i", "r", "u", "v", "a"].map((letter, idx) => {
                   const widths: Record<string, string> = {
-                    z: "22px", i: "6px", r: "22px", u: "21px", v: "24px", a: "24px",
+                    z: isMobile ? "18px" : "22px", 
+                    i: isMobile ? "5px" : "6px", 
+                    r: isMobile ? "18px" : "22px", 
+                    u: isMobile ? "17px" : "21px", 
+                    v: isMobile ? "19px" : "24px", 
+                    a: isMobile ? "19px" : "24px",
                   };
                   const margins: Record<string, string> = {
-                    z: "0.9rem", i: "0.9rem", r: "0.7rem", u: "0.7rem", v: "0.4rem", a: "0",
+                    z: isMobile ? "0.7rem" : "0.9rem", 
+                    i: isMobile ? "0.7rem" : "0.9rem", 
+                    r: isMobile ? "0.5rem" : "0.7rem", 
+                    u: isMobile ? "0.5rem" : "0.7rem", 
+                    v: isMobile ? "0.3rem" : "0.4rem", 
+                    a: "0",
                   };
                   return (
                     <motion.div
@@ -334,7 +332,7 @@ export default function Navbar() {
                       transition={{ duration: 1.1, ease: [0.23, 1, 0.32, 1] }}
                       style={{
                         position: "relative",
-                        height: "26px",
+                        height: isMobile ? "20px" : "26px",
                         width: widths[letter],
                         marginRight: margins[letter],
                       }}
@@ -589,23 +587,21 @@ export default function Navbar() {
                   padding: "8px",
                   display: "flex",
                   flexDirection: "column",
-                  gap: "6px",
+                  gap: "7px",
                   zIndex: 1001,
                 }}
               >
-                {[0, 1, 2].map((i) => (
+                {[0, 1].map((i) => (
                   <motion.span
                     key={i}
                     animate={
                       menuOpen
                         ? i === 0
-                          ? { rotate: 45, y: 7, width: 22 }
-                          : i === 1
-                          ? { opacity: 0, scaleX: 0 }
-                          : { rotate: -45, y: -7, width: 22 }
-                        : { rotate: 0, y: 0, opacity: 1, scaleX: 1, width: i === 1 ? 14 : 22 }
+                          ? { rotate: 45, y: 4, width: 24 }
+                          : { rotate: -45, y: -4, width: 24 }
+                        : { rotate: 0, y: 0, opacity: 1, width: i === 0 ? 24 : 16 }
                     }
-                    transition={{ duration: 0.3, ease: [0.25, 0.46, 0.45, 0.94] }}
+                    transition={{ duration: 0.4, ease: [0.25, 0.46, 0.45, 0.94] }}
                     style={{
                       display: "block",
                       height: "1px",
@@ -624,10 +620,10 @@ export default function Navbar() {
       <AnimatePresence>
         {menuOpen && (
           <motion.div
-            initial={{ x: "100%" }}
-            animate={{ x: 0 }}
-            exit={{ x: "100%" }}
-            transition={{ duration: 0.55, ease: [0.25, 0.46, 0.45, 0.94] }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.4 }}
             style={{
               position: "fixed",
               inset: 0,
@@ -635,86 +631,61 @@ export default function Navbar() {
               background: "var(--cream)",
               display: "flex",
               flexDirection: "column",
-              padding: "0 2.5rem",
+              padding: "0 2rem",
+              paddingTop: "100px"
             }}
           >
-            {/* Mobile menu header */}
-            <div
-              style={{
-                height: "56px",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "space-between",
-                borderBottom: "1px solid var(--border-light)",
-                marginBottom: "3rem",
-              }}
-            >
-              <Link href="/" onClick={() => setMenuOpen(false)} style={{ display: "flex", alignItems: "center" }}>
-                {["z", "i", "r", "u", "v", "a"].map((letter, idx) => {
-                  const widths: Record<string, string> = {
-                    z: "18px", i: "5px", r: "18px", u: "17px", v: "19px", a: "19px",
-                  };
-                  const margins: Record<string, string> = {
-                    z: "0.7rem", i: "0.7rem", r: "0.55rem", u: "0.55rem", v: "0.3rem", a: "0",
-                  };
-                  return (
-                    <div
-                      key={`m-${letter}-${idx}`}
-                      style={{ position: "relative", height: "21px", width: widths[letter], marginRight: margins[letter] }}
-                    >
-                      <Image src={`/images/logo/${letter}.png`} alt={letter.toUpperCase()} fill style={{ objectFit: "contain" }} />
-                    </div>
-                  );
-                })}
-              </Link>
-            </div>
-
-            {/* Nav items */}
-            <nav style={{ flex: 1, display: "flex", flexDirection: "column", gap: "0" }}>
+            <nav style={{ flex: 1, display: "flex", flexDirection: "column", gap: "0.5rem" }}>
               {navLinks.map((link, i) => (
                 <div
                   key={link.label}
                   style={{
-                    borderBottom: "1px solid var(--border-light)",
-                    padding: "1.4rem 0",
+                    borderBottom: "1px solid rgba(43,43,43,0.06)",
+                    padding: "1.2rem 0",
                   }}
                 >
                   <motion.div
-                    initial={{ opacity: 0, x: 20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: 0.15 + i * 0.07, ease: [0.25, 0.46, 0.45, 0.94] }}
-                    style={{ display: "flex", flexDirection: "column" }}
+                    initial={{ opacity: 0, y: 15 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.1 + i * 0.05 }}
                   >
                     <div
-                      onClick={() => {
-                        if (link.hasDropdown === "collection") {
-                          setMobileCollectionOpen(!mobileCollectionOpen);
-                        } else if (link.hasDropdown === "atelier") {
-                          setMobileAtelierOpen(!mobileAtelierOpen);
-                        } else {
-                          setMenuOpen(false);
-                          window.location.href = link.href;
-                        }
+                      style={{ 
+                        display: "flex", 
+                        alignItems: "center", 
+                        justifyContent: "space-between",
+                        width: "100%" 
                       }}
-                      className="mobile-nav-item"
-                      style={{ justifyContent: "space-between" }}
                     >
-                      <span>{link.label}</span>
+                      <Link 
+                        href={link.href} 
+                        onClick={() => setMenuOpen(false)}
+                        className="mobile-nav-item"
+                        style={{ fontSize: "2.4rem", flex: 1 }}
+                      >
+                        {link.label}
+                      </Link>
+                      
                       {link.hasDropdown && (
-                        <motion.span
-                          animate={{
-                            rotate:
-                              (link.hasDropdown === "collection" ? mobileCollectionOpen : mobileAtelierOpen) ? 45 : 0,
+                        <button
+                          onClick={() => {
+                            if (link.hasDropdown === "collection") setMobileCollectionOpen(!mobileCollectionOpen);
+                            if (link.hasDropdown === "atelier") setMobileAtelierOpen(!mobileAtelierOpen);
                           }}
-                          transition={{ duration: 0.25 }}
                           style={{
-                            fontSize: "1rem",
-                            color: "var(--text-meta)",
-                            display: "inline-block",
+                            background: "none",
+                            border: "none",
+                            padding: "1rem",
+                            cursor: "pointer"
                           }}
                         >
-                          +
-                        </motion.span>
+                          <motion.span
+                            animate={{ rotate: (link.hasDropdown === "collection" ? mobileCollectionOpen : mobileAtelierOpen) ? 45 : 0 }}
+                            style={{ fontSize: "1.5rem", color: "var(--text-meta)", display: "block" }}
+                          >
+                            +
+                          </motion.span>
+                        </button>
                       )}
                     </div>
 
@@ -726,23 +697,16 @@ export default function Navbar() {
                             initial={{ height: 0, opacity: 0 }}
                             animate={{ height: "auto", opacity: 1 }}
                             exit={{ height: 0, opacity: 0 }}
-                            transition={{ duration: 0.3 }}
-                            style={{
-                              overflow: "hidden",
-                              display: "flex",
-                              flexDirection: "column",
-                              gap: "0.9rem",
-                              paddingTop: "1.2rem",
-                            }}
+                            style={{ overflow: "hidden", display: "flex", flexDirection: "column", gap: "1rem", paddingTop: "1.5rem" }}
                           >
                             {(link.hasDropdown === "collection" ? collections : atelierLinks).map((col) => (
-                              <a
+                              <Link
                                 key={col.name}
                                 href={col.href}
                                 onClick={() => setMenuOpen(false)}
                                 style={{
                                   fontFamily: "var(--font-fashion)",
-                                  fontSize: "0.72rem",
+                                  fontSize: "0.65rem",
                                   fontWeight: 500,
                                   color: "var(--text-secondary)",
                                   textDecoration: "none",
@@ -750,21 +714,34 @@ export default function Navbar() {
                                   textTransform: "uppercase",
                                   display: "flex",
                                   alignItems: "center",
-                                  gap: "0.6rem",
+                                  gap: "0.8rem",
+                                  paddingLeft: "0.5rem"
                                 }}
                               >
-                                <span
-                                  style={{
-                                    width: "16px",
-                                    height: "1px",
-                                    background: "var(--accent-brown)",
-                                    display: "inline-block",
-                                    opacity: 0.5,
-                                  }}
-                                />
+                                <span style={{ width: "12px", height: "1px", background: "var(--accent-brown)", opacity: 0.4 }} />
                                 {col.name}
-                              </a>
+                              </Link>
                             ))}
+                            <Link
+                              href={link.href}
+                              onClick={() => setMenuOpen(false)}
+                              style={{
+                                fontFamily: "var(--font-fashion)",
+                                fontSize: "0.65rem",
+                                fontWeight: 600,
+                                color: "var(--text-primary)",
+                                textDecoration: "none",
+                                letterSpacing: "0.22em",
+                                textTransform: "uppercase",
+                                padding: "0.8rem 0",
+                                borderTop: "1px solid rgba(43,43,43,0.03)",
+                                marginTop: "0.5rem",
+                                display: "block",
+                                paddingLeft: "0.5rem"
+                              }}
+                            >
+                              View All {link.label} →
+                            </Link>
                           </motion.div>
                         )}
                       </AnimatePresence>
@@ -774,61 +751,35 @@ export default function Navbar() {
               ))}
             </nav>
 
-            {/* Mobile menu footer */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.5 }}
-              style={{
-                padding: "2rem 0",
-                borderTop: "1px solid var(--border-light)",
-                display: "flex",
-                justifyContent: "space-between",
-                alignItems: "flex-end",
-              }}
-            >
+            {/* Mobile Footer */}
+            <div style={{ padding: "2rem 0 3.5rem", display: "flex", justifyContent: "space-between", alignItems: "flex-end", borderTop: "1px solid rgba(43,43,43,0.06)" }}>
               <div>
-                <p
-                  style={{
-                    fontFamily: "var(--font-fashion)",
-                    fontSize: "0.5rem",
-                    letterSpacing: "0.25em",
-                    textTransform: "uppercase",
-                    color: "var(--text-meta)",
-                    marginBottom: "0.4rem",
-                  }}
-                >
+                <p style={{ fontFamily: "var(--font-fashion)", fontSize: "0.5rem", letterSpacing: "0.25em", textTransform: "uppercase", color: "var(--text-meta)", marginBottom: "0.4rem" }}>
                   Maison ZIRUVA
                 </p>
-                <p
-                  style={{
-                    fontFamily: "var(--font-fashion)",
-                    fontSize: "0.5rem",
-                    letterSpacing: "0.18em",
-                    color: "var(--text-meta)",
-                    opacity: 0.7,
-                  }}
-                >
+                <p style={{ fontFamily: "var(--font-sans)", fontSize: "0.75rem", color: "var(--text-secondary)" }}>
                   London, United Kingdom
                 </p>
               </div>
-              <a
-                href="#collection"
+              <Link 
+                href="/collection" 
                 onClick={() => setMenuOpen(false)}
                 style={{
                   fontFamily: "var(--font-fashion)",
-                  fontSize: "0.58rem",
+                  fontSize: "0.55rem",
                   letterSpacing: "0.28em",
                   textTransform: "uppercase",
                   color: "var(--cream)",
                   background: "var(--text-primary)",
-                  padding: "0.7rem 1.6rem",
+                  padding: "0.8rem 1.6rem",
                   textDecoration: "none",
+                  transition: "all 0.3s ease",
+                  display: "inline-block"
                 }}
               >
                 Shop Now
-              </a>
-            </motion.div>
+              </Link>
+            </div>
           </motion.div>
         )}
       </AnimatePresence>
