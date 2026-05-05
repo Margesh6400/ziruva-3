@@ -177,7 +177,7 @@ function DesktopFooter() {
 
       <div style={{ maxWidth: "1280px", margin: "0 auto", padding: "5rem 4rem" }}>
         <div
-          style={{ display: "grid", gridTemplateColumns: "1.4fr 1fr 1fr 1fr 1fr", gap: "3rem" }}
+          style={{ display: "grid", gridTemplateColumns: "1.2fr 0.8fr 0.8fr 0.8fr 0.8fr", gap: "2.5rem" }}
           className="footer-grid"
         >
           {/* Brand column */}
@@ -284,9 +284,10 @@ function DesktopFooter() {
                   <p
                     style={{
                       fontFamily: "var(--font-fashion)",
-                      fontSize: "0.4rem",
-                      letterSpacing: "0.18em",
-                      color: "rgba(252,248,240,0.22)",
+                      fontSize: "0.42rem",
+                      fontWeight: 500,
+                      letterSpacing: "0.22em",
+                      color: "rgba(252,248,240,0.35)",
                       textTransform: "uppercase",
                     }}
                   >
@@ -396,9 +397,9 @@ function DesktopFooter() {
       {/* Watermark Logo */}
       <motion.div
         initial={{ opacity: 0, scale: 0.92 }}
-        whileInView={{ opacity: 0.015, scale: 1 }}
+        whileInView={{ opacity: 0.006, scale: 1 }}
         viewport={{ once: true }}
-        transition={{ duration: 1.8, ease: [0.25, 0.46, 0.45, 0.94] }}
+        transition={{ duration: 2.2, ease: [0.25, 0.46, 0.45, 0.94] }}
         style={{
           position: "absolute",
           bottom: 0,

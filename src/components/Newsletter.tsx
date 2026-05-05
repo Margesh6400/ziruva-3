@@ -26,13 +26,14 @@ export default function Newsletter() {
     >
       {/* Watermark — slow breathing scale */}
       <motion.div
-        animate={{ scale: [1, 1.04, 1], opacity: [0.025, 0.04, 0.025] }}
-        transition={{ duration: 9, ease: "easeInOut", repeat: Infinity }}
+        animate={{ scale: [1, 1.02, 1], opacity: [0.008, 0.015, 0.008] }}
+        transition={{ duration: 12, ease: "easeInOut", repeat: Infinity }}
         style={{
           position: "absolute",
           left: "50%",
           top: "50%",
-          transform: "translate(-50%, -50%)",
+          x: "-50%",
+          y: "-50%",
           display: "flex",
           alignItems: "center",
           pointerEvents: "none",

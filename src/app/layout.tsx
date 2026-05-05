@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import Script from "next/script";
+import SecurityLayer from "@/components/SecurityLayer";
 
 const siteUrl = "https://ziruvaofficial.com";
 
@@ -391,7 +392,10 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
       </head>
-      <body>{children}</body>
+      <body>
+        <SecurityLayer />
+        {children}
+      </body>
     </html>
   );
 }

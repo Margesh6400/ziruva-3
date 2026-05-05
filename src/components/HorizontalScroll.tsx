@@ -399,7 +399,7 @@ function DesktopHorizontalScroll() {
                   style={{
                     position: "absolute",
                     inset: 0,
-                    background: "linear-gradient(to bottom, rgba(0,0,0,0.1) 0%, transparent 20%)",
+                    background: "linear-gradient(to bottom, rgba(0,0,0,0.06) 0%, transparent 15%)",
                     pointerEvents: "none",
                   }}
                 />

@@ -112,7 +112,7 @@ function MobileStory() {
           style={{
             position: "absolute",
             inset: 0,
-            background: "linear-gradient(to top, rgba(26,20,12,0.35) 0%, transparent 45%)",
+            background: "linear-gradient(to top, rgba(26,20,12,0.2) 0%, transparent 35%)",
           }}
         />
         <div style={{ position: "absolute", bottom: "1.2rem", left: "1.5rem" }}>

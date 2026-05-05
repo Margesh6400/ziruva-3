@@ -499,7 +499,7 @@ export default function Navbar() {
                           style={{
                             position: "absolute",
                             inset: 0,
-                            background: "linear-gradient(to top, rgba(0,0,0,0.45) 0%, transparent 50%)",
+                            background: "linear-gradient(to top, rgba(0,0,0,0.3) 0%, transparent 40%)",
                           }}
                         />
                         <div

@@ -124,7 +124,7 @@ function ProductCard({ product, index }: { product: Product; index: number }) {
             style={{
               position: "absolute",
               inset: 0,
-              background: "linear-gradient(to bottom, rgba(0,0,0,0.18) 0%, transparent 28%)",
+              background: "linear-gradient(to bottom, rgba(0,0,0,0.08) 0%, transparent 18%)",
               pointerEvents: "none",
               zIndex: 2,
             }}
@@ -135,8 +135,9 @@ function ProductCard({ product, index }: { product: Product; index: number }) {
               bottom: 0,
               left: 0,
               right: 0,
-              height: "70px",
+              height: "35px",
               background: `linear-gradient(to bottom, transparent 0%, ${product.bg} 100%)`,
+              opacity: 0.7,
               pointerEvents: "none",
               zIndex: 3,
             }}
