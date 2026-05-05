@@ -1,6 +1,7 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import { useIsMobile } from "@/hooks/useMediaQuery";
 
 const features = [
@@ -15,6 +16,7 @@ const features = [
     num: "01",
     title: "100% Genuine Leather",
     text: "Only the finest full-grain leathers, sourced responsibly from certified tanneries.",
+    detail: "Every hide is selected by hand. We work exclusively with tanneries that meet our strict ethical and environmental standards — no exceptions, no compromises.",
   },
   {
     id: 2,
@@ -27,6 +29,7 @@ const features = [
     num: "02",
     title: "True Scarcity",
     text: "Each design is produced in limited quantities. Once retired, never restocked.",
+    detail: "We produce between 8 and 30 pieces per design. When a run closes, it closes permanently. This is not a marketing tactic — it is a founding principle.",
   },
   {
     id: 3,
@@ -39,6 +42,7 @@ const features = [
     num: "03",
     title: "Hand Stitched",
     text: "Assembled by master artisans whose hands carry decades of leatherwork expertise.",
+    detail: "Each bag takes between 30 and 40 hours to complete. Our artisans use traditional awl-and-needle saddle stitch — stronger than machine stitching and impossible to replicate at scale.",
   },
   {
     id: 4,
@@ -52,19 +56,16 @@ const features = [
     num: "04",
     title: "Certified Authenticity",
     text: "Every piece ships with a numbered certificate and a handwritten care note.",
+    detail: "Your certificate includes the artisan's name, atelier location, production date, and a unique serial number. It is your ownership record for life.",
   },
 ];
 
 /* ─────────────────────────────────────────────
-   MOBILE FEATURES — simple vertical list
+   MOBILE
 ───────────────────────────────────────────── */
 function MobileFeatures() {
   return (
-    <section
-      id="features"
-      style={{ background: "var(--cream)", padding: "3rem 1.5rem 4rem" }}
-    >
-      {/* Header */}
+    <section id="features" style={{ background: "var(--cream)", padding: "3rem 1.5rem 4rem" }}>
       <motion.div
         initial={{ opacity: 0, y: 12 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -100,7 +101,6 @@ function MobileFeatures() {
         </h2>
       </motion.div>
 
-      {/* Stacked list */}
       <div>
         {features.map((f, i) => (
           <motion.div
@@ -118,7 +118,6 @@ function MobileFeatures() {
               borderBottom: "1px solid rgba(43,43,43,0.08)",
             }}
           >
-            {/* Icon */}
             <div
               style={{
                 flexShrink: 0,
@@ -135,8 +134,6 @@ function MobileFeatures() {
             >
               {f.icon}
             </div>
-
-            {/* Text */}
             <div>
               <h3
                 style={{
@@ -170,13 +167,117 @@ function MobileFeatures() {
 }
 
 /* ─────────────────────────────────────────────
-   DESKTOP FEATURES — original 4-col grid
+   DESKTOP — accordion hover expand
 ───────────────────────────────────────────── */
+function FeatureCard({ f, i }: { f: (typeof features)[0]; i: number }) {
+  const [hovered, setHovered] = useState(false);
+
+  return (
+    <motion.div
+      key={f.id}
+      id={`feature-${f.id}`}
+      initial={{ opacity: 0, y: 40 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-40px" }}
+      transition={{ duration: 0.8, delay: i * 0.12 }}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+      animate={{ y: hovered ? -8 : 0 }}
+      style={{
+        background: "var(--cream)",
+        borderRadius: "1rem",
+        padding: "2.5rem 2rem",
+        textAlign: "center",
+        cursor: "default",
+        transition: "box-shadow 0.4s ease",
+        boxShadow: hovered ? "0 20px 48px rgba(43,43,43,0.08)" : "none",
+      }}
+    >
+      <motion.div
+        animate={{
+          background: hovered ? "var(--accent-brown)" : "transparent",
+          color: hovered ? "var(--cream)" : "var(--accent-brown)",
+        }}
+        transition={{ duration: 0.4 }}
+        style={{
+          width: "56px",
+          height: "56px",
+          borderRadius: "50%",
+          border: "1px solid rgba(43,43,43,0.12)",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          margin: "0 auto 1.5rem",
+        }}
+      >
+        {f.icon}
+      </motion.div>
+
+      <h3
+        style={{
+          fontFamily: "'Cormorant Garamond', serif",
+          fontSize: "1.25rem",
+          fontWeight: 400,
+          color: "var(--text-primary)",
+          marginBottom: "0.8rem",
+        }}
+      >
+        {f.title}
+      </h3>
+
+      <p
+        style={{
+          fontFamily: "var(--font-sans)",
+          fontSize: "0.8rem",
+          fontWeight: 300,
+          lineHeight: 1.85,
+          color: "var(--text-secondary)",
+        }}
+      >
+        {f.text}
+      </p>
+
+      {/* Accordion detail */}
+      <AnimatePresence>
+        {hovered && (
+          <motion.div
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: "auto", opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.4, ease: [0.25, 0.46, 0.45, 0.94] }}
+            style={{ overflow: "hidden" }}
+          >
+            <div
+              style={{
+                borderTop: "1px solid rgba(43,43,43,0.08)",
+                marginTop: "1rem",
+                paddingTop: "1rem",
+              }}
+            >
+              <p
+                style={{
+                  fontFamily: "var(--font-sans)",
+                  fontSize: "0.74rem",
+                  fontWeight: 300,
+                  lineHeight: 1.8,
+                  color: "var(--text-meta)",
+                  fontStyle: "italic",
+                }}
+              >
+                {f.detail}
+              </p>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </motion.div>
+  );
+}
+
 function DesktopFeatures() {
   return (
     <section id="features" style={{ background: "var(--cream)", padding: "7rem 0" }}>
       <div style={{ maxWidth: "1280px", margin: "0 auto", padding: "0 4rem" }}>
-        {/* Header */}
         <div style={{ textAlign: "center", marginBottom: "5rem" }}>
           <motion.span
             initial={{ opacity: 0, y: 20 }}
@@ -213,92 +314,24 @@ function DesktopFeatures() {
           </motion.h2>
         </div>
 
-        {/* Grid */}
         <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(4, 1fr)",
-            gap: "1.5rem",
-          }}
+          style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "1.5rem" }}
           className="features-grid"
         >
           {features.map((f, i) => (
-            <motion.div
-              key={f.id}
-              id={`feature-${f.id}`}
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-40px" }}
-              transition={{ duration: 0.8, delay: i * 0.12 }}
-              whileHover={{ y: -8 }}
-              style={{
-                background: "var(--cream)",
-                borderRadius: "1rem",
-                padding: "2.5rem 2rem",
-                textAlign: "center",
-                cursor: "default",
-              }}
-            >
-              <motion.div
-                whileHover={{ background: "var(--accent-brown)", color: "var(--cream)" }}
-                transition={{ duration: 0.4 }}
-                style={{
-                  width: "56px",
-                  height: "56px",
-                  borderRadius: "50%",
-                  border: "1px solid rgba(43,43,43,0.12)",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  margin: "0 auto 1.5rem",
-                  color: "var(--accent-brown)",
-                  transition: "all 0.4s ease",
-                }}
-              >
-                {f.icon}
-              </motion.div>
-              <h3
-                style={{
-                  fontFamily: "'Cormorant Garamond', serif",
-                  fontSize: "1.25rem",
-                  fontWeight: 400,
-                  color: "var(--text-primary)",
-                  marginBottom: "0.8rem",
-                }}
-              >
-                {f.title}
-              </h3>
-              <p
-                style={{
-                  fontFamily: "var(--font-sans)",
-                  fontSize: "0.8rem",
-                  fontWeight: 300,
-                  lineHeight: 1.85,
-                  color: "var(--text-secondary)",
-                }}
-              >
-                {f.text}
-              </p>
-            </motion.div>
+            <FeatureCard key={f.id} f={f} i={i} />
           ))}
         </div>
       </div>
 
       <style>{`
-        @media (max-width: 900px) {
-          .features-grid { grid-template-columns: repeat(2, 1fr) !important; }
-        }
-        @media (max-width: 540px) {
-          .features-grid { grid-template-columns: 1fr !important; }
-        }
+        @media (max-width: 900px) { .features-grid { grid-template-columns: repeat(2, 1fr) !important; } }
+        @media (max-width: 540px) { .features-grid { grid-template-columns: 1fr !important; } }
       `}</style>
     </section>
   );
 }
 
-/* ─────────────────────────────────────────────
-   EXPORT
-───────────────────────────────────────────── */
 export default function Features() {
   const isMobile = useIsMobile();
   return isMobile ? <MobileFeatures /> : <DesktopFeatures />;

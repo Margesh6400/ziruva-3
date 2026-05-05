@@ -222,6 +222,80 @@ function DesktopFooter() {
               <br />Designed in the UK.
               <br />Crafted for legacy.
             </p>
+            {/* Currently crafting */}
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.7, delay: 0.2 }}
+              style={{
+                marginBottom: "2rem",
+                borderTop: "1px solid rgba(252,248,240,0.08)",
+                paddingTop: "1.4rem",
+              }}
+            >
+              <p
+                style={{
+                  fontFamily: "var(--font-fashion)",
+                  fontSize: "0.44rem",
+                  letterSpacing: "0.28em",
+                  textTransform: "uppercase",
+                  color: "rgba(252,248,240,0.22)",
+                  marginBottom: "0.75rem",
+                }}
+              >
+                Currently Crafting
+              </p>
+              <Link
+                href="/product/la-lune"
+                style={{ textDecoration: "none", display: "flex", alignItems: "center", gap: "0.85rem" }}
+              >
+                <div
+                  style={{
+                    position: "relative",
+                    width: "38px",
+                    height: "38px",
+                    flexShrink: 0,
+                    borderRadius: "4px",
+                    overflow: "hidden",
+                  }}
+                >
+                  <Image
+                    src="/images/la-lune-attached.jpg"
+                    alt="La Lune"
+                    fill
+                    style={{ objectFit: "cover" }}
+                  />
+                </div>
+                <div>
+                  <p
+                    style={{
+                      fontFamily: "'Cormorant Garamond', serif",
+                      fontSize: "0.88rem",
+                      fontWeight: 300,
+                      color: "rgba(252,248,240,0.55)",
+                      transition: "color 0.3s ease",
+                    }}
+                    onMouseEnter={(e) => ((e.currentTarget as HTMLElement).style.color = "var(--accent-brown)")}
+                    onMouseLeave={(e) => ((e.currentTarget as HTMLElement).style.color = "rgba(252,248,240,0.55)")}
+                  >
+                    La Lune
+                  </p>
+                  <p
+                    style={{
+                      fontFamily: "var(--font-fashion)",
+                      fontSize: "0.4rem",
+                      letterSpacing: "0.18em",
+                      color: "rgba(252,248,240,0.22)",
+                      textTransform: "uppercase",
+                    }}
+                  >
+                    L&apos;Édition · Limited
+                  </p>
+                </div>
+              </Link>
+            </motion.div>
+
             <div style={{ display: "flex", gap: "1.4rem" }}>
               {["Instagram", "Pinterest", "TikTok"].map((s) => (
                 <a
@@ -320,15 +394,18 @@ function DesktopFooter() {
       </div>
 
       {/* Watermark Logo */}
-      <div
+      <motion.div
+        initial={{ opacity: 0, scale: 0.92 }}
+        whileInView={{ opacity: 0.015, scale: 1 }}
+        viewport={{ once: true }}
+        transition={{ duration: 1.8, ease: [0.25, 0.46, 0.45, 0.94] }}
         style={{
           position: "absolute",
           bottom: 0,
           left: "50%",
-          transform: "translateX(-50%)",
+          x: "-50%",
           display: "flex",
           alignItems: "center",
-          opacity: 0.015,
           pointerEvents: "none",
           userSelect: "none",
           paddingBottom: "0.5rem",
@@ -351,7 +428,7 @@ function DesktopFooter() {
             </motion.div>
           );
         })}
-      </div>
+      </motion.div>
 
       <style>{`
         @media (max-width: 1000px) { .footer-grid { grid-template-columns: 1fr 1fr 1fr !important; } }

@@ -28,11 +28,18 @@ const collections = [
   { name: "The Archive", desc: "View Full History", href: "/collection" },
 ];
 
+const announcements = [
+  "SS25: La Saison — Limited Edition",
+  "Free shipping on orders over £200",
+  "New drops every season — join the waitlist",
+];
+
 export default function Navbar() {
   const isMobile = useIsMobile();
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [showAnnouncement, setShowAnnouncement] = useState(true);
+  const [annIdx, setAnnIdx] = useState(0);
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
   const [mobileCollectionOpen, setMobileCollectionOpen] = useState(false);
   const [mobileAtelierOpen, setMobileAtelierOpen] = useState(false);
@@ -41,6 +48,11 @@ export default function Navbar() {
     const onScroll = () => setScrolled(window.scrollY > 60);
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  useEffect(() => {
+    const t = setInterval(() => setAnnIdx((p) => (p + 1) % announcements.length), 4000);
+    return () => clearInterval(t);
   }, []);
 
   return (
@@ -167,25 +179,32 @@ export default function Navbar() {
                 zIndex: 1001,
               }}
             >
-              <div style={{ padding: isMobile ? "7px 0" : "9px 0", flex: 1, textAlign: "center" }}>
-                <p
-                  style={{
-                    fontFamily: "var(--font-fashion)",
-                    fontSize: isMobile ? "0.5rem" : "0.58rem",
-                    fontWeight: 500,
-                    letterSpacing: "0.25em",
-                    textTransform: "uppercase",
-                    color: "var(--cream)",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    gap: isMobile ? "0.5rem" : "1rem",
-                  }}
-                >
-                  {!isMobile && <span style={{ opacity: 0.4, fontSize: "0.35rem" }}>◆</span>}
-                  SS25: La Saison — Limited Edition
-                  {!isMobile && <span style={{ opacity: 0.4, fontSize: "0.35rem" }}>◆</span>}
-                </p>
+              <div style={{ padding: isMobile ? "7px 0" : "9px 0", flex: 1, textAlign: "center", overflow: "hidden" }}>
+                <AnimatePresence mode="wait">
+                  <motion.p
+                    key={annIdx}
+                    initial={{ y: 12, opacity: 0 }}
+                    animate={{ y: 0, opacity: 1 }}
+                    exit={{ y: -12, opacity: 0 }}
+                    transition={{ duration: 0.38 }}
+                    style={{
+                      fontFamily: "var(--font-fashion)",
+                      fontSize: isMobile ? "0.5rem" : "0.58rem",
+                      fontWeight: 500,
+                      letterSpacing: "0.25em",
+                      textTransform: "uppercase",
+                      color: "var(--cream)",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      gap: isMobile ? "0.5rem" : "1rem",
+                    }}
+                  >
+                    {!isMobile && <span style={{ opacity: 0.4, fontSize: "0.35rem" }}>◆</span>}
+                    {announcements[annIdx]}
+                    {!isMobile && <span style={{ opacity: 0.4, fontSize: "0.35rem" }}>◆</span>}
+                  </motion.p>
+                </AnimatePresence>
               </div>
 
               <button
@@ -365,10 +384,10 @@ export default function Navbar() {
               <AnimatePresence>
                 {activeDropdown && (
                   <motion.div
-                    initial={{ opacity: 0, y: -8 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -6 }}
-                    transition={{ duration: 0.35, ease: [0.23, 1, 0.32, 1] }}
+                    initial={{ opacity: 0, clipPath: "inset(0 0 100% 0)" }}
+                    animate={{ opacity: 1, clipPath: "inset(0 0 0% 0)" }}
+                    exit={{ opacity: 0, clipPath: "inset(0 0 100% 0)" }}
+                    transition={{ duration: 0.38, ease: [0.25, 0.46, 0.45, 0.94] }}
                     style={{
                       width: "100%",
                       background: "rgba(252,248,240,0.98)",

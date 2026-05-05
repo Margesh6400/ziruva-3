@@ -6,25 +6,50 @@ import Image from "next/image";
 import { useIsMobile } from "@/hooks/useMediaQuery";
 
 const items = [
-  { id: 1, name: "La Signature Ivoire", sub: "Ivory · Teal Handles", price: "£ 240", image: "https://images.unsplash.com/photo-1547949003-9792a18a2601?auto=format&fit=crop&w=800&q=80", alt: "ZIRUVA La Signature Ivoire — ivory leather handbag with teal handles, £240, SS25 luxury collection" },
-  { id: 2, name: "L'Édition Noire", sub: "Ivory · Black Structure", price: "£ 420", image: "/images/bag-ivory-black.png", alt: "ZIRUVA L'Édition Noire — structured ivory and black leather handbag, £420, limited edition" },
-  { id: 3, name: "La Croco Fauve", sub: "Dark Brown · Crocodile", price: "£ 480", image: "/images/bag-brown-croc.png", alt: "ZIRUVA La Croco Fauve — dark brown crocodile leather handbag, £480, limited to 30 pieces" },
-  { id: 4, name: "La Signature Rose", sub: "Classic · Limited Run", price: "£ 260", image: "/images/bag-ivory-teal-new.png", alt: "ZIRUVA La Signature Rose — classic ivory leather handbag, £260, limited run SS25 collection" },
+  {
+    id: 1,
+    name: "La Signature Ivoire",
+    sub: "Ivory · Teal Handles",
+    material: "Vegetable-tanned calf, ivory",
+    price: "£ 240",
+    image: "https://images.unsplash.com/photo-1547949003-9792a18a2601?auto=format&fit=crop&w=800&q=80",
+    alt: "ZIRUVA La Signature Ivoire — ivory leather handbag with teal handles, £240, SS25 luxury collection",
+  },
+  {
+    id: 2,
+    name: "L'Édition Noire",
+    sub: "Ivory · Black Structure",
+    material: "Box calf, midnight noir",
+    price: "£ 420",
+    image: "/images/bag-ivory-black.png",
+    alt: "ZIRUVA L'Édition Noire — structured ivory and black leather handbag, £420, limited edition",
+  },
+  {
+    id: 3,
+    name: "La Croco Fauve",
+    sub: "Dark Brown · Crocodile",
+    material: "Embossed croc calf, fauve",
+    price: "£ 480",
+    image: "/images/bag-brown-croc.png",
+    alt: "ZIRUVA La Croco Fauve — dark brown crocodile leather handbag, £480, limited to 30 pieces",
+  },
+  {
+    id: 4,
+    name: "La Signature Rose",
+    sub: "Classic · Limited Run",
+    material: "Full-grain nappa, blush",
+    price: "£ 260",
+    image: "/images/bag-ivory-teal-new.png",
+    alt: "ZIRUVA La Signature Rose — classic ivory leather handbag, £260, limited run SS25 collection",
+  },
 ];
 
 /* ─────────────────────────────────────────────
-   MOBILE — native swipe carousel
+   MOBILE
 ───────────────────────────────────────────── */
 function MobileHorizontalScroll() {
   return (
-    <section
-      style={{
-        background: "var(--cream)",
-        padding: "3rem 0 4rem",
-        /* no overflow:hidden — it clips the track's paddingLeft */
-      }}
-    >
-      {/* Header */}
+    <section style={{ background: "var(--cream)", padding: "3rem 0 4rem" }}>
       <motion.div
         initial={{ opacity: 0, y: 14 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -54,24 +79,33 @@ function MobileHorizontalScroll() {
             Horizontal Gallery · Explore
           </span>
         </div>
-        <div
-          style={{
-            display: "flex",
-            alignItems: "flex-end",
-            justifyContent: "space-between",
-          }}
-        >
-          <h2
-            style={{
-              fontFamily: "'Cormorant Garamond', serif",
-              fontSize: "clamp(2rem, 8vw, 2.8rem)",
-              fontWeight: 300,
-              lineHeight: 1.05,
-              color: "var(--text-primary)",
-            }}
-          >
-            Browse the Atelier
-          </h2>
+        <div style={{ display: "flex", alignItems: "flex-end", justifyContent: "space-between" }}>
+          <div>
+            <h2
+              style={{
+                fontFamily: "'Cormorant Garamond', serif",
+                fontSize: "clamp(2rem, 8vw, 2.8rem)",
+                fontWeight: 300,
+                lineHeight: 1.05,
+                color: "var(--text-primary)",
+              }}
+            >
+              Browse the Atelier
+            </h2>
+            <p
+              style={{
+                fontFamily: "'Cormorant Garamond', serif",
+                fontSize: "0.88rem",
+                fontStyle: "italic",
+                fontWeight: 300,
+                color: "var(--text-secondary)",
+                marginTop: "0.3rem",
+                opacity: 0.75,
+              }}
+            >
+              A season in four silhouettes.
+            </p>
+          </div>
           <span
             style={{
               fontFamily: "var(--font-fashion)",
@@ -87,7 +121,6 @@ function MobileHorizontalScroll() {
         </div>
       </motion.div>
 
-      {/* Native-scroll swipe track */}
       <div
         className="hz-mobile-track"
         style={{
@@ -100,16 +133,12 @@ function MobileHorizontalScroll() {
           paddingLeft: "1.5rem",
           paddingRight: "1.5rem",
           paddingBottom: "0.5rem",
-          /* snap respects the left inset */
           scrollPaddingLeft: "1.5rem",
         }}
       >
-        {/* Hide scrollbar cross-browser */}
-        <style>{`
-          .hz-mobile-track::-webkit-scrollbar { display: none; }
-        `}</style>
+        <style>{`.hz-mobile-track::-webkit-scrollbar { display: none; }`}</style>
 
-        {items.map((item, i) => (
+        {items.map((item) => (
           <div
             key={item.id}
             style={{
@@ -119,7 +148,6 @@ function MobileHorizontalScroll() {
               scrollSnapAlign: "start",
             }}
           >
-            {/* Card */}
             <div
               style={{
                 background: "var(--cream)",
@@ -129,45 +157,13 @@ function MobileHorizontalScroll() {
                 boxShadow: "0 4px 20px rgba(43,43,43,0.06)",
               }}
             >
-              {/* Image */}
-              <div
-                style={{
-                  position: "relative",
-                  width: "100%",
-                  height: "280px",
-                  overflow: "hidden",
-                }}
-              >
+              <div style={{ position: "relative", width: "100%", height: "280px", overflow: "hidden" }}>
                 <img
                   src={item.image}
                   alt={item.alt}
-                  style={{
-                    width: "100%",
-                    height: "100%",
-                    objectFit: "cover",
-                    objectPosition: "center",
-                  }}
+                  style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center" }}
                 />
-                {/* Bottom scrim 
-                <div
-                  style={{
-                    position: "absolute",
-                    inset: 0,
-                    background:
-                      "linear-gradient(to top, rgba(14,10,4,0.3) 0%, transparent 40%)",
-                    pointerEvents: "none",
-                  }}
-                />
-                */}
-                {/* Watermark */}
-                <div
-                  style={{
-                    position: "absolute",
-                    bottom: "1rem",
-                    right: "1rem",
-                    opacity: 0.55,
-                  }}
-                >
+                <div style={{ position: "absolute", bottom: "1rem", right: "1rem", opacity: 0.55 }}>
                   <span
                     style={{
                       fontFamily: "'Cormorant Garamond', serif",
@@ -181,7 +177,6 @@ function MobileHorizontalScroll() {
                 </div>
               </div>
 
-              {/* Info */}
               <div style={{ padding: "1rem 1.25rem 1.3rem" }}>
                 <h3
                   style={{
@@ -190,7 +185,7 @@ function MobileHorizontalScroll() {
                     fontWeight: 300,
                     lineHeight: 1.1,
                     color: "var(--text-primary)",
-                    marginBottom: "0.3rem",
+                    marginBottom: "0.25rem",
                   }}
                 >
                   {item.name}
@@ -203,18 +198,24 @@ function MobileHorizontalScroll() {
                     letterSpacing: "0.24em",
                     textTransform: "uppercase",
                     color: "var(--text-meta)",
-                    marginBottom: "0.85rem",
+                    marginBottom: "0.3rem",
                   }}
                 >
                   {item.sub}
                 </p>
-                <div
+                <p
                   style={{
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "space-between",
+                    fontFamily: "var(--font-sans)",
+                    fontSize: "0.66rem",
+                    fontStyle: "italic",
+                    color: "var(--text-secondary)",
+                    opacity: 0.7,
+                    marginBottom: "0.75rem",
                   }}
                 >
+                  {item.material}
+                </p>
+                <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
                   <p
                     style={{
                       fontFamily: "var(--font-sans)",
@@ -252,7 +253,7 @@ function MobileHorizontalScroll() {
 }
 
 /* ─────────────────────────────────────────────
-   DESKTOP — original wheel-scroll gallery
+   DESKTOP
 ───────────────────────────────────────────── */
 function DesktopHorizontalScroll() {
   const scrollRef = useRef<HTMLDivElement>(null);
@@ -265,7 +266,6 @@ function DesktopHorizontalScroll() {
 
   return (
     <section style={{ background: "var(--cream)", padding: "7rem 0" }}>
-      {/* Header */}
       <div
         style={{
           maxWidth: "1280px",
@@ -274,13 +274,7 @@ function DesktopHorizontalScroll() {
           marginBottom: "3.5rem",
         }}
       >
-        <div
-          style={{
-            display: "flex",
-            alignItems: "flex-end",
-            justifyContent: "space-between",
-          }}
-        >
+        <div style={{ display: "flex", alignItems: "flex-end", justifyContent: "space-between" }}>
           <div>
             <motion.span
               initial={{ opacity: 0, y: 20 }}
@@ -310,10 +304,27 @@ function DesktopHorizontalScroll() {
                 fontSize: "clamp(2rem, 4vw, 3.2rem)",
                 fontWeight: 300,
                 color: "var(--text-primary)",
+                marginBottom: "0.5rem",
               }}
             >
               Browse the Atelier
             </motion.h2>
+            <motion.p
+              initial={{ opacity: 0, y: 15 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.7, delay: 0.2 }}
+              style={{
+                fontFamily: "'Cormorant Garamond', serif",
+                fontSize: "1.05rem",
+                fontStyle: "italic",
+                fontWeight: 300,
+                color: "var(--text-secondary)",
+                opacity: 0.75,
+              }}
+            >
+              A season in four silhouettes.
+            </motion.p>
           </div>
           <p
             style={{
@@ -330,7 +341,6 @@ function DesktopHorizontalScroll() {
         </div>
       </div>
 
-      {/* Scrollable track */}
       <div
         ref={scrollRef}
         onWheel={handleWheel}
@@ -350,8 +360,8 @@ function DesktopHorizontalScroll() {
         {items.map((item, i) => (
           <motion.div
             key={item.id}
-            initial={{ opacity: 0, x: 40 }}
-            whileInView={{ opacity: 1, x: 0 }}
+            initial={{ opacity: 0, x: 40, scale: 0.95 }}
+            whileInView={{ opacity: 1, x: 0, scale: 1 }}
             viewport={{ once: true, margin: "-80px" }}
             transition={{ duration: 0.8, delay: i * 0.1 }}
             id={`showcase-item-${item.id}`}
@@ -370,14 +380,7 @@ function DesktopHorizontalScroll() {
                 transition: "box-shadow 0.4s ease",
               }}
             >
-              {/* Image area */}
-              <div
-                style={{
-                  height: "360px",
-                  position: "relative",
-                  overflow: "hidden",
-                }}
-              >
+              <div style={{ height: "360px", position: "relative", overflow: "hidden" }}>
                 <motion.div
                   whileHover={{ scale: 1.1 }}
                   transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
@@ -388,25 +391,19 @@ function DesktopHorizontalScroll() {
                     alt={item.alt}
                     fill
                     sizes="320px"
-                    style={{
-                      objectFit: "cover",
-                      filter: "brightness(0.96)",
-                    }}
+                    style={{ objectFit: "cover", filter: "brightness(0.96)" }}
                   />
                 </motion.div>
 
-                {/* Legibility Gradient */}
                 <div
                   style={{
                     position: "absolute",
                     inset: 0,
-                    background:
-                      "linear-gradient(to bottom, rgba(0,0,0,0.1) 0%, transparent 20%)",
+                    background: "linear-gradient(to bottom, rgba(0,0,0,0.1) 0%, transparent 20%)",
                     pointerEvents: "none",
                   }}
                 />
 
-                {/* Brand Watermark */}
                 <div
                   style={{
                     position: "absolute",
@@ -429,7 +426,6 @@ function DesktopHorizontalScroll() {
                 </div>
               </div>
 
-              {/* Info */}
               <div style={{ padding: "1.2rem 1.8rem 1.8rem" }}>
                 <h3
                   style={{
@@ -437,7 +433,7 @@ function DesktopHorizontalScroll() {
                     fontSize: "1.3rem",
                     fontWeight: 400,
                     color: "var(--text-primary)",
-                    marginBottom: "0.4rem",
+                    marginBottom: "0.25rem",
                   }}
                 >
                   {item.name}
@@ -450,18 +446,24 @@ function DesktopHorizontalScroll() {
                     letterSpacing: "0.25em",
                     textTransform: "uppercase",
                     color: "var(--text-secondary)",
-                    marginBottom: "1rem",
+                    marginBottom: "0.3rem",
                   }}
                 >
                   {item.sub}
                 </p>
-                <div
+                <p
                   style={{
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "space-between",
+                    fontFamily: "var(--font-sans)",
+                    fontSize: "0.7rem",
+                    fontStyle: "italic",
+                    color: "var(--text-secondary)",
+                    opacity: 0.65,
+                    marginBottom: "0.9rem",
                   }}
                 >
+                  {item.material}
+                </p>
+                <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
                   <p
                     style={{
                       fontFamily: "var(--font-sans)",
@@ -507,9 +509,6 @@ function DesktopHorizontalScroll() {
   );
 }
 
-/* ─────────────────────────────────────────────
-   EXPORT
-───────────────────────────────────────────── */
 export default function HorizontalScroll() {
   const isMobile = useIsMobile();
   return isMobile ? <MobileHorizontalScroll /> : <DesktopHorizontalScroll />;

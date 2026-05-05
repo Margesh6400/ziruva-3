@@ -13,7 +13,6 @@ const lines = [
 export default function ScrollTransition() {
   return (
     <section
-      ref={null}
       id="scroll-manifesto"
       style={{
         minHeight: "45vh",
@@ -23,7 +22,7 @@ export default function ScrollTransition() {
         background: "var(--cream)",
         position: "relative",
         overflow: "hidden",
-        padding: "6rem 0",   /* equal top & bottom */
+        padding: "6rem 0",
       }}
     >
       <div
@@ -39,7 +38,7 @@ export default function ScrollTransition() {
         style={{
           maxWidth: "800px",
           margin: "0 auto",
-          padding: "0 4rem",   /* horizontal only — no extra vertical */
+          padding: "0 4rem",
           textAlign: "center",
         }}
       >
@@ -62,28 +61,29 @@ export default function ScrollTransition() {
           The ZIRUVA Manifesto
         </motion.span>
 
+        {/* Lines with left-to-right clip-path wipe */}
         <div style={{ display: "flex", flexDirection: "column", gap: "0.2rem" }}>
           {lines.map((line, i) => (
-            <motion.p
-              key={i}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-20px" }}
-              transition={{
-                duration: 1,
-                delay: i * 0.12,
-                ease: [0.25, 0.46, 0.45, 0.94],
-              }}
-              style={{
-                fontFamily: "'Cormorant Garamond', serif",
-                fontSize: "clamp(1.5rem, 3vw, 2.6rem)",
-                fontWeight: 300,
-                lineHeight: 1.25,
-                color: i % 2 === 0 ? "var(--text-primary)" : "var(--text-secondary)",
-              }}
-            >
-              {line}
-            </motion.p>
+            <div key={i} style={{ overflow: "hidden" }}>
+              <motion.p
+                initial={{ clipPath: "inset(0 100% 0 0)", opacity: 0.4 }}
+                whileInView={{ clipPath: "inset(0 0% 0 0)", opacity: 1 }}
+                viewport={{ once: true, margin: "-20px" }}
+                transition={{
+                  clipPath: { duration: 0.85, delay: i * 0.14, ease: [0.25, 0.46, 0.45, 0.94] },
+                  opacity: { duration: 0.4, delay: i * 0.14 },
+                }}
+                style={{
+                  fontFamily: "'Cormorant Garamond', serif",
+                  fontSize: "clamp(1.5rem, 3vw, 2.6rem)",
+                  fontWeight: 300,
+                  lineHeight: 1.25,
+                  color: i % 2 === 0 ? "var(--text-primary)" : "var(--text-secondary)",
+                }}
+              >
+                {line}
+              </motion.p>
+            </div>
           ))}
         </div>
 
@@ -93,13 +93,50 @@ export default function ScrollTransition() {
           viewport={{ once: true }}
           transition={{ duration: 1.2, delay: 0.8 }}
           style={{
-            margin: "2.5rem auto 0",   /* matches the 2rem eyebrow gap above */
+            margin: "2.5rem auto 0",
             height: "1px",
             width: "60px",
             background: "var(--accent-brown)",
             transformOrigin: "center",
           }}
         />
+
+        {/* Founder pull-quote */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.9, delay: 1.0 }}
+          style={{ marginTop: "3rem" }}
+        >
+          <p
+            style={{
+              fontFamily: "'Cormorant Garamond', serif",
+              fontSize: "clamp(1rem, 1.8vw, 1.35rem)",
+              fontStyle: "italic",
+              fontWeight: 300,
+              color: "var(--text-secondary)",
+              maxWidth: "520px",
+              margin: "0 auto",
+              lineHeight: 1.6,
+              opacity: 0.8,
+            }}
+          >
+            &ldquo;We make twelve bags a month. That is not a limitation. That is the point.&rdquo;
+          </p>
+          <p
+            style={{
+              fontFamily: "var(--font-fashion)",
+              fontSize: "0.48rem",
+              letterSpacing: "0.3em",
+              textTransform: "uppercase",
+              color: "var(--accent-brown)",
+              marginTop: "1rem",
+            }}
+          >
+            — Founder, Maison ZIRUVA
+          </p>
+        </motion.div>
       </div>
     </section>
   );

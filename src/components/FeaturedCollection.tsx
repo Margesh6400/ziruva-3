@@ -19,6 +19,11 @@ function ProductCard({ product, index }: { product: Product; index: number }) {
     setTilt({ x, y });
   };
 
+  const isLimited = product.tier.toLowerCase().includes("limited");
+  const shortMaterial = product.specs.material.includes(" in ")
+    ? product.specs.material.split(" in ").slice(-1)[0]
+    : product.specs.material.split(",")[0];
+
   return (
     <Link href={`/product/${product.id}`} style={{ textDecoration: "none", display: "block" }}>
       <motion.div
@@ -45,7 +50,7 @@ function ProductCard({ product, index }: { product: Product; index: number }) {
         }}
       >
         {/* Tier badge */}
-        <div style={{ position: "absolute", top: "1.5rem", left: "1.6rem", zIndex: 10 }}>
+        <div style={{ position: "absolute", top: "1.5rem", left: "1.6rem", zIndex: 10, display: "flex", gap: "0.5rem", flexWrap: "wrap" }}>
           <span
             style={{
               fontFamily: "var(--font-fashion)",
@@ -59,12 +64,27 @@ function ProductCard({ product, index }: { product: Product; index: number }) {
           >
             {product.tier}
           </span>
+          {isLimited && (
+            <span
+              style={{
+                fontFamily: "var(--font-fashion)",
+                fontSize: "0.48rem",
+                fontWeight: 600,
+                letterSpacing: "0.18em",
+                textTransform: "uppercase",
+                color: "var(--cream)",
+                background: "var(--accent-brown)",
+                padding: "0.15rem 0.55rem",
+                borderRadius: "2px",
+              }}
+            >
+              8 left
+            </span>
+          )}
         </div>
 
-        {/* Image Container — aspect-ratio based so proportions hold on all screens */}
+        {/* Image */}
         <div className="card-img-wrap" style={{ position: "relative", paddingTop: "115%", overflow: "hidden" }}>
-
-          {/* Zoom wrapper */}
           <motion.div
             animate={{
               scale: hovered ? 1.07 : 1,
@@ -98,7 +118,6 @@ function ProductCard({ product, index }: { product: Product; index: number }) {
             )}
           </motion.div>
 
-          {/* Top vignette — badge legibility */}
           <div
             style={{
               position: "absolute",
@@ -108,8 +127,6 @@ function ProductCard({ product, index }: { product: Product; index: number }) {
               zIndex: 2,
             }}
           />
-
-          {/* Bottom fade — seamlessly blends into info section */}
           <div
             style={{
               position: "absolute",
@@ -122,8 +139,6 @@ function ProductCard({ product, index }: { product: Product; index: number }) {
               zIndex: 3,
             }}
           />
-
-          {/* Maison Ziruva watermark */}
           <div
             style={{
               position: "absolute",
@@ -148,9 +163,14 @@ function ProductCard({ product, index }: { product: Product; index: number }) {
           </div>
         </div>
 
-        {/* Info section */}
-        <div style={{ padding: "1.25rem 1.75rem 1.75rem" }}>
-
+        {/* Info — slides up on hover */}
+        <div
+          style={{
+            padding: "1.25rem 1.75rem 1.75rem",
+            transform: `translateY(${hovered ? -4 : 0}px)`,
+            transition: "transform 0.4s cubic-bezier(0.23,1,0.32,1)",
+          }}
+        >
           <p
             style={{
               fontFamily: "var(--font-fashion)",
@@ -172,20 +192,28 @@ function ProductCard({ product, index }: { product: Product; index: number }) {
               fontWeight: 300,
               lineHeight: 1.1,
               color: "var(--text-primary)",
-              marginBottom: "1.1rem",
+              marginBottom: "0.5rem",
             }}
           >
             {product.name}
           </h3>
 
-          {/* Divider */}
-          <div
+          {/* Material descriptor */}
+          <p
             style={{
-              height: "1px",
-              background: "rgba(43,43,43,0.1)",
-              marginBottom: "1rem",
+              fontFamily: "var(--font-sans)",
+              fontSize: "0.68rem",
+              fontWeight: 300,
+              fontStyle: "italic",
+              color: "var(--text-secondary)",
+              opacity: 0.72,
+              marginBottom: "0.9rem",
             }}
-          />
+          >
+            {shortMaterial}
+          </p>
+
+          <div style={{ height: "1px", background: "rgba(43,43,43,0.1)", marginBottom: "1rem" }} />
 
           <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
             <p
@@ -215,6 +243,8 @@ function ProductCard({ product, index }: { product: Product; index: number }) {
                 display: "flex",
                 alignItems: "center",
                 gap: "0.45rem",
+                opacity: hovered ? 1 : 0.7,
+                transition: "opacity 0.35s ease",
               }}
             >
               Add to Waitlist
@@ -231,7 +261,6 @@ function ProductCard({ product, index }: { product: Product; index: number }) {
           </div>
         </div>
 
-        {/* Bottom reveal bar */}
         <motion.div
           animate={{ scaleX: hovered ? 1 : 0 }}
           transition={{ duration: 0.4 }}
@@ -261,7 +290,6 @@ export default function FeaturedCollection() {
         className="collection-container"
         style={{ maxWidth: "1280px", margin: "0 auto", padding: "0 4rem" }}
       >
-        {/* Header — editorial two-column on desktop */}
         <div className="collection-header collection-header-mb">
           <div className="collection-header-left">
             <motion.span
@@ -321,13 +349,8 @@ export default function FeaturedCollection() {
           </div>
         </div>
 
-        {/* Grid — 3 clean columns */}
         <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(3, 1fr)",
-            gap: "1.5rem",
-          }}
+          style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "1.5rem" }}
           className="products-grid"
         >
           {products.slice(0, 3).map((p, i) => (
@@ -335,7 +358,6 @@ export default function FeaturedCollection() {
           ))}
         </div>
 
-        {/* CTA */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -360,7 +382,6 @@ export default function FeaturedCollection() {
         .collection-header-mb { margin-bottom: 5rem; }
         .collection-header-right { padding-bottom: 0.4rem; }
 
-        /* Tablet */
         @media (max-width: 860px) {
           .collection-header { flex-direction: column; align-items: flex-start; gap: 1rem; }
           .collection-header-right { padding-bottom: 0; }
@@ -370,7 +391,6 @@ export default function FeaturedCollection() {
           .products-grid { grid-template-columns: 1fr 1fr !important; gap: 1.25rem !important; }
         }
 
-        /* Mobile */
         @media (max-width: 560px) {
           .collection-section { padding: 3rem 0 4rem !important; }
           .collection-container { padding: 0 1.25rem !important; }

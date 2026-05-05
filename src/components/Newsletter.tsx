@@ -24,8 +24,10 @@ export default function Newsletter() {
         overflow: "hidden",
       }}
     >
-      {/* Bespoke ZIRUVA watermark logo */}
-      <div
+      {/* Watermark — slow breathing scale */}
+      <motion.div
+        animate={{ scale: [1, 1.04, 1], opacity: [0.025, 0.04, 0.025] }}
+        transition={{ duration: 9, ease: "easeInOut", repeat: Infinity }}
         style={{
           position: "absolute",
           left: "50%",
@@ -33,7 +35,6 @@ export default function Newsletter() {
           transform: "translate(-50%, -50%)",
           display: "flex",
           alignItems: "center",
-          opacity: 0.025,
           pointerEvents: "none",
           userSelect: "none",
           filter: "brightness(0) invert(1)",
@@ -57,17 +58,13 @@ export default function Newsletter() {
             a: "0",
           };
           return (
-            <motion.div
+            <div
               key={`newsletter-watermark-${letter}-${idx}`}
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 1.5, delay: idx * 0.1 }}
               style={{
                 position: "relative",
                 height: "clamp(5rem, 18vw, 16rem)",
                 width: watermarkWidths[letter],
-                marginRight: watermarkMargins[letter]
+                marginRight: watermarkMargins[letter],
               }}
             >
               <Image
@@ -76,10 +73,10 @@ export default function Newsletter() {
                 fill
                 style={{ objectFit: "contain" }}
               />
-            </motion.div>
+            </div>
           );
         })}
-      </div>
+      </motion.div>
 
       <div
         style={{
@@ -138,12 +135,64 @@ export default function Newsletter() {
             fontWeight: 300,
             lineHeight: 1.9,
             color: "rgba(252,248,240,0.45)",
-            marginBottom: "3.5rem",
+            marginBottom: "2rem",
           }}
         >
           Join the ZIRUVA inner circle for early access to new drops, exclusive
           behind-the-scenes and invitations to private previews.
         </motion.p>
+
+        {/* Social proof */}
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.7, delay: 0.25 }}
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            gap: "0.85rem",
+            marginBottom: "2.5rem",
+          }}
+        >
+          <div style={{ display: "flex" }}>
+            {[
+              "#8B6B4E",
+              "#A07848",
+              "#C9A84C",
+              "#6B4F3A",
+              "#B08060",
+            ].map((color, i) => (
+              <div
+                key={i}
+                style={{
+                  width: "26px",
+                  height: "26px",
+                  borderRadius: "50%",
+                  background: color,
+                  border: "2px solid var(--text-primary)",
+                  marginLeft: i > 0 ? "-9px" : 0,
+                  zIndex: 5 - i,
+                  position: "relative",
+                }}
+              />
+            ))}
+          </div>
+          <p
+            style={{
+              fontFamily: "var(--font-sans)",
+              fontSize: "0.74rem",
+              fontWeight: 300,
+              color: "rgba(252,248,240,0.38)",
+              letterSpacing: "0.02em",
+            }}
+          >
+            Join{" "}
+            <span style={{ color: "rgba(252,248,240,0.65)", fontWeight: 400 }}>2,400+</span>{" "}
+            members of the Inner Circle
+          </p>
+        </motion.div>
 
         <motion.form
           initial={{ opacity: 0, y: 20 }}
@@ -156,11 +205,7 @@ export default function Newsletter() {
         >
           <AnimatePresence mode="wait">
             {!submitted ? (
-              <motion.div
-                key="form"
-                exit={{ opacity: 0 }}
-                style={{ display: "flex" }}
-              >
+              <motion.div key="form" exit={{ opacity: 0 }} style={{ display: "flex" }}>
                 <input
                   id="newsletter-email"
                   type="email"
@@ -181,7 +226,8 @@ export default function Newsletter() {
                     borderRight: "none",
                     color: "var(--cream)",
                     outline: "none",
-                    transition: "border-color 0.3s ease",
+                    transition: "border-color 0.3s ease, box-shadow 0.3s ease",
+                    boxShadow: focused ? "0 0 0 3px rgba(201,168,76,0.12)" : "none",
                   }}
                 />
                 <button
@@ -212,6 +258,34 @@ export default function Newsletter() {
                 animate={{ opacity: 1, y: 0 }}
                 style={{ padding: "1.5rem 0" }}
               >
+                {/* Animated checkmark */}
+                <motion.svg
+                  width="44"
+                  height="44"
+                  viewBox="0 0 44 44"
+                  fill="none"
+                  style={{ display: "block", margin: "0 auto 1.2rem" }}
+                >
+                  <circle
+                    cx="22"
+                    cy="22"
+                    r="20"
+                    stroke="var(--accent-brown)"
+                    strokeWidth="1"
+                    opacity="0.3"
+                  />
+                  <motion.path
+                    d="M13 22l7 7 11-14"
+                    stroke="var(--accent-brown)"
+                    strokeWidth="1.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    initial={{ pathLength: 0 }}
+                    animate={{ pathLength: 1 }}
+                    transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
+                  />
+                </motion.svg>
+
                 <p
                   style={{
                     fontFamily: "'Cormorant Garamond', serif",

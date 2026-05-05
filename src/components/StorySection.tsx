@@ -1,12 +1,36 @@
 "use client";
 
-import { useRef } from "react";
-import { motion, useScroll, useTransform } from "framer-motion";
+import { useRef, useEffect, useState } from "react";
+import { motion, useScroll, useTransform, useInView } from "framer-motion";
 import Image from "next/image";
 import { useIsMobile } from "@/hooks/useMediaQuery";
 
+function CountUp({ to, suffix = "" }: { to: number; suffix?: string }) {
+  const ref = useRef<HTMLSpanElement>(null);
+  const inView = useInView(ref, { once: true });
+  const [count, setCount] = useState(0);
+
+  useEffect(() => {
+    if (!inView) return;
+    let current = 0;
+    const timer = setInterval(() => {
+      current += 1;
+      setCount(current);
+      if (current >= to) clearInterval(timer);
+    }, 60);
+    return () => clearInterval(timer);
+  }, [inView, to]);
+
+  return (
+    <span ref={ref}>
+      {count}
+      {suffix}
+    </span>
+  );
+}
+
 /* ─────────────────────────────────────────────
-   MOBILE STORY — editorial full-width stack
+   MOBILE
 ───────────────────────────────────────────── */
 function MobileStory() {
   return (
@@ -19,7 +43,6 @@ function MobileStory() {
         position: "relative",
       }}
     >
-      {/* Section label */}
       <motion.div
         initial={{ opacity: 0, x: -12 }}
         whileInView={{ opacity: 1, x: 0 }}
@@ -48,7 +71,7 @@ function MobileStory() {
         </span>
       </motion.div>
 
-      {/* Full-bleed editorial image */}
+      {/* Full-bleed image */}
       <motion.div
         initial={{ opacity: 0, scale: 1.03 }}
         whileInView={{ opacity: 1, scale: 1 }}
@@ -69,7 +92,6 @@ function MobileStory() {
           sizes="100vw"
           style={{ objectFit: "cover", objectPosition: "center top", filter: "grayscale(15%)" }}
         />
-        {/* Overlay badge */}
         <div
           style={{
             position: "absolute",
@@ -86,7 +108,6 @@ function MobileStory() {
         >
           Atelier Dossier — Vol. IV
         </div>
-        {/* Bottom scrim */}
         <div
           style={{
             position: "absolute",
@@ -94,14 +115,7 @@ function MobileStory() {
             background: "linear-gradient(to top, rgba(26,20,12,0.35) 0%, transparent 45%)",
           }}
         />
-        {/* Serial number */}
-        <div
-          style={{
-            position: "absolute",
-            bottom: "1.2rem",
-            left: "1.5rem",
-          }}
-        >
+        <div style={{ position: "absolute", bottom: "1.2rem", left: "1.5rem" }}>
           <p
             style={{
               fontFamily: "var(--font-fashion)",
@@ -125,9 +139,7 @@ function MobileStory() {
         </div>
       </motion.div>
 
-      {/* Text content */}
       <div style={{ padding: "0 1.5rem" }}>
-        {/* Headline */}
         <motion.h2
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -146,7 +158,6 @@ function MobileStory() {
           <span style={{ color: "var(--accent-brown)", fontStyle: "italic" }}>Craftsmanship</span>
         </motion.h2>
 
-        {/* Body copy */}
         <motion.p
           initial={{ opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -158,12 +169,46 @@ function MobileStory() {
             fontWeight: 300,
             lineHeight: 1.75,
             color: "var(--text-secondary)",
-            marginBottom: "1.8rem",
+            marginBottom: "1.4rem",
           }}
         >
           A study in restraint. Each ZIRUVA silhouette is built from the inside out, ensuring
           structural integrity that lasts generations.
         </motion.p>
+
+        {/* Pull-quote */}
+        <motion.blockquote
+          initial={{ opacity: 0, x: -10 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.7, delay: 0.15 }}
+          style={{
+            borderLeft: "2px solid var(--accent-brown)",
+            paddingLeft: "1.1rem",
+            margin: "0 0 1.6rem",
+            fontFamily: "'Cormorant Garamond', serif",
+            fontSize: "1.05rem",
+            fontStyle: "italic",
+            fontWeight: 300,
+            lineHeight: 1.55,
+            color: "var(--text-primary)",
+          }}
+        >
+          &ldquo;We make twelve bags a month. That is not a limitation. That is the point.&rdquo;
+          <footer
+            style={{
+              fontFamily: "var(--font-fashion)",
+              fontSize: "0.42rem",
+              letterSpacing: "0.2em",
+              textTransform: "uppercase",
+              color: "var(--accent-brown)",
+              marginTop: "0.5rem",
+              fontStyle: "normal",
+            }}
+          >
+            — Founder, Maison ZIRUVA
+          </footer>
+        </motion.blockquote>
 
         {/* Materials list */}
         <motion.div
@@ -222,15 +267,15 @@ function MobileStory() {
           ))}
         </motion.div>
 
-        {/* Spec tiles */}
+        {/* Count-up stats */}
         <motion.div
           initial={{ opacity: 0, y: 12 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.7, delay: 0.25 }}
+          transition={{ duration: 0.6, delay: 0.2 }}
           style={{
             display: "grid",
-            gridTemplateColumns: "1fr 1fr",
+            gridTemplateColumns: "repeat(3, 1fr)",
             gap: "1px",
             background: "rgba(43,43,43,0.1)",
             border: "1px solid rgba(43,43,43,0.1)",
@@ -238,31 +283,33 @@ function MobileStory() {
           }}
         >
           {[
-            { label: "HAND-STITCHED", sub: "Traditional Awl & Needle" },
-            { label: "HAND-PAINTED", sub: "Triple-Layer Edging" },
-          ].map((spec) => (
-            <div key={spec.label} style={{ background: "var(--cream)", padding: "1rem 0.9rem" }}>
+            { val: 12, suffix: "", label: "bags / month" },
+            { val: 36, suffix: "h", label: "per bag" },
+            { val: 3, suffix: "", label: "artisans / piece" },
+          ].map((s) => (
+            <div key={s.label} style={{ background: "var(--cream)", padding: "1rem 0.9rem", textAlign: "center" }}>
               <p
                 style={{
-                  fontFamily: "var(--font-fashion)",
-                  fontSize: "0.46rem",
+                  fontFamily: "'Cormorant Garamond', serif",
+                  fontSize: "1.5rem",
+                  fontWeight: 300,
                   color: "var(--accent-brown)",
-                  fontWeight: 700,
-                  letterSpacing: "0.15em",
-                  marginBottom: "0.3rem",
-                  textTransform: "uppercase",
+                  lineHeight: 1,
+                  marginBottom: "0.25rem",
                 }}
               >
-                {spec.label}
+                <CountUp to={s.val} suffix={s.suffix} />
               </p>
               <p
                 style={{
-                  fontFamily: "var(--font-sans)",
-                  fontSize: "0.66rem",
-                  color: "var(--text-secondary)",
+                  fontFamily: "var(--font-fashion)",
+                  fontSize: "0.42rem",
+                  letterSpacing: "0.15em",
+                  textTransform: "uppercase",
+                  color: "var(--text-meta)",
                 }}
               >
-                {spec.sub}
+                {s.label}
               </p>
             </div>
           ))}
@@ -311,7 +358,7 @@ function MobileStory() {
 }
 
 /* ─────────────────────────────────────────────
-   DESKTOP STORY — original layout, untouched
+   DESKTOP
 ───────────────────────────────────────────── */
 function DesktopStory() {
   const sectionRef = useRef<HTMLElement>(null);
@@ -348,7 +395,6 @@ function DesktopStory() {
             boxShadow: "0 10px 30px rgba(0,0,0,0.03)",
           }}
         >
-          {/* Metadata Sidebar Header */}
           <div
             style={{
               position: "absolute",
@@ -367,7 +413,7 @@ function DesktopStory() {
             Atelier Dossier — Vol. IV
           </div>
 
-          {/* Left: Visual Module */}
+          {/* Left: Image */}
           <div
             style={{
               position: "relative",
@@ -387,7 +433,7 @@ function DesktopStory() {
               >
                 <Image
                   src="/images/story-editorial.png"
-                  alt="ZIRUVA master artisan hand-stitching a luxury leather handbag — traditional awl and needle technique at the Maison ZIRUVA atelier, London"
+                  alt="ZIRUVA master artisan hand-stitching a luxury leather handbag"
                   fill
                   sizes="(max-width: 860px) 100vw, 35vw"
                   style={{ objectFit: "cover" }}
@@ -395,7 +441,6 @@ function DesktopStory() {
               </div>
             </motion.div>
 
-            {/* Micro Badge */}
             <div
               style={{
                 marginTop: "1.5rem",
@@ -419,32 +464,59 @@ function DesktopStory() {
                   ZR-2024-LDN
                 </p>
               </div>
-              <motion.div
-                style={{ width: "50px", height: "50px" }}
-                animate={{ rotate: 360 }}
-                transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
-              >
-                <svg viewBox="0 0 100 100">
-                  <path
-                    id="smallPath"
-                    d="M 50, 50 m -30, 0 a 30,30 0 1,1 60,0 a 30,30 0 1,1 -60,0"
-                    fill="none"
-                  />
-                  <text
-                    style={{
-                      fontFamily: "var(--font-fashion)",
-                      fontSize: "14px",
-                      fill: "var(--accent-brown)",
-                    }}
-                  >
-                    <textPath xlinkHref="#smallPath">ORIGIN ORIGIN</textPath>
-                  </text>
-                </svg>
-              </motion.div>
+
+              {/* Dual rotating rings */}
+              <div style={{ position: "relative", width: "54px", height: "54px" }}>
+                <motion.div
+                  style={{ position: "absolute", inset: 0 }}
+                  animate={{ rotate: 360 }}
+                  transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
+                >
+                  <svg viewBox="0 0 100 100">
+                    <path
+                      id="outerPath"
+                      d="M 50, 50 m -38, 0 a 38,38 0 1,1 76,0 a 38,38 0 1,1 -76,0"
+                      fill="none"
+                    />
+                    <text
+                      style={{
+                        fontFamily: "var(--font-fashion)",
+                        fontSize: "11px",
+                        fill: "var(--accent-brown)",
+                      }}
+                    >
+                      <textPath xlinkHref="#outerPath">MAISON ZIRUVA · LONDON ·</textPath>
+                    </text>
+                  </svg>
+                </motion.div>
+                <motion.div
+                  style={{ position: "absolute", inset: "10px" }}
+                  animate={{ rotate: -360 }}
+                  transition={{ duration: 14, repeat: Infinity, ease: "linear" }}
+                >
+                  <svg viewBox="0 0 100 100">
+                    <path
+                      id="innerPath"
+                      d="M 50, 50 m -30, 0 a 30,30 0 1,1 60,0 a 30,30 0 1,1 -60,0"
+                      fill="none"
+                    />
+                    <text
+                      style={{
+                        fontFamily: "var(--font-fashion)",
+                        fontSize: "14px",
+                        fill: "var(--text-secondary)",
+                        opacity: 0.35,
+                      }}
+                    >
+                      <textPath xlinkHref="#innerPath">ORIGIN ORIGIN</textPath>
+                    </text>
+                  </svg>
+                </motion.div>
+              </div>
             </div>
           </div>
 
-          {/* Right: Technical Module */}
+          {/* Right: Content */}
           <div
             style={{
               display: "flex",
@@ -479,14 +551,43 @@ function DesktopStory() {
                   fontWeight: 300,
                   lineHeight: 1.6,
                   color: "var(--text-secondary)",
-                  marginBottom: "2rem",
+                  marginBottom: "1.2rem",
                 }}
               >
                 A study in restraint. Each ZIRUVA silhouette is built from the inside out, ensuring
                 structural integrity that lasts generations.
               </p>
 
-              {/* Modular Process List */}
+              {/* Pull-quote */}
+              <blockquote
+                style={{
+                  borderLeft: "2px solid var(--accent-brown)",
+                  paddingLeft: "1rem",
+                  margin: "0 0 1.5rem",
+                  fontFamily: "'Cormorant Garamond', serif",
+                  fontSize: "0.95rem",
+                  fontStyle: "italic",
+                  fontWeight: 300,
+                  lineHeight: 1.55,
+                  color: "var(--text-secondary)",
+                }}
+              >
+                &ldquo;We make twelve bags a month. That is not a limitation. That is the point.&rdquo;
+                <footer
+                  style={{
+                    fontFamily: "var(--font-fashion)",
+                    fontSize: "0.4rem",
+                    letterSpacing: "0.2em",
+                    textTransform: "uppercase",
+                    color: "var(--accent-brown)",
+                    marginTop: "0.45rem",
+                    fontStyle: "normal",
+                  }}
+                >
+                  — Founder, Maison ZIRUVA
+                </footer>
+              </blockquote>
+
               <div style={{ borderTop: "1px solid rgba(43,43,43,0.1)", paddingTop: "1.5rem" }}>
                 {[
                   { label: "Material", val: "Grade A Full-Grain" },
@@ -512,11 +613,7 @@ function DesktopStory() {
                       {item.label}
                     </span>
                     <span
-                      style={{
-                        fontFamily: "var(--font-sans)",
-                        fontSize: "0.7rem",
-                        fontWeight: 500,
-                      }}
+                      style={{ fontFamily: "var(--font-sans)", fontSize: "0.7rem", fontWeight: 500 }}
                     >
                       {item.val}
                     </span>
@@ -525,47 +622,54 @@ function DesktopStory() {
               </div>
             </motion.div>
 
-            {/* Bottom Specs Block */}
+            {/* Count-up stats */}
             <div
               style={{
                 display: "grid",
-                gridTemplateColumns: "1fr 1fr",
+                gridTemplateColumns: "repeat(3, 1fr)",
                 gap: "1px",
                 background: "rgba(43,43,43,0.1)",
-                marginTop: "2rem",
+                marginTop: "1.5rem",
                 border: "1px solid rgba(43,43,43,0.1)",
               }}
             >
               {[
-                { label: "HAND-STITCHED", sub: "Traditional Awl & Needle" },
-                { label: "HAND-PAINTED", sub: "Triple-Layer Edging" },
-              ].map((spec) => (
-                <div key={spec.label} style={{ background: "var(--cream)", padding: "1rem" }}>
+                { val: 12, suffix: "", label: "bags / month" },
+                { val: 36, suffix: "h", label: "per bag" },
+                { val: 3, suffix: "", label: "artisans" },
+              ].map((s) => (
+                <div
+                  key={s.label}
+                  style={{ background: "var(--cream)", padding: "0.9rem 1rem", textAlign: "center" }}
+                >
                   <p
                     style={{
-                      fontFamily: "var(--font-fashion)",
-                      fontSize: "0.5rem",
+                      fontFamily: "'Cormorant Garamond', serif",
+                      fontSize: "1.45rem",
+                      fontWeight: 300,
                       color: "var(--accent-brown)",
-                      fontWeight: 700,
+                      lineHeight: 1,
                       marginBottom: "0.2rem",
                     }}
                   >
-                    {spec.label}
+                    <CountUp to={s.val} suffix={s.suffix} />
                   </p>
                   <p
                     style={{
-                      fontFamily: "var(--font-sans)",
-                      fontSize: "0.65rem",
-                      color: "var(--text-secondary)",
+                      fontFamily: "var(--font-fashion)",
+                      fontSize: "0.4rem",
+                      letterSpacing: "0.15em",
+                      textTransform: "uppercase",
+                      color: "var(--text-meta)",
                     }}
                   >
-                    {spec.sub}
+                    {s.label}
                   </p>
                 </div>
               ))}
             </div>
 
-            {/* Artisan Signature Seal */}
+            {/* Artisan Signature */}
             <div
               style={{
                 marginTop: "1.5rem",
@@ -609,9 +713,6 @@ function DesktopStory() {
   );
 }
 
-/* ─────────────────────────────────────────────
-   EXPORT
-───────────────────────────────────────────── */
 export default function StorySection() {
   const isMobile = useIsMobile();
   return isMobile ? <MobileStory /> : <DesktopStory />;
