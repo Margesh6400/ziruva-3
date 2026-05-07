@@ -5,7 +5,7 @@ const siteUrl = "https://ziruvaofficial.com";
 export const metadata: Metadata = {
   title: "The Archives — Full Collection | ZIRUVA Luxury Leather Handbags UK",
   description:
-    "Browse the ZIRUVA SS25 collection — luxury leather handbags designed in London and handcrafted in Italy. Shop La Signature, Hero Series, and L'Édition limited pieces. From £310. Free UK delivery.",
+    "Browse the ZIRUVA SS25 collection — luxury leather handbags designed in London and handcrafted in Italy. Shop La Signature, Hero Series, and L'Édition limited pieces. From £180. Free UK delivery.",
   alternates: {
     canonical: `${siteUrl}/collection`,
     languages: {
@@ -20,7 +20,7 @@ export const metadata: Metadata = {
     siteName: "ZIRUVA",
     title: "The Archives — Full Collection | ZIRUVA Luxury Leather Handbags UK",
     description:
-      "Shop the full ZIRUVA SS25 collection — limited-edition luxury leather handbags designed in London. La Signature from £310, Hero Series from £375, L'Édition from £445. Free UK delivery.",
+      "Shop the full ZIRUVA SS25 collection — limited-edition luxury leather handbags designed in London. La Signature from £180, Hero Series from £210, L'Édition from £225. Free UK delivery.",
     locale: "en_GB",
     images: [
       {

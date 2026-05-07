@@ -209,7 +209,7 @@ function MobileCollection({
             }}
           >
             <style>{`.no-scrollbar::-webkit-scrollbar { display: none; }`}</style>
-            {["All", "Signature", "Limited"].map((tag) => (
+            {["All", "Hero", "Signature", "Limited"].map((tag) => (
               <button
                 key={tag}
                 onClick={() => setFilter(tag)}
@@ -329,7 +329,7 @@ function DesktopCollection({
               borderBottom: "1px solid rgba(43,43,43,0.06)",
               paddingBottom: "1rem"
             }}>
-              {["All", "Signature", "Limited"].map((tag) => (
+              {["All", "Hero", "Signature", "Limited"].map((tag) => (
                 <button
                   key={tag}
                   onClick={() => setFilter(tag)}

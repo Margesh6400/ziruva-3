@@ -6,6 +6,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { products } from "@/data/products";
 import { useIsMobile } from "@/hooks/useMediaQuery";
+import { useCart } from "@/context/CartContext";
 
 const navLinks = [
   { label: "Collection", href: "/collection", hasDropdown: "collection" },
@@ -36,6 +37,7 @@ const announcements = [
 
 export default function Navbar() {
   const isMobile = useIsMobile();
+  const { count, openCart } = useCart();
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [showAnnouncement, setShowAnnouncement] = useState(true);
@@ -588,48 +590,134 @@ export default function Navbar() {
                   </div>
                 ))}
 
+                {/* Cart icon — desktop */}
+                <button
+                  onClick={openCart}
+                  aria-label="Open cart"
+                  style={{
+                    background: "none",
+                    border: "none",
+                    cursor: "pointer",
+                    padding: "6px",
+                    position: "relative",
+                    display: "flex",
+                    alignItems: "center",
+                    color: "var(--text-primary)",
+                  }}
+                >
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                    <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"/>
+                    <line x1="3" y1="6" x2="21" y2="6" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round"/>
+                    <path d="M16 10a4 4 0 0 1-8 0" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"/>
+                  </svg>
+                  {count > 0 && (
+                    <span style={{
+                      position: "absolute",
+                      top: "0px",
+                      right: "0px",
+                      background: "var(--accent-brown)",
+                      color: "white",
+                      fontFamily: "var(--font-sans)",
+                      fontSize: "0.55rem",
+                      width: "16px",
+                      height: "16px",
+                      borderRadius: "50%",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      lineHeight: 1,
+                    }}>
+                      {count}
+                    </span>
+                  )}
+                </button>
+
                 <a href="#collection" className="nav-shop-btn">
                   Shop
                 </a>
               </div>
             )}
 
-            {/* ── Mobile: Hamburger ── */}
+            {/* ── Mobile: Cart + Hamburger ── */}
             {isMobile && (
-              <button
-                onClick={() => setMenuOpen(!menuOpen)}
-                aria-label="Toggle menu"
-                style={{
-                  background: "none",
-                  border: "none",
-                  cursor: "pointer",
-                  padding: "8px",
-                  display: "flex",
-                  flexDirection: "column",
-                  gap: "7px",
-                  zIndex: 1001,
-                }}
-              >
-                {[0, 1].map((i) => (
-                  <motion.span
-                    key={i}
-                    animate={
-                      menuOpen
-                        ? i === 0
-                          ? { rotate: 45, y: 4, width: 24 }
-                          : { rotate: -45, y: -4, width: 24 }
-                        : { rotate: 0, y: 0, opacity: 1, width: i === 0 ? 24 : 16 }
-                    }
-                    transition={{ duration: 0.4, ease: [0.25, 0.46, 0.45, 0.94] }}
-                    style={{
-                      display: "block",
-                      height: "1px",
-                      background: "var(--text-primary)",
-                      transformOrigin: "center",
-                    }}
-                  />
-                ))}
-              </button>
+              <div style={{ display: "flex", alignItems: "center", gap: "0.2rem" }}>
+                {/* Cart icon — mobile */}
+                <button
+                  onClick={openCart}
+                  aria-label="Open cart"
+                  style={{
+                    background: "none",
+                    border: "none",
+                    cursor: "pointer",
+                    padding: "8px",
+                    position: "relative",
+                    display: "flex",
+                    alignItems: "center",
+                    color: "var(--text-primary)",
+                  }}
+                >
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+                    <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round"/>
+                    <line x1="3" y1="6" x2="21" y2="6" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round"/>
+                    <path d="M16 10a4 4 0 0 1-8 0" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round"/>
+                  </svg>
+                  {count > 0 && (
+                    <span style={{
+                      position: "absolute",
+                      top: "2px",
+                      right: "2px",
+                      background: "var(--accent-brown)",
+                      color: "white",
+                      fontFamily: "var(--font-sans)",
+                      fontSize: "0.5rem",
+                      width: "14px",
+                      height: "14px",
+                      borderRadius: "50%",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      lineHeight: 1,
+                    }}>
+                      {count}
+                    </span>
+                  )}
+                </button>
+
+                <button
+                  onClick={() => setMenuOpen(!menuOpen)}
+                  aria-label="Toggle menu"
+                  style={{
+                    background: "none",
+                    border: "none",
+                    cursor: "pointer",
+                    padding: "8px",
+                    display: "flex",
+                    flexDirection: "column",
+                    gap: "7px",
+                    zIndex: 1001,
+                  }}
+                >
+                  {[0, 1].map((i) => (
+                    <motion.span
+                      key={i}
+                      animate={
+                        menuOpen
+                          ? i === 0
+                            ? { rotate: 45, y: 4, width: 24 }
+                            : { rotate: -45, y: -4, width: 24 }
+                          : { rotate: 0, y: 0, opacity: 1, width: i === 0 ? 24 : 16 }
+                      }
+                      transition={{ duration: 0.4, ease: [0.25, 0.46, 0.45, 0.94] }}
+                      style={{
+                        display: "block",
+                        height: "1px",
+                        background: "var(--text-primary)",
+                        transformOrigin: "center",
+                      }}
+                    />
+                  ))}
+                </button>
+              </div>
             )}
           </div>
         </nav>

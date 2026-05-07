@@ -29,37 +29,10 @@ export interface Product {
 
 export const products: Product[] = [
   {
-    id: "la-lune",
-    name: "La Lune",
-    collection: "L'Édition",
-    price: "£ 445",
-    tier: "L'Édition · Limited",
-    image: "/images/la-lune-attached.jpg",
-    alt: "ZIRUVA La Lune Luxury Leather Moon Bag — Handcrafted Cognac Genuine Calf Leather Handbag with 18k Gold Chain, Designed in London",
-    bg: "#F2EDE8",
-    category: "Limited",
-    specs: {
-      material: "Full-Grain Box Calf Leather in Heritage Cognac",
-      hardware: "18k Gold-Plated Sculptural Interlocking Links",
-      dimensions: "24cm x 18cm x 7cm",
-      origin: "Florence, Italy · Atelier No. 4",
-      serial: "ZR.ED-LN.001-A",
-      lining: "Sustainable Mushroom-Derived Vegan Suede",
-      strap: "Adjustable 18k Gold-Plated Chain (50cm drop)",
-      closure: "Discreet Magnetic Arch Closure",
-      interior: "One main compartment with a gold-foil embossed slip pocket"
-    },
-    narrative: "A lunar-inspired silhouette defined by its architectural curve and signature interlocking gold chain detail. La Lune represents the pinnacle of celestial minimalism, handcrafted from Grade-A heritage cognac calfskin that develops a rich patina over a lifetime.",
-    variants: [
-      { color: "#8B4513", image: "/images/la-lune-attached.jpg", label: "Heritage Cognac" },
-      { color: "#1A1A1A", image: "/images/bag-ivory-black.png", label: "Noir Midnight" }
-    ]
-  },
-  {
     id: "la-prisme",
     name: "La Prisme",
     collection: "Hero",
-    price: "£ 425",
+    price: "£ 220",
     tier: "Hero · 999 Numbered",
     image: "/images/la-prisme-new.png",
     alt: "ZIRUVA La Prisme Ivory Multi-Prism Leather Satchel — Limited Edition Luxury Handcrafted Tote Bag with 18k Gold Pillars",
@@ -86,7 +59,7 @@ export const products: Product[] = [
     id: "la-barre",
     name: "La Barre",
     collection: "Hero",
-    price: "£ 375",
+    price: "£ 225",
     tier: "Hero · 999 Numbered",
     image: "/images/la-barre-attached.jpg",
     alt: "ZIRUVA La Barre Two-Tone Teal and Ivory Designer Tote — Architectural Full-Grain Luxury Leather Handbag for Women",
@@ -110,37 +83,37 @@ export const products: Product[] = [
     ]
   },
   {
-    id: "la-douce",
-    name: "La Douce",
+    id: "la-toile",
+    name: "La Toile",
     collection: "La Signature",
-    price: "£ 355",
+    price: "£ 212",
     tier: "Signature · Essential",
-    image: "/images/la-douce-attached.jpg",
-    alt: "ZIRUVA La Douce Brown Croc-Embossed Tote Bag — Classic Cognac Luxury Vachetta Leather Shoulder Bag, Made in Italy",
+    image: "/images/la-toile-attached.jpg",
+    alt: "ZIRUVA La Toile Deep Burgundy Leather Tote — Sophisticated Large Capacity Luxury Handbag with Gold-Plated Handles",
     bg: "#F2EDE8",
     category: "Signature",
     specs: {
-      material: "Cognac Croc-Embossed Vachetta Leather",
-      hardware: "Polished Palladium Logo Plaque",
-      dimensions: "36cm x 28cm x 15cm",
-      origin: "Tuscany, Italy · Heritage Tannery",
-      serial: "ZR.SI-DC.004-D",
-      lining: "Raw Suede Interior Finish",
-      strap: "Dual Flat Shoulder Straps (28cm drop)",
-      closure: "Hand-Finished Leather Toggle",
-      interior: "Spacious unlined interior with a removable leather zip pouch"
+      material: "Full-Grain Box Calf in Seasonal Burgundy",
+      hardware: "Gold-Plated Handle Links & Protective Feet",
+      dimensions: "40cm x 30cm x 18cm",
+      origin: "Veneto, Italy · Tradition Studio",
+      serial: "ZR.SI-TL.007-G",
+      lining: "Burgundy Grosgrain Fabric",
+      strap: "Circular Gold-Plated Metal Handles",
+      closure: "Open-Top with Internal Security Clip",
+      interior: "Large capacity interior with a suspended leather pocket"
     },
-    narrative: "A tactile masterpiece of classic sophistication. La Douce captures the essence of luxury with its rich cognac croc-embossed Vachetta leather and refined architectural silhouette, designed to be the ultimate companion for the discerning urbanite.",
+    narrative: "A study in depth and silhouette. La Toile is reimagined in a rich, seasonal deep burgundy leather, balancing a classic tote form with modern structural integrity and sophisticated gold-plated accents that catch the light with every step.",
     variants: [
-      { color: "#4E3629", image: "/images/la-douce-attached.jpg", label: "Cognac Croc" },
-      { color: "#1A1A1A", image: "/images/la-peau-attached.jpg", label: "Midnight Smooth" }
+      { color: "#800000", image: "/images/la-toile-attached.jpg", label: "Deep Burgundy" },
+      { color: "#F2EDE8", image: "/images/la-lune-attached.jpg", label: "Classic Cream" }
     ]
   },
   {
     id: "la-peau",
     name: "La Peau",
     collection: "La Signature",
-    price: "£ 345",
+    price: "£ 200",
     tier: "Signature · Essential",
     image: "/images/la-peau-attached.jpg",
     alt: "ZIRUVA La Peau Two-Tone Black and Ivory Tote — Premium Contrast Pebble Grain Leather Handbag with Gold-Foil Details",
@@ -164,10 +137,64 @@ export const products: Product[] = [
     ]
   },
   {
+    id: "la-douce",
+    name: "La Douce",
+    collection: "La Signature",
+    price: "£ 180",
+    tier: "Signature · Essential",
+    image: "/images/la-douce-attached.jpg",
+    alt: "ZIRUVA La Douce Brown Croc-Embossed Tote Bag — Classic Cognac Luxury Vachetta Leather Shoulder Bag, Made in Italy",
+    bg: "#F2EDE8",
+    category: "Signature",
+    specs: {
+      material: "Cognac Croc-Embossed Vachetta Leather",
+      hardware: "Polished Palladium Logo Plaque",
+      dimensions: "36cm x 28cm x 15cm",
+      origin: "Tuscany, Italy · Heritage Tannery",
+      serial: "ZR.SI-DC.004-D",
+      lining: "Raw Suede Interior Finish",
+      strap: "Dual Flat Shoulder Straps (28cm drop)",
+      closure: "Hand-Finished Leather Toggle",
+      interior: "Spacious unlined interior with a removable leather zip pouch"
+    },
+    narrative: "A tactile masterpiece of classic sophistication. La Douce captures the essence of luxury with its rich cognac croc-embossed Vachetta leather and refined architectural silhouette, designed to be the ultimate companion for the discerning urbanite.",
+    variants: [
+      { color: "#4E3629", image: "/images/la-douce-attached.jpg", label: "Cognac Croc" },
+      { color: "#1A1A1A", image: "/images/la-peau-attached.jpg", label: "Midnight Smooth" }
+    ]
+  },
+  {
+    id: "la-lune",
+    name: "La Lune",
+    collection: "L'Édition",
+    price: "£ 185",
+    tier: "L'Édition · Limited",
+    image: "/images/la-lune-attached.jpg",
+    alt: "ZIRUVA La Lune Luxury Leather Moon Bag — Handcrafted Cognac Genuine Calf Leather Handbag with 18k Gold Chain, Designed in London",
+    bg: "#F2EDE8",
+    category: "Limited",
+    specs: {
+      material: "Full-Grain Box Calf Leather in Heritage Cognac",
+      hardware: "18k Gold-Plated Sculptural Interlocking Links",
+      dimensions: "24cm x 18cm x 7cm",
+      origin: "Florence, Italy · Atelier No. 4",
+      serial: "ZR.ED-LN.001-A",
+      lining: "Sustainable Mushroom-Derived Vegan Suede",
+      strap: "Adjustable 18k Gold-Plated Chain (50cm drop)",
+      closure: "Discreet Magnetic Arch Closure",
+      interior: "One main compartment with a gold-foil embossed slip pocket"
+    },
+    narrative: "A lunar-inspired silhouette defined by its architectural curve and signature interlocking gold chain detail. La Lune represents the pinnacle of celestial minimalism, handcrafted from Grade-A heritage cognac calfskin that develops a rich patina over a lifetime.",
+    variants: [
+      { color: "#8B4513", image: "/images/la-lune-attached.jpg", label: "Heritage Cognac" },
+      { color: "#1A1A1A", image: "/images/bag-ivory-black.png", label: "Noir Midnight" }
+    ]
+  },
+  {
     id: "l-arc",
     name: "L'Arc",
     collection: "La Signature",
-    price: "£ 325",
+    price: "£ 190",
     tier: "Signature · Essential",
     image: "/images/la-arc-attached.jpg",
     alt: "ZIRUVA L'Arc Taupe Crescent Moon Bag — Minimalist Luxury Semi-Aniline Leather Crossbody with Integrated Pouch",
@@ -188,33 +215,6 @@ export const products: Product[] = [
     variants: [
       { color: "#9A8F85", image: "/images/la-arc-attached.jpg", label: "Urban Taupe" },
       { color: "#800000", image: "/images/la-toile-attached.jpg", label: "Royal Burgundy" }
-    ]
-  },
-  {
-    id: "la-toile",
-    name: "La Toile",
-    collection: "La Signature",
-    price: "£ 310",
-    tier: "Signature · Essential",
-    image: "/images/la-toile-attached.jpg",
-    alt: "ZIRUVA La Toile Deep Burgundy Leather Tote — Sophisticated Large Capacity Luxury Handbag with Gold-Plated Handles",
-    bg: "#F2EDE8",
-    category: "Signature",
-    specs: {
-      material: "Full-Grain Box Calf in Seasonal Burgundy",
-      hardware: "Gold-Plated Handle Links & Protective Feet",
-      dimensions: "40cm x 30cm x 18cm",
-      origin: "Veneto, Italy · Tradition Studio",
-      serial: "ZR.SI-TL.007-G",
-      lining: "Burgundy Grosgrain Fabric",
-      strap: "Circular Gold-Plated Metal Handles",
-      closure: "Open-Top with Internal Security Clip",
-      interior: "Large capacity interior with a suspended leather pocket"
-    },
-    narrative: "A study in depth and silhouette. La Toile is reimagined in a rich, seasonal deep burgundy leather, balancing a classic tote form with modern structural integrity and sophisticated gold-plated accents that catch the light with every step.",
-    variants: [
-      { color: "#800000", image: "/images/la-toile-attached.jpg", label: "Deep Burgundy" },
-      { color: "#F2EDE8", image: "/images/la-lune-attached.jpg", label: "Classic Cream" }
     ]
   }
 ];

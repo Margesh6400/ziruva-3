@@ -9,6 +9,7 @@ import { motion, Variants, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
 import { useIsMobile } from "@/hooks/useMediaQuery";
+import { useCart } from "@/context/CartContext";
 
 const siteUrl = "https://ziruvaofficial.com";
 
@@ -28,9 +29,40 @@ const staggerContainer: Variants = {
    MOBILE PRODUCT VIEW
 ───────────────────────────────────────────── */
 
+const SCARF_OPTIONS = [
+  { qty: 0, label: "None", price: 0 },
+  { qty: 1, label: "1 Scarf", price: 10 },
+  { qty: 2, label: "2 Scarves", price: 16 },
+];
+
 function MobileProduct({ product }: { product: Product }) {
   const [activeImage, setActiveImage] = useState(product.image);
+  const [scarfQty, setScarfQty] = useState(0);
+  const [added, setAdded] = useState(false);
+  const { addItem } = useCart();
   const relatedProducts = products.filter((p) => p.id !== product.id).slice(0, 4);
+
+  function handleAddToCart() {
+    const colorLabel =
+      product.variants?.find((v) => v.image === activeImage)?.label ??
+      product.variants?.[0]?.label ??
+      "Default";
+    const price = parseInt(product.price.replace(/[^0-9]/g, ""), 10);
+    const scarfPrice = SCARF_OPTIONS[scarfQty].price;
+    addItem({
+      key: `${product.id}-${colorLabel}-scarf${scarfQty}`,
+      productId: product.id,
+      name: product.name,
+      price,
+      image: activeImage,
+      colorLabel,
+      scarfQty,
+      scarfPrice,
+      qty: 1,
+    });
+    setAdded(true);
+    setTimeout(() => setAdded(false), 1800);
+  }
 
   return (
     <main style={{ background: "var(--cream)", minHeight: "100vh" }}>
@@ -134,25 +166,10 @@ function MobileProduct({ product }: { product: Product }) {
             {product.name}
           </motion.h1>
 
-          <motion.div variants={fadeUp} style={{ marginBottom: "2rem" }}>
-            <span style={{ 
-              fontFamily: "var(--font-sans)", 
-              fontSize: "1.1rem", 
-              color: "var(--text-primary)",
-              display: "block",
-              marginBottom: "1.5rem"
-            }}>
-              {product.price}
-            </span>
-            <button className="btn-primary" style={{ width: "100%", padding: "1.1rem" }}>
-              <span>Add to Waitlist</span>
-            </button>
-          </motion.div>
-
-          <motion.p variants={fadeUp} style={{ 
-            fontFamily: "var(--font-sans)", 
-            fontSize: "0.9rem", 
-            lineHeight: 1.7, 
+          <motion.p variants={fadeUp} style={{
+            fontFamily: "var(--font-sans)",
+            fontSize: "0.9rem",
+            lineHeight: 1.7,
             color: "var(--text-secondary)",
             marginBottom: "2.5rem"
           }}>
@@ -160,11 +177,11 @@ function MobileProduct({ product }: { product: Product }) {
           </motion.p>
 
           {product.variants && (
-            <motion.div variants={fadeUp} style={{ marginBottom: "3rem" }}>
-              <span style={{ 
-                fontFamily: "var(--font-fashion)", 
-                fontSize: "0.5rem", 
-                letterSpacing: "0.15em", 
+            <motion.div variants={fadeUp} style={{ marginBottom: "2rem" }}>
+              <span style={{
+                fontFamily: "var(--font-fashion)",
+                fontSize: "0.5rem",
+                letterSpacing: "0.15em",
                 textTransform: "uppercase",
                 color: "var(--text-meta)",
                 display: "block",
@@ -193,6 +210,68 @@ function MobileProduct({ product }: { product: Product }) {
               </div>
             </motion.div>
           )}
+
+          {!["la-prisme", "l-arc", "la-lune"].includes(product.id) && (
+            <motion.div variants={fadeUp} style={{ marginBottom: "2rem" }}>
+              <span style={{
+                fontFamily: "var(--font-fashion)",
+                fontSize: "0.5rem",
+                letterSpacing: "0.15em",
+                textTransform: "uppercase",
+                color: "var(--text-meta)",
+                display: "block",
+                marginBottom: "0.8rem"
+              }}>
+                Scarf Add-On
+              </span>
+              <div style={{ display: "flex", gap: "0.6rem" }}>
+                {SCARF_OPTIONS.map((opt) => (
+                  <button
+                    key={opt.qty}
+                    onClick={() => setScarfQty(opt.qty)}
+                    style={{
+                      flex: 1,
+                      padding: "0.65rem 0.4rem",
+                      border: scarfQty === opt.qty ? "1px solid var(--text-primary)" : "1px solid rgba(43,43,43,0.15)",
+                      background: scarfQty === opt.qty ? "var(--text-primary)" : "transparent",
+                      color: scarfQty === opt.qty ? "var(--cream)" : "var(--text-primary)",
+                      cursor: "pointer",
+                      transition: "all 0.2s ease",
+                      textAlign: "center" as const,
+                    }}
+                  >
+                    <span style={{ fontFamily: "var(--font-fashion)", fontSize: "0.45rem", letterSpacing: "0.15em", display: "block", textTransform: "uppercase" as const }}>
+                      {opt.label}
+                    </span>
+                    {opt.price > 0 && (
+                      <span style={{ fontFamily: "var(--font-sans)", fontSize: "0.7rem", display: "block", marginTop: "0.2rem" }}>
+                        +£ {opt.price}
+                      </span>
+                    )}
+                  </button>
+                ))}
+              </div>
+            </motion.div>
+          )}
+
+          <motion.div variants={fadeUp} style={{ marginBottom: "2rem" }}>
+            <span style={{
+              fontFamily: "var(--font-sans)",
+              fontSize: "1.1rem",
+              color: "var(--text-primary)",
+              display: "block",
+              marginBottom: "1.5rem"
+            }}>
+              {product.price}{scarfQty > 0 ? ` + £ ${SCARF_OPTIONS[scarfQty].price}` : ""}
+            </span>
+            <button
+              className="btn-primary"
+              onClick={handleAddToCart}
+              style={{ width: "100%", padding: "1.1rem", transition: "opacity 0.2s" }}
+            >
+              <span>{added ? "Added ✓" : "Add to Cart"}</span>
+            </button>
+          </motion.div>
 
           {/* Tech Specs */}
           <motion.div variants={fadeUp} style={{ borderTop: "1px solid rgba(43,43,43,0.1)", paddingTop: "2rem", marginBottom: "4rem" }}>
@@ -316,7 +395,32 @@ function MobileProduct({ product }: { product: Product }) {
 
 function DesktopProduct({ product }: { product: Product }) {
   const [activeImage, setActiveImage] = useState(product.image);
+  const [scarfQty, setScarfQty] = useState(0);
+  const [added, setAdded] = useState(false);
+  const { addItem } = useCart();
   const relatedProducts = products.filter((p) => p.id !== product.id).slice(0, 3);
+
+  function handleAddToCart() {
+    const colorLabel =
+      product.variants?.find((v) => v.image === activeImage)?.label ??
+      product.variants?.[0]?.label ??
+      "Default";
+    const price = parseInt(product.price.replace(/[^0-9]/g, ""), 10);
+    const scarfPrice = SCARF_OPTIONS[scarfQty].price;
+    addItem({
+      key: `${product.id}-${colorLabel}-scarf${scarfQty}`,
+      productId: product.id,
+      name: product.name,
+      price,
+      image: activeImage,
+      colorLabel,
+      scarfQty,
+      scarfPrice,
+      qty: 1,
+    });
+    setAdded(true);
+    setTimeout(() => setAdded(false), 1800);
+  }
 
   return (
     <main style={{ background: "var(--cream)", minHeight: "100vh" }}>
@@ -424,10 +528,14 @@ function DesktopProduct({ product }: { product: Product }) {
                       color: "var(--text-primary)",
                     }}
                   >
-                    {product.price}
+                    {product.price}{scarfQty > 0 ? ` + £ ${SCARF_OPTIONS[scarfQty].price}` : ""}
                   </span>
-                  <button className="btn-primary" style={{ padding: "0.8rem 2.5rem" }}>
-                    <span>Add to Waitlist</span>
+                  <button
+                    className="btn-primary"
+                    onClick={handleAddToCart}
+                    style={{ padding: "0.8rem 2.5rem", transition: "opacity 0.2s" }}
+                  >
+                    <span>{added ? "Added ✓" : "Add to Cart"}</span>
                   </button>
                 </div>
 
@@ -477,6 +585,49 @@ function DesktopProduct({ product }: { product: Product }) {
                               border: "2px solid var(--cream)",
                             }}
                           />
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {!["la-prisme", "l-arc", "la-lune"].includes(product.id) && (
+                  <div>
+                    <span style={{
+                      fontFamily: "var(--font-fashion)",
+                      fontSize: "0.55rem",
+                      letterSpacing: "0.2em",
+                      textTransform: "uppercase",
+                      color: "var(--text-meta)",
+                      display: "block",
+                      marginBottom: "1rem",
+                    }}>
+                      Scarf Add-On
+                    </span>
+                    <div style={{ display: "flex", gap: "0.8rem" }}>
+                      {SCARF_OPTIONS.map((opt) => (
+                        <button
+                          key={opt.qty}
+                          onClick={() => setScarfQty(opt.qty)}
+                          style={{
+                            padding: "0.7rem 1.2rem",
+                            border: scarfQty === opt.qty ? "1px solid var(--text-primary)" : "1px solid rgba(43,43,43,0.15)",
+                            background: scarfQty === opt.qty ? "var(--text-primary)" : "transparent",
+                            color: scarfQty === opt.qty ? "var(--cream)" : "var(--text-primary)",
+                            cursor: "pointer",
+                            transition: "all 0.2s ease",
+                            textAlign: "center" as const,
+                            minWidth: "90px",
+                          }}
+                        >
+                          <span style={{ fontFamily: "var(--font-fashion)", fontSize: "0.5rem", letterSpacing: "0.15em", display: "block", textTransform: "uppercase" as const }}>
+                            {opt.label}
+                          </span>
+                          {opt.price > 0 && (
+                            <span style={{ fontFamily: "var(--font-sans)", fontSize: "0.75rem", display: "block", marginTop: "0.25rem" }}>
+                              +£ {opt.price}
+                            </span>
+                          )}
                         </button>
                       ))}
                     </div>

@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import "./globals.css";
 import Script from "next/script";
 import SecurityLayer from "@/components/SecurityLayer";
+import { CartProvider } from "@/context/CartContext";
+import CartDrawer from "@/components/CartDrawer";
 
 const siteUrl = "https://ziruvaofficial.com";
 
@@ -21,7 +23,7 @@ export const metadata: Metadata = {
   },
 
   description:
-    "Shop ZIRUVA — luxury leather handbags designed in London and handcrafted by master artisans in Italy. Limited-edition collections in genuine full-grain leather. Free UK delivery. From £310.",
+    "Shop ZIRUVA — luxury leather handbags designed in London and handcrafted by master artisans in Italy. Limited-edition collections in genuine full-grain leather. Free UK delivery. From £180.",
 
   keywords: [
     "ZIRUVA",
@@ -163,9 +165,9 @@ const jsonLd = {
         "@type": "OfferCatalog",
         name: "ZIRUVA SS25 Collection — Luxury Leather Handbags",
         itemListElement: [
-          { "@type": "OfferCatalog", name: "La Signature — Timeless Essentials (from £310)" },
-          { "@type": "OfferCatalog", name: "Hero Series — Seasonal Icons (from £375, limited to 999)" },
-          { "@type": "OfferCatalog", name: "L'Édition — Limited Artist Pieces (from £445)" },
+          { "@type": "OfferCatalog", name: "La Signature — Timeless Essentials (from £180)" },
+          { "@type": "OfferCatalog", name: "Hero Series — Seasonal Icons (from £210, limited to 999)" },
+          { "@type": "OfferCatalog", name: "L'Édition — Limited Artist Pieces (from £225)" },
         ],
       },
     },
@@ -232,7 +234,7 @@ const jsonLd = {
           name: "How much do ZIRUVA handbags cost in the UK?",
           acceptedAnswer: {
             "@type": "Answer",
-            text: "ZIRUVA handbags range from £310 to £445 GBP, with free UK delivery included. The price reflects their limited-edition status, Grade A Italian full-grain leather, and 18k gold-plated hardware.",
+            text: "ZIRUVA handbags range from £180 to £225 GBP, with free UK delivery included. The price reflects their limited-edition status, Grade A Italian full-grain leather, and 18k gold-plated hardware.",
           },
         },
         {
@@ -274,7 +276,7 @@ const jsonLd = {
             offers: {
               "@type": "Offer",
               priceCurrency: "GBP",
-              price: "445",
+              price: "225",
               availability: "https://schema.org/LimitedAvailability",
               itemCondition: "https://schema.org/NewCondition",
               seller: { "@id": `${siteUrl}/#organization` },
@@ -302,7 +304,7 @@ const jsonLd = {
             offers: {
               "@type": "Offer",
               priceCurrency: "GBP",
-              price: "425",
+              price: "215",
               availability: "https://schema.org/LimitedAvailability",
               itemCondition: "https://schema.org/NewCondition",
               seller: { "@id": `${siteUrl}/#organization` },
@@ -330,7 +332,7 @@ const jsonLd = {
             offers: {
               "@type": "Offer",
               priceCurrency: "GBP",
-              price: "375",
+              price: "210",
               availability: "https://schema.org/LimitedAvailability",
               itemCondition: "https://schema.org/NewCondition",
               seller: { "@id": `${siteUrl}/#organization` },
@@ -358,7 +360,7 @@ const jsonLd = {
             offers: {
               "@type": "Offer",
               priceCurrency: "GBP",
-              price: "355",
+              price: "200",
               availability: "https://schema.org/InStock",
               itemCondition: "https://schema.org/NewCondition",
               seller: { "@id": `${siteUrl}/#organization` },
@@ -393,8 +395,11 @@ export default function RootLayout({
         />
       </head>
       <body>
-        <SecurityLayer />
-        {children}
+        <CartProvider>
+          <SecurityLayer />
+          <CartDrawer />
+          {children}
+        </CartProvider>
       </body>
     </html>
   );
