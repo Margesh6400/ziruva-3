@@ -40,7 +40,7 @@ export const products: Product[] = [
     category: "Hero",
     specs: {
       material: "Hand-Cut Leather Intarsia on Box Calfskin Base",
-      hardware: "18k Gold-Plated Architectural Pillars",
+      hardware: "18k Gold-Tone Architectural Pillars",
       dimensions: "28cm x 20cm x 10cm",
       origin: "Tuscany, Italy · Master Workshop",
       serial: "ZR.HR-PR.002-B",
@@ -52,7 +52,7 @@ export const products: Product[] = [
     narrative: "A prismatic masterpiece of artisanal precision. La Prisme features an intricate intarsia of multi-colored leather triangles, each hand-cut and bonded to a heritage ivory base, creating a silhouette that is both avant-garde and timelessly structured.",
     variants: [
       { color: "#FDFCFB", image: "/images/la-prisme-new.png", label: "Ivory Multi-Prism" },
-      { color: "#1A1A1A", image: "/images/la-prisme1-new.png", label: "Noir Gold-Prism" }
+      { color: "#1A1A1A", image: "/images/la-prisme-lifestyle.png", label: "Noir Gold-Prism" }
     ]
   },
   {
@@ -67,7 +67,7 @@ export const products: Product[] = [
     category: "Hero",
     specs: {
       material: "Pebbled & Smooth Calf Leather Dual-Tones",
-      hardware: "18k Gold-Plated Vertical Handle Bars",
+      hardware: "18k Gold-Tone Vertical Handle Bars",
       dimensions: "32cm x 26cm x 12cm",
       origin: "Veneto, Italy · Specialized Tannery",
       serial: "ZR.HR-BR.003-C",
@@ -76,7 +76,7 @@ export const products: Product[] = [
       closure: "Recessed Magnetic Bridge",
       interior: "Expansion side panels with an internal smartphone pocket"
     },
-    narrative: "A study in architectural verticality and color theory. La Barre pairs a pristine ivory body with deep teal pebbled leather accents, defined by its signature gold-plated pillar handles that bridge the gap between jewelry and accessory.",
+    narrative: "A study in architectural verticality and color theory. La Barre pairs a pristine ivory body with deep teal pebbled leather accents, defined by its signature gold-tone pillar handles that bridge the gap between jewelry and accessory.",
     variants: [
       { color: "#004D4D", image: "/images/la-barre-attached.jpg", label: "Teal & Ivory" },
       { color: "#4E3629", image: "/images/la-douce-attached.jpg", label: "Earth & Sand" }
@@ -89,21 +89,21 @@ export const products: Product[] = [
     price: "£ 212",
     tier: "Signature · Essential",
     image: "/images/la-toile-attached.jpg",
-    alt: "ZIRUVA La Toile Deep Burgundy Leather Tote — Sophisticated Large Capacity Luxury Handbag with Gold-Plated Handles",
+    alt: "ZIRUVA La Toile Deep Burgundy Leather Tote — Sophisticated Large Capacity Luxury Handbag with Gold-Tone Handles",
     bg: "#F2EDE8",
     category: "Signature",
     specs: {
       material: "Full-Grain Box Calf in Seasonal Burgundy",
-      hardware: "Gold-Plated Handle Links & Protective Feet",
+      hardware: "Gold-Tone Handle Links & Protective Feet",
       dimensions: "40cm x 30cm x 18cm",
       origin: "Veneto, Italy · Tradition Studio",
       serial: "ZR.SI-TL.007-G",
       lining: "Burgundy Grosgrain Fabric",
-      strap: "Circular Gold-Plated Metal Handles",
+      strap: "Circular Gold-Tone Metal Handles",
       closure: "Open-Top with Internal Security Clip",
       interior: "Large capacity interior with a suspended leather pocket"
     },
-    narrative: "A study in depth and silhouette. La Toile is reimagined in a rich, seasonal deep burgundy leather, balancing a classic tote form with modern structural integrity and sophisticated gold-plated accents that catch the light with every step.",
+    narrative: "A study in depth and silhouette. La Toile is reimagined in a rich, seasonal deep burgundy leather, balancing a classic tote form with modern structural integrity and sophisticated gold-tone accents that catch the light with every step.",
     variants: [
       { color: "#800000", image: "/images/la-toile-attached.jpg", label: "Deep Burgundy" },
       { color: "#F2EDE8", image: "/images/la-lune-attached.jpg", label: "Classic Cream" }
@@ -175,12 +175,12 @@ export const products: Product[] = [
     category: "Limited",
     specs: {
       material: "Full-Grain Box Calf Leather in Heritage Cognac",
-      hardware: "18k Gold-Plated Sculptural Interlocking Links",
+      hardware: "18k Gold-Tone Sculptural Interlocking Links",
       dimensions: "24cm x 18cm x 7cm",
       origin: "Florence, Italy · Atelier No. 4",
       serial: "ZR.ED-LN.001-A",
       lining: "Sustainable Mushroom-Derived Vegan Suede",
-      strap: "Adjustable 18k Gold-Plated Chain (50cm drop)",
+      strap: "Adjustable 18k Gold-Tone Chain (50cm drop)",
       closure: "Discreet Magnetic Arch Closure",
       interior: "One main compartment with a gold-foil embossed slip pocket"
     },
