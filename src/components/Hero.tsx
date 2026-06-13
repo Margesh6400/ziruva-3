@@ -130,28 +130,23 @@ function MobileHero() {
         minHeight: "520px",
         overflow: "hidden",
         background: "var(--cream)",
+        contain: "paint",
       }}
     >
-      {/* Ken-burns image */}
+      {/* Hero image — single scale-in on mobile (no infinite loop = no GPU thrash) */}
       <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 0.58 }}
-        transition={{ duration: 1.5, ease: [0.25, 0.46, 0.45, 0.94] }}
-        style={{ position: "absolute", inset: 0 }}
+        initial={{ opacity: 0, scale: 1.06 }}
+        animate={{ opacity: 0.58, scale: 1.0 }}
+        transition={{ duration: 1.6, ease: [0.25, 0.46, 0.45, 0.94] }}
+        style={{ position: "absolute", inset: 0, willChange: "transform, opacity" }}
       >
-        <motion.div
-          animate={{ scale: [1.04, 1.1, 1.04] }}
-          transition={{ duration: 9, ease: "easeInOut", repeat: Infinity }}
-          style={{ position: "absolute", inset: 0 }}
-        >
-          <Image
-            src="/images/hero-geometric.jpg"
-            alt="ZIRUVA SS25 Campaign — Luxury leather handbags"
-            fill
-            priority
-            style={{ objectFit: "cover", objectPosition: "center 15%" }}
-          />
-        </motion.div>
+        <Image
+          src="/images/hero-geometric.jpg"
+          alt="ZIRUVA SS25 Campaign — Luxury leather handbags"
+          fill
+          priority
+          style={{ objectFit: "cover", objectPosition: "center 15%" }}
+        />
       </motion.div>
 
       {/* Scrim */}
@@ -345,7 +340,7 @@ function MobileHero() {
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ delay: 2.4, duration: 0.8 }}
+        transition={{ delay: 1.2, duration: 0.8 }}
         style={{
           position: "absolute",
           bottom: "calc(1.8rem + env(safe-area-inset-bottom, 0px))",
@@ -441,7 +436,7 @@ function DesktopHero() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 1.3, ease: "easeOut" }}
-          style={{ position: "relative", width: "100%", height: "100%", overflow: "hidden" }}
+          style={{ position: "relative", width: "100%", height: "100%", overflow: "hidden", contain: "paint" }}
         >
           <motion.div
             animate={{ scale: [1.04, 1.09, 1.04] }}
@@ -451,6 +446,7 @@ function DesktopHero() {
               width: "100%",
               height: "100%",
               position: "relative",
+              willChange: "transform",
             }}
           >
             <Image

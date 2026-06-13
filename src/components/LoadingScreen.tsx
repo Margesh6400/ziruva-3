@@ -38,20 +38,30 @@ interface LoadingScreenProps {
 export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
   const [show, setShow] = useState(true);
   const [factIdx, setFactIdx] = useState(0);
+  const [reducedMotion, setReducedMotion] = useState(false);
 
   useEffect(() => {
+    const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
+    setReducedMotion(mq.matches);
+
+    // Reduced motion / low-power mode: get out fast with no animations
+    const duration = mq.matches ? 600 : 1900;
     const timer = setTimeout(() => {
       setShow(false);
       if (onComplete) onComplete();
-    }, 3200);
+    }, duration);
     return () => clearTimeout(timer);
   }, [onComplete]);
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      setFactIdx((p) => (p + 1) % materialFacts.length);
-    }, 750);
-    return () => clearInterval(interval);
+    // Start fact ticker only after letters have appeared (~1s)
+    const delay = setTimeout(() => {
+      const interval = setInterval(() => {
+        setFactIdx((p) => (p + 1) % materialFacts.length);
+      }, 700);
+      return () => clearInterval(interval);
+    }, 1000);
+    return () => clearTimeout(delay);
   }, []);
 
   return (
@@ -61,7 +71,7 @@ export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
           initial={{ opacity: 1 }}
           exit={{
             opacity: 0,
-            transition: { duration: 1.2, ease: [0.33, 1, 0.68, 1] },
+            transition: { duration: reducedMotion ? 0.2 : 0.7, ease: [0.33, 1, 0.68, 1] },
           }}
           style={{
             position: "fixed",
@@ -72,6 +82,7 @@ export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
             flexDirection: "column",
             alignItems: "center",
             justifyContent: "center",
+            contain: "strict",
           }}
         >
           {/* Logo — clip-path wipe reveal per letter */}
@@ -88,14 +99,14 @@ export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
                 }}
               >
                 <motion.div
-                  initial={{ y: "100%" }}
+                  initial={{ y: reducedMotion ? "0%" : "100%" }}
                   animate={{ y: "0%" }}
                   transition={{
-                    duration: 1.0,
-                    delay: idx * 0.12 + 0.3,
+                    duration: 0.7,
+                    delay: reducedMotion ? 0 : idx * 0.09 + 0.15,
                     ease: [0.22, 1, 0.36, 1],
                   }}
-                  style={{ position: "absolute", inset: 0 }}
+                  style={{ position: "absolute", inset: 0, willChange: "transform" }}
                 >
                   <Image
                     src={`/images/logo/${letter}.png`}
@@ -110,91 +121,98 @@ export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
           </div>
 
           {/* Subtext */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 0.4, transition: { delay: 1.6, duration: 1.2 } }}
-            style={{ marginTop: "2.5rem", textAlign: "center" }}
-          >
-            <p
-              style={{
-                fontFamily: "var(--font-fashion)",
-                fontSize: "0.55rem",
-                letterSpacing: "0.5em",
-                textTransform: "uppercase",
-                color: "var(--text-primary)",
-                marginBottom: "0.5rem",
-              }}
+          {!reducedMotion && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 0.4, transition: { delay: 1.0, duration: 0.8 } }}
+              style={{ marginTop: "2.5rem", textAlign: "center" }}
             >
-              Maison ZIRUVA — London
-            </p>
-            <div
-              style={{
-                width: "40px",
-                height: "1px",
-                background: "var(--accent-brown)",
-                margin: "0 auto",
-                opacity: 0.5,
-              }}
-            />
-          </motion.div>
-
-          {/* Rotating material fact */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1, transition: { delay: 2.0, duration: 0.5 } }}
-            style={{ marginTop: "1.1rem", height: "1.4em", overflow: "hidden", textAlign: "center" }}
-          >
-            <AnimatePresence mode="wait">
-              <motion.p
-                key={factIdx}
-                initial={{ y: 10, opacity: 0 }}
-                animate={{ y: 0, opacity: 0.38 }}
-                exit={{ y: -10, opacity: 0 }}
-                transition={{ duration: 0.3 }}
+              <p
                 style={{
-                  fontFamily: "var(--font-sans)",
-                  fontSize: "0.62rem",
-                  fontWeight: 300,
-                  letterSpacing: "0.06em",
-                  color: "var(--accent-brown)",
-                  fontStyle: "italic",
+                  fontFamily: "var(--font-fashion)",
+                  fontSize: "0.55rem",
+                  letterSpacing: "0.5em",
+                  textTransform: "uppercase",
+                  color: "var(--text-primary)",
+                  marginBottom: "0.5rem",
                 }}
               >
-                {materialFacts[factIdx]}
-              </motion.p>
-            </AnimatePresence>
-          </motion.div>
+                Maison ZIRUVA — London
+              </p>
+              <div
+                style={{
+                  width: "40px",
+                  height: "1px",
+                  background: "var(--accent-brown)",
+                  margin: "0 auto",
+                  opacity: 0.5,
+                }}
+              />
+            </motion.div>
+          )}
+
+          {/* Rotating material fact */}
+          {!reducedMotion && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1, transition: { delay: 1.4, duration: 0.4 } }}
+              style={{ marginTop: "1.1rem", height: "1.4em", overflow: "hidden", textAlign: "center" }}
+            >
+              <AnimatePresence mode="wait">
+                <motion.p
+                  key={factIdx}
+                  initial={{ y: 8, opacity: 0 }}
+                  animate={{ y: 0, opacity: 0.38 }}
+                  exit={{ y: -8, opacity: 0 }}
+                  transition={{ duration: 0.25 }}
+                  style={{
+                    fontFamily: "var(--font-sans)",
+                    fontSize: "0.62rem",
+                    fontWeight: 300,
+                    letterSpacing: "0.06em",
+                    color: "var(--accent-brown)",
+                    fontStyle: "italic",
+                  }}
+                >
+                  {materialFacts[factIdx]}
+                </motion.p>
+              </AnimatePresence>
+            </motion.div>
+          )}
 
           {/* Progress bar */}
-          <motion.div
-            style={{
-              position: "absolute",
-              bottom: 0,
-              left: 0,
-              right: 0,
-              height: "2px",
-              background: "var(--accent-brown)",
-              originX: 0,
-            }}
-            initial={{ scaleX: 0, opacity: 0.12 }}
-            animate={{ scaleX: 1, opacity: 0.12 }}
-            transition={{ duration: 2.8, ease: "easeInOut" }}
-          />
-          {/* Gold pulse at completion */}
-          <motion.div
-            style={{
-              position: "absolute",
-              bottom: 0,
-              left: 0,
-              right: 0,
-              height: "2px",
-              background: "linear-gradient(to right, transparent 0%, var(--accent-brown) 50%, transparent 100%)",
-              originX: 0,
-            }}
-            initial={{ opacity: 0, scaleX: 0 }}
-            animate={{ opacity: [0, 0, 0.9, 0], scaleX: [0, 1, 1, 1] }}
-            transition={{ duration: 2.8, times: [0, 0.82, 0.92, 1], ease: "easeInOut" }}
-          />
+          {!reducedMotion && (
+            <>
+              <motion.div
+                style={{
+                  position: "absolute",
+                  bottom: 0,
+                  left: 0,
+                  right: 0,
+                  height: "2px",
+                  background: "var(--accent-brown)",
+                  originX: 0,
+                }}
+                initial={{ scaleX: 0, opacity: 0.12 }}
+                animate={{ scaleX: 1, opacity: 0.12 }}
+                transition={{ duration: 1.7, ease: "easeInOut" }}
+              />
+              <motion.div
+                style={{
+                  position: "absolute",
+                  bottom: 0,
+                  left: 0,
+                  right: 0,
+                  height: "2px",
+                  background: "linear-gradient(to right, transparent 0%, var(--accent-brown) 50%, transparent 100%)",
+                  originX: 0,
+                }}
+                initial={{ opacity: 0, scaleX: 0 }}
+                animate={{ opacity: [0, 0, 0.9, 0], scaleX: [0, 1, 1, 1] }}
+                transition={{ duration: 1.7, times: [0, 0.78, 0.9, 1], ease: "easeInOut" }}
+              />
+            </>
+          )}
         </motion.div>
       )}
     </AnimatePresence>

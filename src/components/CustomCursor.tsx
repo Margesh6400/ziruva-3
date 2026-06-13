@@ -7,8 +7,13 @@ export default function CustomCursor() {
   const dotRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    // Don't run on touch-only devices — the cursor elements are CSS-hidden
+    // but without this guard the rAF loop still burns CPU.
+    if (!window.matchMedia("(pointer: fine)").matches) return;
+
     let x = 0, y = 0;
     let ringX = 0, ringY = 0;
+    let rafId: number;
 
     const onMouseMove = (e: MouseEvent) => {
       x = e.clientX;
@@ -28,7 +33,7 @@ export default function CustomCursor() {
         ringRef.current.style.left = `${ringX}px`;
         ringRef.current.style.top = `${ringY}px`;
       }
-      requestAnimationFrame(animate);
+      rafId = requestAnimationFrame(animate);
     };
 
     const onMouseOver = (e: MouseEvent) => {
@@ -57,9 +62,10 @@ export default function CustomCursor() {
 
     window.addEventListener("mousemove", onMouseMove);
     window.addEventListener("mouseover", onMouseOver);
-    animate();
+    rafId = requestAnimationFrame(animate);
 
     return () => {
+      cancelAnimationFrame(rafId);
       window.removeEventListener("mousemove", onMouseMove);
       window.removeEventListener("mouseover", onMouseOver);
     };

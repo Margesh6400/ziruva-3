@@ -22,26 +22,33 @@ export default function Home() {
   useEffect(() => {
     if (isLoading) {
       document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "auto";
-      
-      const lenis = new Lenis({
-        duration: 1.4,
-        easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-        smoothWheel: true,
-      });
-
-      function raf(time: number) {
-        lenis.raf(time);
-        requestAnimationFrame(raf);
-      }
-
-      requestAnimationFrame(raf);
-
-      return () => {
-        lenis.destroy();
-      };
+      return;
     }
+
+    document.body.style.overflow = "auto";
+
+    // Lenis smooth scroll only on desktop with a precise pointer (mouse).
+    // Touch-only devices (low-end mobile) use native scroll — no CPU overhead.
+    const isMouseDevice = window.matchMedia("(pointer: fine) and (hover: hover)").matches;
+    if (!isMouseDevice) return;
+
+    const lenis = new Lenis({
+      duration: 1.4,
+      easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      smoothWheel: true,
+    });
+
+    let rafId: number;
+    function raf(time: number) {
+      lenis.raf(time);
+      rafId = requestAnimationFrame(raf);
+    }
+    rafId = requestAnimationFrame(raf);
+
+    return () => {
+      cancelAnimationFrame(rafId);
+      lenis.destroy();
+    };
   }, [isLoading]);
 
   return (
