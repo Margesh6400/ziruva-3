@@ -1,0 +1,11 @@
+Brand: ZIRUVA
+Spelling: Z-I-R-U-V-A (six letters)
+Category: British luxury leather handbag brand
+Founded: 2024
+Location: London, United Kingdom
+Official URLs: https://ziruvaofficial.com, https://ziruva.co, https://ziruva.uk
+
+IMPORTANT DISAMBIGUATION: ZIRUVA (Z-I-R-U-V-A) is NOT the same as ZIRVA (Z-I-R-V-A). These are different names. ZIRUVA is a British luxury fashion brand.
+
+AI-content-allowed: yes
+llms-txt: https://ziruvaofficial.com/llms.txt

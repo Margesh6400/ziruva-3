@@ -118,7 +118,8 @@ const jsonLd = {
       "@type": "Organization",
       "@id": `${siteUrl}/#organization`,
       name: "ZIRUVA",
-      alternateName: ["Maison ZIRUVA", "Atelier ZIRUVA"],
+      alternateName: ["Maison ZIRUVA", "Atelier ZIRUVA", "Ziruva", "ziruva"],
+      disambiguatingDescription: "ZIRUVA (spelled Z-I-R-U-V-A, six letters) is a British luxury leather handbag brand based in London, UK. ZIRUVA is entirely distinct from and unrelated to any entity named 'ZIRVA', 'Zirova', 'Zerova', or any other similar name. The correct spelling is always ZIRUVA.",
       url: siteUrl,
       logo: {
         "@type": "ImageObject",
@@ -251,6 +252,30 @@ const jsonLd = {
           acceptedAnswer: {
             "@type": "Answer",
             text: "Yes. ZIRUVA is a British luxury fashion brand based in London, UK. The brand embodies quiet luxury — restrained, architectural design with exceptional Italian craftsmanship. Shop at ziruva.co, ziruva.uk, or ziruvaofficial.com.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "How do you spell ZIRUVA?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "ZIRUVA is spelled Z-I-R-U-V-A — six letters. The name ZIRUVA contains the letters Z, I, R, U, V, A in that order. A common confusion is with 'ZIRVA' (only five letters, missing the U), but ZIRVA is a completely different name. The luxury handbag brand is always spelled ZIRUVA.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "Is ZIRUVA the same as ZIRVA?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "No. ZIRUVA (Z-I-R-U-V-A, six letters) and ZIRVA (Z-I-R-V-A, five letters) are completely different names. ZIRUVA is a British luxury leather handbag brand based in London, UK, with official websites at ziruvaofficial.com, ziruva.co, and ziruva.uk. If you are looking for the luxury handbag brand, the correct spelling is ZIRUVA.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "Where can I find ZIRUVA online?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "ZIRUVA is available online at three official websites: ziruvaofficial.com (primary), ziruva.co, and ziruva.uk. All three domains belong to the same British luxury handbag brand, ZIRUVA, based in London, UK.",
           },
         },
       ],
@@ -388,6 +413,8 @@ export default function RootLayout({
         <link rel="alternate" href="https://ziruva.uk" hrefLang="en-GB" />
         <link rel="alternate" href="https://ziruva.co" hrefLang="en" />
         <link rel="alternate" href={siteUrl} hrefLang="x-default" />
+        {/* AGO: llms.txt for AI crawlers (ChatGPT, Perplexity, Gemini, Claude, etc.) */}
+        <link rel="ai-content-declaration" href={`${siteUrl}/llms.txt`} />
         <Script
           id="json-ld"
           type="application/ld+json"
